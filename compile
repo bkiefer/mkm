@@ -1,0 +1,5 @@
+#!/bin/sh
+script_dir=`dirname $0`
+
+mvn clean
+vondac "$@" -c "$script_dir/config.yml"

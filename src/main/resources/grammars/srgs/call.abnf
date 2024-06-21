@@ -1,0 +1,23 @@
+#ABNF 1.0 UTF-8;
+
+language de-DE;
+root $top;
+mode voice;
+tag-format "semantics/1.0";
+
+public $top = ($callRequest | $callConfirm) { out = $%1; };
+
+$callRequest = (
+  [das] "$$.*" { send = "$$1"; } (für|an) "$$.*" { addr = "$$1"; } kommen |
+  [das] "$$.*" { addr = "$$1"; } von "$$.*" { send = "$$1"; } [bitte] [kommen]
+  )
+  {
+    out.da="Request"; out.prop="Call"; out.senderName=send; out.addresseeName=addr;
+  };
+
+$callConfirm = (
+  "$$.*" { send="$$1"; } hört [kommen] |
+  [ja] ich { send="PRON1SG"; } höre |
+  "$$.*" { send="$$1"; } hier [kommen] |
+  [ja] hier "$$.*" { send="$$1"; } [hört] [kommen]
+  ) { out.da="Confirm"; out.prop="Call"; out.senderName=send } ;
