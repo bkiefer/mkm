@@ -1,12 +1,6 @@
-import de.dfki.drz.mkm.util.Date;
+Agent user;
+HfcUtils hu;
 
-DialogueAct prevDA() { return null; }
-
-resolve_1sg_pronoun:
-if (lastDA() && lastDA().sender == "PROP_1SG") {
-  if (prevDA() >= #CallRequest(top)) {
-    lastDA().sender = prevDA().addressee;
-  } else if (prevDA() >= #Call(top)) {
-    lastDA().sender = prevDA().sender;
-  }
-}
+#Date String timeOfDay();
+String toString(Message m);
+Rdf toRdf(DialogueAct da);

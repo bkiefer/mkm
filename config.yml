@@ -1,5 +1,5 @@
 # Points to the HFC config file
-ontologyFile:       src/main/resources/ontology/drz.yml
+ontologyFile:       src/main/resources/ontology/mkm.yml
 
 # ########## COMPILE CONFIGURATION SETTINGS ##########
 inputFile:          src/main/rudi/MissionKnowledge.rudi
@@ -34,20 +34,45 @@ NLG:
                              # can not do it by itself
 NLU:
   de_DE:
-    class: de.dfki.mlt.rudimant.agent.nlp.SrgsParser
-    grammar: src/main/resources/grammars/srgs/call.abnf
-    converter: src/main/resources/grammars/cplanner/srgsconv
-    tokenizer:
-      class: de.dfki.mlt.rudimant.agent.nlp.TrivialTokenizer
-      toLower: true           # turn all output to lower case
-      removePunctuation: true  # remove all punctuation tokens
+    # class: de.dfki.mlt.rudimant.agent.nlp.RegexInterpreter
+    # expressions:
+    #   '(?:das )?(.*?) (?:für|an|von) (.*?) (?:bitte )?kommen':
+    #     'Request(Call, sender="{2}", adressee="{1}")'
+    #   '(.*) hört(?: kommen)?':
+    #     'Confirm(Call, sender="{1}")'
+    #   '(?:ja )?ich höre':
+    #     'Confirm(Call, sender="PRON1SG")'
+    #   '(.*?) hier(?: kommen)?':
+    #     'Confirm(Call, sender="{1}")'
+    #   '(?:ja )?hier (.*?)(?: hört)?(?: kommen)?':
+    #     'Confirm(Call, sender="{1}")'
+    class: de.dfki.mlt.rudimant.agent.nlp.CombinedInterpreter
+    instances:
+    - class: de.dfki.mlt.rudimant.agent.nlp.SrgsParser
+      grammar: src/main/resources/grammars/srgs/call.abnf
+      converter: src/main/resources/grammars/cplanner/srgsconv
+      tokenizer:
+        class: de.dfki.mlt.rudimant.agent.nlp.TrivialTokenizer
+        toLower: true           # turn all output to lower case
+        removePunctuation: true  # remove all punctuation tokens
+    - class: de.dfki.mlt.rudimant.agent.nlp.RasaNlu
+      host: localhost
+      port: 9797
+      min_confidence: 0.8
+      converter: src/main/resources/cplanner/rasaconv
 
 # ########## DEBUGGER/GUI SETTINGS ##########
 debugPort: 9777
 
 customCompileCommands:
   compile: ./compile
-  mvncompile: mvn install
+  mvncompile: ./compile && mvn install
   mvncleancmp: mvn clean install
   vcompile: vondac -v -c config.yml
 defaultCompileCommand: compile
+
+# Evaluation of language services (parsing)
+language: de_DE
+corpora:
+  - data/call_confirm.txt
+  - data/call_request.txt

@@ -1,3 +1,103 @@
-Agent user;
+Message lastMsg;
+DialogueAct prevDA; // the DialogueAct of lastMsg
+Conversation current;
 
-#Date String timeOfDay();
+Message newMessage(DialogueAct da) {
+  Message m = new Message;
+  m.da = toRdf(da);
+  if (da.text)
+    m.text = da.text;
+  if (current) {
+    current.contains.add(m);
+  } else {
+    logger.error("Message without active conversation: {}-{}: {}",
+                 isa(DialogueAct, m.da).fromTime,
+                 isa(DialogueAct, m.da).toTime,
+                 m.text);
+  }
+  return m;
+}
+
+void messageProcessed(Message m) {
+  lastMsg = m;
+  prevDA = lastDA();
+  lastDAprocessed();
+}
+
+Agent asRdf(Object o) {
+  return (o <= Rdf) ? isa(Rdf, o) : toRdf(isa(String, o));
+}
+
+resolve_1sg_pronoun:
+if (lastDA().sender && lastDA().sender == "PROP_1SG") {
+  if (lastDA() >= #Confirm(Call) || prevDA >= #Request(Call)) { // ich höre
+    if (prevDA.addressee) {
+      lastDA().sender = prevDA.addressee;
+    }
+  }
+  /*else if (prevDA >= #top(Call)) { // kommt das vor?
+    lastDA().sender = prevDA().sender;
+    }*/
+}
+
+
+// A call request creates a new Conversation
+request_call:
+if (lastDA() >= #Request(Call)) {
+  // TODO: maybe do that internally when receiving the DA
+  running_conversation:
+  if (current) {
+    if (current.issuer != lastDA().sender
+        || current.isAddressed != lastDA().addressee) {
+      logger.warn("new call request in conversation with different partners");
+    }
+    // start new conversation now?
+  }
+  // start new conversation
+  current = new Conversation;
+  if (lastDA().sender) {
+    current.issuer = asRdf(lastDA().sender);
+  }
+  if (lastDA().addressee) {
+    current.isAddressed = asRdf(lastDA().addressee);
+  }
+  m = newMessage(lastDA());
+  messageProcessed(m);
+}
+
+// confirmation implies that we address the sender of the previous message
+confirm_call:
+if (lastDA() >= #Confirm(Call)) {
+  if (! current) {
+    logger.warn("Confirmation without conversation");
+  }
+  if (lastDA().sender != prevDA.addressee) {
+    logger.warn("Confirmation sender does not match last addressee");
+  }
+  if (lastDA().sender != current.isAddressed) {
+    logger.warn("Confirmation sender does not match conversation participant");
+  }
+  if (! lastDA().addressee && prevDA >= #Request(Call)) { // true most of the time
+    lastDA().addressee = prevDA.sender;
+  }
+  m = newMessage(lastDA());
+  if (prevDA >= #Request(Call)) { // true most of the time
+    lastDA().refersTo = prevDA;
+  }
+  messageProcessed(m);
+}
+
+if (lastDA() >= #Inform(top) || lastDA() >= #Order(top)) {
+  if (! lastDA().sender) {
+    if (prevDA >= #Confirm(top)) { // TODO: is that all?
+      lastDA().sender = prevDA.adressee;
+    }
+  }
+  if (! lastDA().adressee) {
+    if (prevDA >= #Confirm(top)) { // TODO: is that all?
+      lastDA().adressee = prevDA.sender;
+    }
+  }
+  m = newMessage(lastDA());
+  messageProcessed(m);
+}

@@ -1,7 +1,13 @@
 package de.dfki.drz.mkm;
 
+import static de.dfki.drz.mkm.util.Utils.*;
+
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.nio.charset.Charset;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
@@ -21,8 +27,6 @@ import de.dfki.lt.hfc.WrongFormatException;
 import de.dfki.lt.hfc.db.HfcDbHandler;
 import de.dfki.lt.hfc.db.rdfProxy.DbClient;
 import de.dfki.lt.hfc.db.rdfProxy.RdfProxy;
-import de.dfki.lt.hfc.types.XsdDouble;
-import de.dfki.lt.hfc.types.XsdFloat;
 import de.dfki.mlt.mqtt.JsonMarshaller;
 import de.dfki.mlt.mqtt.MqttHandler;
 import de.dfki.mlt.rudimant.agent.Agent;
@@ -37,6 +41,7 @@ public class MkmClient implements CommunicationHub {
   private final static Logger logger = LoggerFactory.getLogger(MkmClient.class);
 
   private static final String ASR_TOPIC = "whisperasr/asrresult/de";
+  private static final String STRING_TOPIC = "test/string";
 
   private static final String CFG_ONTOLOGY_FILE = "ontologyFile";
 
@@ -44,35 +49,6 @@ public class MkmClient implements CommunicationHub {
    *  no message came back that the previous behaviour was finished.
    */
   public static long MIN_TIME_BETWEEN_BEHAVIOURS = 10000;
-
-
-  public static float getDefault(Float d) {
-    if (d == null) return 0.0f;
-    return d;
-  }
-
-  public static double getDefault(Double d) {
-    if (d == null) return 0.0;
-    return d;
-  }
-
-  public static int getDefault(Integer d) {
-    if (d == null) return 0;
-    return d;
-  }
-
-  public static boolean getDefault(Boolean b) {
-    if (b == null) return false;
-    return b;
-  }
-
-  public static String float2xsd(Float f) {
-    return new XsdFloat(getDefault(f)).toString();
-  }
-
-  public static String float2xsd(Double f) {
-    return new XsdDouble(getDefault(f)).toString();
-  }
 
   private DbClient handler;
 
@@ -95,17 +71,14 @@ public class MkmClient implements CommunicationHub {
 
   private List<Listener<Behaviour>> _listeners = new ArrayList<>();
 
-  private RdfProxy startClient(File configDir, Map<String, Object> configs)
+  private void startHfcClient(File configDir, Map<String, Object> configs)
       throws IOException, WrongFormatException {
     String ontoFileName = (String) configs.get(CFG_ONTOLOGY_FILE);
     if (ontoFileName == null) {
       throw new IOException("Ontology file is missing.");
     }
-    HfcDbHandler h = new HfcDbHandler(ontoFileName);
-    handler = h;
-    RdfProxy proxy = new RdfProxy(handler);
-
-    return proxy;
+    handler = new HfcDbHandler(ontoFileName);
+    _proxy = new RdfProxy(handler);
   }
 
   /** While this method is executed, no MQTT messages should be processed. This
@@ -116,7 +89,7 @@ public class MkmClient implements CommunicationHub {
    */
   private void initAgent() {
     _agent = new MissionKnowledge();
-    //_agent.hu = new HfcUtils(_proxy);
+    _agent.hu = new HfcUtils(_proxy);
     String language = "de_DE";
     logger.debug("Initialising agent with language {}", language);
     _agent.init(_configDir, language, _proxy, _configs, "volu");
@@ -134,10 +107,25 @@ public class MkmClient implements CommunicationHub {
     return ! asr.isEmpty();
   }
 
+  private boolean receiveString(byte[] b) {
+    StringBuilder sb = new StringBuilder();
+    int c;
+    try (Reader r = new InputStreamReader(new ByteArrayInputStream(b),
+        Charset.forName("UTF-8"))) {
+      while ((c = r.read()) >= 0) {
+        sb.append((char)c);
+      }
+    } catch (IOException ex) { // will not happen
+    }
+    if (! sb.isEmpty()) sendEvent(sb.toString());
+    return ! sb.isEmpty();
+  }
+
   private void initMqtt(Map<String, Object> configs) throws MqttException {
     mapper = new JsonMarshaller();
     client = new MqttHandler(configs);
     client.register(ASR_TOPIC, this::receiveAsr);
+    client.register(STRING_TOPIC, this::receiveString);
   }
 
   @SuppressWarnings("unchecked")
@@ -145,7 +133,7 @@ public class MkmClient implements CommunicationHub {
       throws IOException, WrongFormatException, MqttException {
     _configDir = configDir;
     _configs = configs;
-    _proxy = startClient(_configDir, _configs);
+    startHfcClient(_configDir, _configs);
     initAgent();
     initMqtt((Map<String, Object>)_configs.get("mqtt"));
   }
@@ -182,8 +170,22 @@ public class MkmClient implements CommunicationHub {
     inQueue.push(new Intention(intention, 0.0));
   }
 
-  public DialogueAct analyse(String in) {
-    return _agent.analyse(in);
+  private void addWithMetaData(DialogueAct da, long start, long end) {
+    if (da == null) {
+      da = Interpreter.NO_RESULT;
+    }
+    // resolve sender and addressee names to uris, eventually creating new
+    // Einsatzkraft/Agent instances
+    if (da.hasSlot("sender")) {
+      da.setValue("sender", _agent.hu.resolveSpeaker(da.getValue("sender").trim()));
+    }
+    if (da.hasSlot("addressee")) {
+      da.setValue("addressee", _agent.hu.resolveSpeaker(da.getValue("addressee").trim()));
+    }
+    da.setValue("fromTime", num2xsd(start));
+    da.setValue("toTime", num2xsd(end));
+    _agent.addLastDA(da);
+    _agent.newData();
   }
 
   // depends on the concrete Event class
@@ -191,22 +193,20 @@ public class MkmClient implements CommunicationHub {
     if (evt instanceof Intention) {
       _agent.executeProposal((Intention)evt);
     } else if (evt instanceof DialogueAct) {
-      // TODO: RESOLVE SENDER AND ADDRESSEE NAMES TO URIS, MAYBE OVERRIDE THE
-      // ADDLASTDA METHOD
       _agent.addLastDA((DialogueAct)evt);
       _agent.newData();
     } else if (evt instanceof String) {
+      logger.info("Incoming String message: {}", evt);
       DialogueAct da = _agent.analyse((String)evt);
-      if (da == null) {
-        da = Interpreter.NO_RESULT;
-      }
-      // TODO: RESOLVE SENDER AND ADDRESSEE NAMES TO URIS
-      inQueue.add(da);
+      long now = System.currentTimeMillis();
+      addWithMetaData(da, now, now);
     } else if (evt instanceof AsrResult) {
+      AsrResult res = ((AsrResult)evt);
       // TODO: check if we can filter out nonsense based on info from AsrResult
-      String asr = ((AsrResult)evt).getText();
+      String asr = res.getText();
       logger.info("Incoming ASR message: {}", asr);
-      inQueue.add(asr);
+      DialogueAct da = _agent.analyse((String)evt);
+      addWithMetaData(da, res.start, res.end);
     } else {
       logger.warn("Unknown incoming object: {}", evt);
     }
@@ -264,8 +264,7 @@ public class MkmClient implements CommunicationHub {
   }
 
   public void startListening() {
-    // eventually connect to communication infrastructure
-    // _communicationChannel.connect();
+    // connect to communication infrastructure done in init()
     Thread listenToClient = new Thread() {
       @Override
       public void run() { runReceiveSendCycle(); }
@@ -276,8 +275,11 @@ public class MkmClient implements CommunicationHub {
   }
 
   public void shutdown() {
-    // eventually disconnect from communication infrastructure
-    // _communicationChannel.disconnect();
+    try {
+      client.disconnect();
+    } catch (MqttException e) {
+      logger.error("Error disconnecting from MQTT: {}", e.getMessage());
+    }
     isRunning = false;
   }
 }

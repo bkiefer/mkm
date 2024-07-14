@@ -1,5 +1,8 @@
 package de.dfki.drz.mkm;
 
+import static de.dfki.mlt.rudimant.common.Configs.*;
+import static de.dfki.drz.mkm.Constants.*;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.Map;
@@ -13,13 +16,14 @@ import de.dfki.mlt.rudimant.agent.Agent;
 import de.dfki.mlt.rudimant.agent.Behaviour;
 import de.dfki.mlt.rudimant.agent.nlp.DialogueAct;
 
-public abstract class KnowledgeManager extends Agent implements Constants {
+public abstract class KnowledgeManager extends Agent {
 
   Rdf user;
-  Rdf robot;
 
   private DbClient handler;
   private HfcDbHandler server;
+
+  HfcUtils hu;
 
   private RdfProxy startClient(File configDir, Map<String, Object> configs)
       throws IOException, WrongFormatException {
@@ -40,12 +44,11 @@ public abstract class KnowledgeManager extends Agent implements Constants {
           throws IOException, WrongFormatException {
     RdfProxy proxy = startClient(configDir, configs);
     // the last parameter sets the default namespace for creating instances
-    super.init(configDir, language, proxy, configs, "mkm");
-
-    // start first round of rule evaluations
-    newData();
+    super.init(configDir, language, proxy, configs, INSTANCE_NS_SHORT);
     // log all rules to stdout
     this.logAllRules();
+    // start first round of rule evaluations
+    newData();
   }
 
   @Override
@@ -58,5 +61,9 @@ public abstract class KnowledgeManager extends Agent implements Constants {
   protected Behaviour createBehaviour(int delay, DialogueAct da) {
     System.out.println("Returned DA: " + da.toString());
     return super.createBehaviour(delay, da);
+  }
+  
+  protected Rdf toRdf(DialogueAct da) {
+    return da.toRdf(_proxy);
   }
 }

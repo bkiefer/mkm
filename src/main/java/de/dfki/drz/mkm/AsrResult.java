@@ -75,9 +75,11 @@ class Segment {
   public double no_speech_prob;
 }
 
+/** This is the internal representation of a whisper output compatible result */
 public class AsrResult {
   public Map<String, Object> info;
   public List<Segment> segments;
+  public long start, end;
 
   public String getText() {
     StringBuffer sb = new StringBuffer();

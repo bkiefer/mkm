@@ -1,7 +1,6 @@
 package de.dfki.drz.mkm;
 
-import static de.dfki.drz.mkm.Constants.CFG_ONTOLOGY_FILE;
-import static de.dfki.drz.mkm.Constants.CFG_VISUALISE;
+import static de.dfki.mlt.rudimant.common.Configs.*;
 
 import java.io.File;
 import java.io.FileNotFoundException;
