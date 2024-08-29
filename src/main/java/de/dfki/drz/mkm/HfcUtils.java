@@ -14,6 +14,13 @@ public class HfcUtils {
     proxy = p;
   }
 
+  public Rdf resolveAgentFromToken(String callsign) {
+    List<Object> agents = proxy.query(
+        "select distinct ?a where ?a <drz:hasToken> \"{}\" ?_ & ?a <rdf:type> <drz:Einsatzkraft> ?_",
+        callsign);
+    return agents.isEmpty() ? null : (Rdf)agents.get(0);
+  }
+  
   public Rdf resolveAgent(String callsign) {
     List<Object> agents = proxy.query(
         "select distinct ?a where ?a <drz:hasCallsign> \"{}\" ?_ & ?a <rdf:type> <drz:Einsatzkraft> ?_",

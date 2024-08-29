@@ -37,6 +37,24 @@ import de.dfki.mlt.rudimant.agent.nlp.DialogueAct;
 import de.dfki.mlt.rudimant.agent.nlp.Interpreter;
 
 public class MkmClient implements CommunicationHub {
+  private static class IdString {
+    public String id;
+    public String text;
+    public String speaker; // nullable, to evaluate perfect speaker oracle
+    private IdString(String i, String t, String s) {
+      id = i; text = t; speaker = s;
+    }
+
+    public static IdString getIdString(String str) {
+      String[] parts = str.split("[|]");
+      if (parts.length < 2) return null;
+      String speaker = null;
+      if (parts.length > 2) {
+        speaker = parts[2];
+      }
+      return new IdString(parts[0], parts[1], speaker);
+    }
+  }
 
   private final static Logger logger = LoggerFactory.getLogger(MkmClient.class);
 
@@ -223,8 +241,19 @@ public class MkmClient implements CommunicationHub {
       long now = System.currentTimeMillis();
       addWithMetaData(da, now, now);
       da.setValue("text", (String)evt);
+    } else if (evt instanceof IdString) {
+      IdString is = (IdString)evt;
+      _agent.startEvaluation();
+      logger.info("Incoming IdString message: {}|{}|{}", is.id, is.text, is.speaker);
+      DialogueAct da = _agent.analyse((is.text).trim());
       long now = System.currentTimeMillis();
+      if (!da.hasSlot("sender") && is.speaker != null) {
+        // we have to change this since we only send the token, not the callsign
+        da.setValue("sender", _agent.hu.resolveSpeaker(is.speaker));
+      }
       addWithMetaData(da, now, now);
+      da.setValue("text", is.text);
+      da.setValue("id", is.id);
     } else if (evt instanceof AsrResult) {
       AsrResult res = ((AsrResult)evt);
       // TODO: check if we can filter out nonsense based on info from AsrResult

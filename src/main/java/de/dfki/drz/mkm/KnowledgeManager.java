@@ -4,7 +4,10 @@ import static de.dfki.drz.mkm.Constants.INSTANCE_NS_SHORT;
 import static de.dfki.mlt.rudimant.common.Configs.CFG_ONTOLOGY_FILE;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.Writer;
 import java.util.Map;
 
 import de.dfki.lt.hfc.WrongFormatException;
@@ -22,6 +25,9 @@ public abstract class KnowledgeManager extends Agent {
 
   private DbClient handler;
   private HfcDbHandler server;
+
+  boolean evaluation = false;
+  private Writer w = null;
 
   HfcUtils hu;
 
@@ -54,6 +60,13 @@ public abstract class KnowledgeManager extends Agent {
   @Override
   public void shutdown() {
     if (server != null) server.shutdown();
+    if (w != null) {
+      try {
+        w.close();
+      } catch (IOException ex) {
+        logger.error("Closing evaluation file failed: {}", ex.getMessage());
+      }
+    }
     super.shutdown();
   }
 
@@ -62,8 +75,41 @@ public abstract class KnowledgeManager extends Agent {
     System.out.println("Returned DA: " + da.toString());
     return super.createBehaviour(delay, da);
   }
-  
+
   protected Rdf toRdf(DialogueAct da) {
     return da.toRdf(_proxy);
+  }
+
+  private String na(String in) { return in == null ? "NA" : in; }
+
+  protected void startEvaluation() {
+    if (evaluation) return;
+    evaluation = true;
+    String evalFileName = "evaluation" + System.currentTimeMillis() + ".csv";
+    try {
+      w = new PrintWriter(new File(evalFileName));
+    } catch (FileNotFoundException ex) {
+      logger.error("Creating evaluation file failed: {}", ex.getMessage());
+      w = null;
+      evaluation = false;
+    }
+  }
+
+  protected void printEval(String id, String speaker, String addressee, String intent, String text) {
+    try {
+      w.append(id + "," + na(speaker) + "," + na(addressee) + ","
+          + intent + ", \"" + text + '"');
+      w.append(System.lineSeparator());
+      w.flush();
+    } catch (IOException ex) {
+      logger.error("Writing to evaluation file failed: {}", ex.getMessage());
+      try {
+        w.close();
+      } catch (IOException ex2) {
+        logger.error("Closing evaluation file failed: {}", ex2.getMessage());
+      }
+      w = null;
+      evaluation = false;
+    }
   }
 }

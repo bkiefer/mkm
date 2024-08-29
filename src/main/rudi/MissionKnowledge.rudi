@@ -13,6 +13,15 @@ Message newMessage(DialogueAct da) {
     logger.error("Message without active conversation: {}-{}: {}",
                  m.da.fromTime, m.da.toTime, m.text);
   }
+  if (evaluation) {
+    Einsatzkraft s = m.da.sender;
+    Einsatzkraft a = m.da.addressee;
+    String sender = s ? s.hasToken : "NA";
+    String addr = a ? a.hasToken : "NA";
+    printEval(da.getValue("id"), sender, addr,
+              da.getDialogueActType() + "_" + da.getProposition(),
+              m.text);
+  }
   return m;
 }
 

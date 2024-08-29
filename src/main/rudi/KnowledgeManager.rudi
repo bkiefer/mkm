@@ -1,5 +1,9 @@
 Agent user;
 HfcUtils hu;
+boolean evaluation;
+void printEval(String id, String speaker, String addressee, String intent,
+               String text);
+
 
 #Date String timeOfDay();
 String toString(Message m);

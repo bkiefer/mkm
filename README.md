@@ -30,3 +30,13 @@ mvn install
 ./run_mkm
 ```
 **Attention:** Make sure to **not** run `mvn clean install`, as this would delete the generated Java files!
+
+## Evaluation based on a list of transcribed utterances
+
+With the script `testclient.py`, a text file is sent line by line to the MKM. The results are stored in the database, which means defining a persistence file will provide all generated information in the sequence in which it is created.
+
+For convenience, a CSV file can be generated that is easier to use for evaluation purposes. It contains the following informations, if they could be computed:
+
+id, sender, addressee, dialogue intent
+
+id is always present, this is the line number of the text string sent.
