@@ -24,9 +24,6 @@ import org.slf4j.LoggerFactory;
 
 import de.dfki.drz.mkm.util.Listener;
 import de.dfki.lt.hfc.WrongFormatException;
-import de.dfki.lt.hfc.db.HfcDbHandler;
-import de.dfki.lt.hfc.db.rdfProxy.DbClient;
-import de.dfki.lt.hfc.db.rdfProxy.RdfProxy;
 import de.dfki.mlt.mqtt.JsonMarshaller;
 import de.dfki.mlt.mqtt.MqttHandler;
 import de.dfki.mlt.rudimant.agent.Agent;
@@ -69,8 +66,6 @@ public class MkmClient implements CommunicationHub {
    */
   public static long MIN_TIME_BETWEEN_BEHAVIOURS = 10000;
 
-  private DbClient handler;
-
   private MqttHandler client;
   private JsonMarshaller mapper;
 
@@ -80,7 +75,7 @@ public class MkmClient implements CommunicationHub {
 
   private File _configDir;
   private Map<String, Object> _configs;
-  private RdfProxy _proxy;
+
   private MissionKnowledge _agent;
 
   private Deque<Object> inQueue = new ArrayDeque<>();
@@ -90,28 +85,19 @@ public class MkmClient implements CommunicationHub {
 
   private List<Listener<Behaviour>> _listeners = new ArrayList<>();
 
-  private void startHfcClient(File configDir, Map<String, Object> configs)
-      throws IOException, WrongFormatException {
-    String ontoFileName = (String) configs.get(CFG_ONTOLOGY_FILE);
-    if (ontoFileName == null) {
-      throw new IOException("Ontology file is missing.");
-    }
-    handler = new HfcDbHandler(ontoFileName);
-    _proxy = new RdfProxy(handler);
-  }
-
   /** While this method is executed, no MQTT messages should be processed. This
    * could be done using synchronized, but it would be better and more efficient
    * to temporarily disconnect from the broker.
    *
    * @param userId the user id for which a new agent shall be created
+   * @throws IOException 
+   * @throws WrongFormatException 
    */
-  private void initAgent() {
+  private void initAgent() throws WrongFormatException, IOException {
     _agent = new MissionKnowledge();
-    _agent.hu = new HfcUtils(_proxy);
     String language = "de_DE";
     logger.debug("Initialising agent with language {}", language);
-    _agent.init(_configDir, language, _proxy, _configs, "volu");
+    _agent.init(_configDir, language, _configs);
     // needs to be done after grammar loading
     Interpreter.NO_RESULT = new DialogueAct("OutOfDomain(top)");
 
@@ -177,7 +163,6 @@ public class MkmClient implements CommunicationHub {
       throws IOException, WrongFormatException, MqttException {
     _configDir = configDir;
     _configs = configs;
-    startHfcClient(_configDir, _configs);
     initAgent();
     initMqtt((Map<String, Object>)_configs.get("mqtt"));
   }
@@ -259,7 +244,7 @@ public class MkmClient implements CommunicationHub {
       // TODO: check if we can filter out nonsense based on info from AsrResult
       String asr = res.getText();
       logger.info("Incoming ASR message: {}", asr);
-      DialogueAct da = _agent.analyse((String)evt);
+      DialogueAct da = _agent.analyse(asr);
       addWithMetaData(da, res.start, res.end);
     } else {
       logger.warn("Unknown incoming object: {}", evt);
@@ -287,6 +272,9 @@ public class MkmClient implements CommunicationHub {
       boolean emptyRun = true;
       while (! inQueue.isEmpty()) {
         Object event = inQueue.pollFirst();
+        if (event instanceof DialogueAct) {
+          if (Agent.exists(_agent.lastDA())) break;
+        }
         onEvent(event);
       }
       // if a proposal was executed, handle pending events now
@@ -319,6 +307,12 @@ public class MkmClient implements CommunicationHub {
       }
     }
     _agent.shutdown();
+    try {
+        client.disconnect();
+    } catch (MqttException e) {
+      logger.error("Error disconnecting from MQTT: {}", e.getMessage());
+    }
+    logger.info("Exiting");
   }
 
   public void startListening() {
@@ -333,12 +327,6 @@ public class MkmClient implements CommunicationHub {
   }
 
   public void shutdown() {
-    try {
-      _agent.shutdown();
-      client.disconnect();
-    } catch (MqttException e) {
-      logger.error("Error disconnecting from MQTT: {}", e.getMessage());
-    }
     isRunning = false;
   }
 }

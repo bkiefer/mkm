@@ -24,7 +24,6 @@ public abstract class KnowledgeManager extends Agent {
   Rdf user;
 
   private DbClient handler;
-  private HfcDbHandler server;
 
   boolean evaluation = false;
   private Writer w = null;
@@ -37,11 +36,10 @@ public abstract class KnowledgeManager extends Agent {
     if (ontoFileName == null) {
       throw new IOException("Ontology file is missing.");
     }
-    server = new HfcDbHandler(new File(configDir, ontoFileName).getPath());
-    handler = new HfcDbHandler(ontoFileName);
+    handler = new HfcDbHandler(new File(configDir, ontoFileName).getPath());
 
     RdfProxy proxy = new RdfProxy(handler);
-    handler.registerStreamingClient(proxy);
+    hu = new HfcUtils(proxy);
     return proxy;
   }
 
@@ -59,7 +57,7 @@ public abstract class KnowledgeManager extends Agent {
 
   @Override
   public void shutdown() {
-    if (server != null) server.shutdown();
+    if (handler != null) ((HfcDbHandler)handler).shutdownNoExit();
     if (w != null) {
       try {
         w.close();
