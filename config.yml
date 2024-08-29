@@ -13,6 +13,8 @@ rootPackage:        de.dfki.drz.mkm
 
 nameToURI:
   Agent: <dial:Agent>
+  DialAct: <dial:DialogueAct>
+
 #nameToClass:
 #  Date: de.dfki.drz.mkm.util.Date
 #printErrors: false   # prints compile errors to terminal, true is the default
@@ -28,8 +30,8 @@ nameToURI:
 NLG:
   de_DE:
     class: de.dfki.mlt.rudimant.agent.nlp.LanguageGenerator
-    mapperProject: src/main/resources/grammars/cplanner/allrules-mapper
-    generationProject: src/main/resources/grammars/cplanner/allrules
+    mapperProject: src/main/resources/cplanner/allrules-mapper
+    generationProject: src/main/resources/cplanner/allrules
     #translateNumbers: true  # translates numbers to text internally, if, e.g., the TTS
                              # can not do it by itself
 NLU:
@@ -50,7 +52,7 @@ NLU:
     instances:
     - class: de.dfki.mlt.rudimant.agent.nlp.SrgsParser
       grammar: src/main/resources/grammars/srgs/call.abnf
-      converter: src/main/resources/grammars/cplanner/srgsconv
+      converter: src/main/resources/cplanner/srgsconv
       tokenizer:
         class: de.dfki.mlt.rudimant.agent.nlp.TrivialTokenizer
         toLower: true           # turn all output to lower case
@@ -67,12 +69,12 @@ debugPort: 9777
 customCompileCommands:
   compile: ./compile
   mvncompile: ./compile && mvn install
-  mvncleancmp: mvn clean install
+  mvncleancmp: mvn clean && ./compile && mvn install
   vcompile: vondac -v -c config.yml
 defaultCompileCommand: compile
 
 # Evaluation of language services (parsing)
 language: de_DE
 corpora:
-  - data/call_confirm.txt
-  - data/call_request.txt
+  - rasa/call_confirm.yml
+  - rasa/call_request.yml

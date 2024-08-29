@@ -1,8 +1,14 @@
 #!/bin/sh
 scrdir=`dirname $0`
-scrdir=`realpath $scrdir`
+#scrdir=`realpath $scrdir`
 
 if test -f "logback.xml"; then
    logconf="-Dlogback.configurationFile=./logback.xml"
 fi
+docker ps | grep -q mkm_rasa_nlu && rasaruns=true
+if test -x $scrdir/rasa/rasadock -a -z "$rasaruns" ; then
+    echo "Starting rasa NLU"
+    $scrdir/rasa/rasadock
+fi
+
 java $logconf -jar "$scrdir"/target/mkm-fatjar.jar "$@"

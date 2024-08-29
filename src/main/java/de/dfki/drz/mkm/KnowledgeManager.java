@@ -1,7 +1,7 @@
 package de.dfki.drz.mkm;
 
-import static de.dfki.mlt.rudimant.common.Configs.*;
-import static de.dfki.drz.mkm.Constants.*;
+import static de.dfki.drz.mkm.Constants.INSTANCE_NS_SHORT;
+import static de.dfki.mlt.rudimant.common.Configs.CFG_ONTOLOGY_FILE;
 
 import java.io.File;
 import java.io.IOException;

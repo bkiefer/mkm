@@ -42,6 +42,7 @@ public class MkmClient implements CommunicationHub {
 
   private static final String ASR_TOPIC = "whisperasr/asrresult/de";
   private static final String STRING_TOPIC = "test/string";
+  private static final String CONTROL_TOPIC = "mkm/control";
 
   private static final String CFG_ONTOLOGY_FILE = "ontologyFile";
 
@@ -107,7 +108,7 @@ public class MkmClient implements CommunicationHub {
     return ! asr.isEmpty();
   }
 
-  private boolean receiveString(byte[] b) {
+  private String bytesToString(byte[] b) {
     StringBuilder sb = new StringBuilder();
     int c;
     try (Reader r = new InputStreamReader(new ByteArrayInputStream(b),
@@ -117,15 +118,40 @@ public class MkmClient implements CommunicationHub {
       }
     } catch (IOException ex) { // will not happen
     }
-    if (! sb.isEmpty()) sendEvent(sb.toString());
-    return ! sb.isEmpty();
+    return sb.toString();
+  }
+  
+  private boolean receiveString(byte[] b) {
+    String str = bytesToString(b);
+    if (! str.isEmpty()) {
+      int bar = str.indexOf('|');
+      if (bar < 0) {
+        sendEvent(str);
+      } else {
+        IdString ids = IdString.getIdString(str);
+        if (ids != null) {
+          sendEvent(ids);
+        }
+      }
+    }
+    return ! str.isEmpty();
   }
 
+  private boolean receiveCommand(byte[] b) {
+    String cmd = bytesToString(b);
+    switch (cmd) {
+    case "exit": shutdown(); break;
+    default: logger.warn("Unknown command: {}", cmd); break;
+    }
+    return ! cmd.isEmpty();
+  }
+  
   private void initMqtt(Map<String, Object> configs) throws MqttException {
     mapper = new JsonMarshaller();
     client = new MqttHandler(configs);
     client.register(ASR_TOPIC, this::receiveAsr);
     client.register(STRING_TOPIC, this::receiveString);
+    client.register(CONTROL_TOPIC, this::receiveCommand);
   }
 
   @SuppressWarnings("unchecked")
@@ -140,10 +166,6 @@ public class MkmClient implements CommunicationHub {
 
   public void registerBehaviourListener(Listener<Behaviour> listener) {
     _listeners.add(listener);
-  }
-
-  public void sendEvent(Object in) {
-    inQueue.push(in);
   }
 
   public Agent getAgent() { return _agent; }
@@ -197,7 +219,10 @@ public class MkmClient implements CommunicationHub {
       _agent.newData();
     } else if (evt instanceof String) {
       logger.info("Incoming String message: {}", evt);
-      DialogueAct da = _agent.analyse((String)evt);
+      DialogueAct da = _agent.analyse(((String)evt).trim());
+      long now = System.currentTimeMillis();
+      addWithMetaData(da, now, now);
+      da.setValue("text", (String)evt);
       long now = System.currentTimeMillis();
       addWithMetaData(da, now, now);
     } else if (evt instanceof AsrResult) {
@@ -222,6 +247,10 @@ public class MkmClient implements CommunicationHub {
 
   private boolean isRunning() {
     return isRunning;
+  }
+  
+  public void sendEvent(Object in) {
+    inQueue.addLast(in);
   }
 
   private void runReceiveSendCycle() {
@@ -276,6 +305,7 @@ public class MkmClient implements CommunicationHub {
 
   public void shutdown() {
     try {
+      _agent.shutdown();
       client.disconnect();
     } catch (MqttException e) {
       logger.error("Error disconnecting from MQTT: {}", e.getMessage());

@@ -1,8 +1,14 @@
 #!/bin/sh
 scdir=`dirname $0`
 cd "$scdir"
+name="mkm_rasa_nlu"
+
+if test -n "$name"; then
+    name="--name $name"
+fi
+
 if test -z "$1"; then
-    docker run -d --rm --user $UID:$UID -p 9797:5005 -v $(pwd):/app rasa/rasa:3.6.20-full run --enable-api --port 5005
+    docker run -d --rm $name --user $UID:$UID -p 9797:5005 -v $(pwd):/app rasa/rasa:3.6.20-full run --enable-api --port 5005
 else
     # e.g., for training
     #docker run --rm --user $UID:$UID -v $(pwd):/app rasa/rasa:3.6.20-full "$@"

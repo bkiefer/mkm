@@ -1,15 +1,14 @@
 <?xml version="1.0"?>
-<rdf:RDF xmlns="http://www.dfki.de/lt/onto/drz/communication#"
-     xml:base="http://www.dfki.de/lt/onto/drz/communication"
+<rdf:RDF xmlns="http://www.dfki.de/lt/onto/drz/communication.owl#"
+     xml:base="http://www.dfki.de/lt/onto/drz/communication.owl"
      xmlns:owl="http://www.w3.org/2002/07/owl#"
      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
      xmlns:xml="http://www.w3.org/XML/1998/namespace"
      xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
      xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
-    <owl:Ontology rdf:about="http://www.dfki.de/lt/onto/drz/communication">
+    <owl:Ontology rdf:about="http://www.dfki.de/lt/onto/drz/communication.owl">
         <owl:imports rdf:resource="http://www.dfki.de/lt/onto/common/dialogue.owl"/>
     </owl:Ontology>
-    
 
 
     <!-- 
@@ -28,72 +27,64 @@
     <rdf:Description rdf:about="http://www.dfki.de/lt/onto/common/dialogue.owl#addressee">
         <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
     </rdf:Description>
-    
 
 
-    <!-- http://www.dfki.de/lt/onto/drz/communication#belongsTo -->
 
-    <owl:ObjectProperty rdf:about="http://www.dfki.de/lt/onto/drz/communication#belongsTo">
+    <!-- http://www.dfki.de/lt/onto/drz/communication.owl#belongsTo -->
+
+    <owl:ObjectProperty rdf:about="http://www.dfki.de/lt/onto/drz/communication.owl#belongsTo">
         <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
-        <owl:inverseOf rdf:resource="http://www.dfki.de/lt/onto/drz/communication#contains"/>
+        <owl:inverseOf rdf:resource="http://www.dfki.de/lt/onto/drz/communication.owl#contains"/>
     </owl:ObjectProperty>
-    
 
 
-    <!-- http://www.dfki.de/lt/onto/drz/communication#contains -->
 
-    <owl:ObjectProperty rdf:about="http://www.dfki.de/lt/onto/drz/communication#contains">
+    <!-- http://www.dfki.de/lt/onto/drz/communication.owl#contains -->
+
+    <owl:ObjectProperty rdf:about="http://www.dfki.de/lt/onto/drz/communication.owl#contains">
         <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
     </owl:ObjectProperty>
-    
 
 
-    <!-- http://www.dfki.de/lt/onto/drz/communication#da -->
 
-    <owl:ObjectProperty rdf:about="http://www.dfki.de/lt/onto/drz/communication#da">
+    <!-- http://www.dfki.de/lt/onto/drz/communication.owl#da -->
+
+    <owl:ObjectProperty rdf:about="http://www.dfki.de/lt/onto/drz/communication.owl#da">
         <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
         <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
-        <rdfs:domain rdf:resource="http://www.dfki.de/lt/onto/drz/communication#Message"/>
+        <rdfs:domain rdf:resource="http://www.dfki.de/lt/onto/drz/communication.owl#Message"/>
         <rdfs:range rdf:resource="http://www.dfki.de/lt/onto/common/dialogue.owl#DialogueAct"/>
     </owl:ObjectProperty>
-    
 
 
-    <!-- http://www.dfki.de/lt/onto/drz/communication#followUpOf -->
 
-    <owl:ObjectProperty rdf:about="http://www.dfki.de/lt/onto/drz/communication#followUpOf">
+    <!-- http://www.dfki.de/lt/onto/drz/communication.owl#followUpOf -->
+
+    <owl:ObjectProperty rdf:about="http://www.dfki.de/lt/onto/drz/communication.owl#followUpOf">
         <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
     </owl:ObjectProperty>
-    
 
 
-    <!-- http://www.dfki.de/lt/onto/drz/communication#isAddressed -->
 
-    <owl:ObjectProperty rdf:about="http://www.dfki.de/lt/onto/drz/communication#isAddressed">
+    <!-- http://www.dfki.de/lt/onto/drz/communication.owl#isAddressed -->
+
+    <owl:ObjectProperty rdf:about="http://www.dfki.de/lt/onto/drz/communication.owl#isAddressed">
         <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
         <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
-        <rdfs:domain rdf:resource="http://www.dfki.de/lt/onto/drz/communication#Conversation"/>
+        <rdfs:domain rdf:resource="http://www.dfki.de/lt/onto/drz/communication.owl#Conversation"/>
         <rdfs:range rdf:resource="http://www.dfki.de/lt/onto/common/dialogue.owl#Agent"/>
     </owl:ObjectProperty>
-    
 
 
-    <!-- http://www.dfki.de/lt/onto/drz/communication#issuer -->
 
-    <owl:ObjectProperty rdf:about="http://www.dfki.de/lt/onto/drz/communication#issuer">
+    <!-- http://www.dfki.de/lt/onto/drz/communication.owl#issuer -->
+
+    <owl:ObjectProperty rdf:about="http://www.dfki.de/lt/onto/drz/communication.owl#issuer">
         <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
         <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
-        <rdfs:domain rdf:resource="http://www.dfki.de/lt/onto/drz/communication#Conversation"/>
+        <rdfs:domain rdf:resource="http://www.dfki.de/lt/onto/drz/communication.owl#Conversation"/>
         <rdfs:range rdf:resource="http://www.dfki.de/lt/onto/common/dialogue.owl#Agent"/>
     </owl:ObjectProperty>
-    
-
-
-    <!-- http://www.w3.org/2002/07/owl#topObjectProperty -->
-
-    <rdf:Description rdf:about="http://www.w3.org/2002/07/owl#topObjectProperty">
-        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
-    </rdf:Description>
     
 
 
@@ -105,43 +96,43 @@
     ///////////////////////////////////////////////////////////////////////////////////////
      -->
 
-    
 
 
-    <!-- http://www.dfki.de/lt/onto/drz/communication#infoType -->
 
-    <owl:DatatypeProperty rdf:about="http://www.dfki.de/lt/onto/drz/communication#infoType">
+    <!-- http://www.dfki.de/lt/onto/drz/communication.owl#infoType -->
+
+    <owl:DatatypeProperty rdf:about="http://www.dfki.de/lt/onto/drz/communication.owl#infoType">
         <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
         <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
-        <rdfs:domain rdf:resource="http://www.dfki.de/lt/onto/drz/communication#MsgInfo"/>
+        <rdfs:domain rdf:resource="http://www.dfki.de/lt/onto/drz/communication.owl#MsgInfo"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
     </owl:DatatypeProperty>
-    
 
 
-    <!-- http://www.dfki.de/lt/onto/drz/communication#infoValue -->
 
-    <owl:DatatypeProperty rdf:about="http://www.dfki.de/lt/onto/drz/communication#infoValue">
+    <!-- http://www.dfki.de/lt/onto/drz/communication.owl#infoValue -->
+
+    <owl:DatatypeProperty rdf:about="http://www.dfki.de/lt/onto/drz/communication.owl#infoValue">
         <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
         <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
-        <rdfs:domain rdf:resource="http://www.dfki.de/lt/onto/drz/communication#MsgInfo"/>
+        <rdfs:domain rdf:resource="http://www.dfki.de/lt/onto/drz/communication.owl#MsgInfo"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
     </owl:DatatypeProperty>
-    
 
 
-    <!-- http://www.dfki.de/lt/onto/drz/communication#text -->
 
-    <owl:DatatypeProperty rdf:about="http://www.dfki.de/lt/onto/drz/communication#text">
+    <!-- http://www.dfki.de/lt/onto/drz/communication.owl#text -->
+
+    <owl:DatatypeProperty rdf:about="http://www.dfki.de/lt/onto/drz/communication.owl#text">
         <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
         <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
-        <rdfs:domain rdf:resource="http://www.dfki.de/lt/onto/drz/communication#Message"/>
+        <rdfs:domain rdf:resource="http://www.dfki.de/lt/onto/drz/communication.owl#Message"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
     </owl:DatatypeProperty>
-    
 
 
-    <!-- 
+
+    <!--
     ///////////////////////////////////////////////////////////////////////////////////////
     //
     // Classes
@@ -149,44 +140,44 @@
     ///////////////////////////////////////////////////////////////////////////////////////
      -->
 
-    
 
 
-    <!-- http://www.dfki.de/lt/onto/drz/communication#Conversation -->
 
-    <owl:Class rdf:about="http://www.dfki.de/lt/onto/drz/communication#Conversation">
+    <!-- http://www.dfki.de/lt/onto/drz/communication.owl#Conversation -->
+
+    <owl:Class rdf:about="http://www.dfki.de/lt/onto/drz/communication.owl#Conversation">
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="http://www.dfki.de/lt/onto/drz/communication#contains"/>
-                <owl:allValuesFrom rdf:resource="http://www.dfki.de/lt/onto/drz/communication#Message"/>
+                <owl:onProperty rdf:resource="http://www.dfki.de/lt/onto/drz/communication.owl#contains"/>
+                <owl:allValuesFrom rdf:resource="http://www.dfki.de/lt/onto/drz/communication.owl#Message"/>
             </owl:Restriction>
         </rdfs:subClassOf>
     </owl:Class>
-    
 
 
-    <!-- http://www.dfki.de/lt/onto/drz/communication#Message -->
 
-    <owl:Class rdf:about="http://www.dfki.de/lt/onto/drz/communication#Message">
+    <!-- http://www.dfki.de/lt/onto/drz/communication.owl#Message -->
+
+    <owl:Class rdf:about="http://www.dfki.de/lt/onto/drz/communication.owl#Message">
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="http://www.dfki.de/lt/onto/drz/communication#contains"/>
-                <owl:allValuesFrom rdf:resource="http://www.dfki.de/lt/onto/drz/communication#MsgInfo"/>
+                <owl:onProperty rdf:resource="http://www.dfki.de/lt/onto/drz/communication.owl#contains"/>
+                <owl:allValuesFrom rdf:resource="http://www.dfki.de/lt/onto/drz/communication.owl#MsgInfo"/>
             </owl:Restriction>
         </rdfs:subClassOf>
     </owl:Class>
-    
 
 
-    <!-- http://www.dfki.de/lt/onto/drz/communication#MsgInfo -->
 
-    <owl:Class rdf:about="http://www.dfki.de/lt/onto/drz/communication#MsgInfo"/>
-    
+    <!-- http://www.dfki.de/lt/onto/drz/communication.owl#MsgInfo -->
+
+    <owl:Class rdf:about="http://www.dfki.de/lt/onto/drz/communication.owl#MsgInfo"/>
 
 
-    <!-- http://www.dfki.de/lt/onto/drz/communication#Order -->
 
-    <owl:Class rdf:about="http://www.dfki.de/lt/onto/drz/communication#Order">
+    <!-- http://www.dfki.de/lt/onto/drz/communication.owl#Order -->
+
+    <owl:Class rdf:about="http://www.dfki.de/lt/onto/drz/communication.owl#Order">
         <rdfs:subClassOf rdf:resource="http://www.dfki.de/lt/onto/common/dialogue.owl#Request"/>
     </owl:Class>
 </rdf:RDF>

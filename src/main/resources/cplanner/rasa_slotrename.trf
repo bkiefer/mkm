@@ -1,21 +1,6 @@
 <number>#n -> # ^ <what>string2number(#n), # ! <number>.
 
-(JumpSlide | JumpChapter)
-{
-  // default if not specified: 1
-  ^ <theme>(Forward | Back) ^ !<what> ^ !<number>
-  ->
-  # ^ <what>1.
-
-  ^ <theme>Forward ^ <what>
-  ->
-  # ! <theme>.
-
-  ^ <theme>Back ^ <what>#w:
-  ->
-  # ! <theme>,
-  #w = concatenate("-", #w).
-}
+:Everything ^ Else -> # = :OutOfDomain ^ top.
 
 // :OutOfDomain ^ :#t -> #t = :PossibleQuestion.
 

@@ -16,7 +16,7 @@ public class HfcUtils {
 
   public Rdf resolveAgent(String callsign) {
     List<Object> agents = proxy.query(
-        "select distinct ?a where ?a <drz:hasCallSign> \"{}\" ?_ & ?a <rdf:type> <dial:Agent> ?_",
+        "select distinct ?a where ?a <drz:hasCallsign> \"{}\" ?_ & ?a <rdf:type> <drz:Einsatzkraft> ?_",
         callsign);
     return agents.isEmpty() ? null : (Rdf)agents.get(0);
   }

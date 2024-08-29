@@ -19,7 +19,8 @@
     </encoder>
   </appender>
 
-  <appender name="STDOUT" class="ConsoleAppender">
+  <appender name="STDERR" class="ConsoleAppender">
+    <target>System.err</target>
     <!--<withJansi>true</withJansi>-->
     <encoder class="PatternLayoutEncoder">
       <pattern>%d{HH:mm:ss.SSS} %highlight(%-5level) %logger{36} - %msg%n</pattern>
@@ -27,13 +28,13 @@
     </encoder>
   </appender>
 
-  <logger name="de.dfki.voluprof" level="DEBUG"/>
+  <logger name="de.dfki.drz" level="DEBUG"/>
   <logger name="de.dfki.mlt.rudimant.agent" level="DEBUG"/>
   <logger name="de.dfki.mlt.rudimant.common" level="DEBUG"/>
   <logger name="de.dfki.mlt.rudimant.nlp" level="DEBUG"/>
 
   <root level="WARN">
-    <appender-ref ref="STDOUT"/>
+    <appender-ref ref="STDERR"/>
     <appender-ref ref="logfile"/>
   </root>
 </configuration>

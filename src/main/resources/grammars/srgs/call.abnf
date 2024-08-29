@@ -7,7 +7,7 @@ tag-format "semantics/1.0";
 
 public $top = ($callRequest | $callConfirm) { out = $%1; };
 
-$callsign = "$$.*";
+$callsign = "$$.*"<1-2>;
 
 $callRequest = (
   [das] $callsign { addr = "$$1"; } (für|an|von) $callsign { send = "$$1"; } [bitte] kommen
@@ -20,5 +20,6 @@ $callConfirm = (
   $callsign { send="$$1"; } hört [kommen] |
   [ja] ich { send="PRON1SG"; } höre [kommen] |
   $callsign { send="$$1"; } hier [kommen] |
-  [ja] hier $callsign { send="$$1"; } [hört] [kommen]
+  [ja] hier $callsign { send="$$1"; } [hört] [kommen] |
+  ja $callsign { send="$$1"; } [hört] [kommen]
   ) { out.da="Confirm"; out.prop="Call"; out.sender=send } ;
