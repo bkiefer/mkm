@@ -2,6 +2,14 @@ Message lastMsg;
 DialogueAct prevDA; // the DialogueAct of lastMsg
 Conversation current;
 
+/*
+if (lastDA() && evaluation) {
+  System.out.println(lastDA().getValue("id"));
+}
+*/
+
+System.out.println(lastDA());
+
 Message newMessage(DialogueAct da) {
   Message m = new Message;
   m.da = toRdf(da);
@@ -37,8 +45,8 @@ Agent asRdf(Object o) {
 
 resolve_1sg_pronoun:
 if (lastDA().sender && lastDA().sender == "PROP_1SG") {
-  if (lastDA() >= #Confirm(Call)
-      || (prevDA && prevDA >= #Request(Call))) { // ich höre
+  if (lastDA() >= #Confirm(Communication)
+      || (prevDA && prevDA >= #Request(Communication))) { // ich höre
     if (prevDA.addressee) {
       lastDA().sender = prevDA.addressee;
     }
@@ -59,9 +67,15 @@ if (lastDA().addressee && lastDA().addressee == "PROP_2SG") {
 }
 
 
+unrecognized:
+if (lastDA() >= #OutOfDomain(top)) {
+  m = newMessage(lastDA());
+  messageProcessed(m);
+}
+
 // A call request creates a new Conversation
 request_call:
-if (lastDA() >= #Request(Call)) {
+if (lastDA() >= #Request(Communication)) {
   // TODO: maybe do that internally when receiving the DA
   running_conversation:
   if (current) {
@@ -85,7 +99,7 @@ if (lastDA() >= #Request(Call)) {
 
 // confirmation implies that we address the sender of the previous message
 confirm_call:
-if (lastDA() >= #Confirm(Call)) {
+if (lastDA() >= #Confirm(Communication)) {
   if (! current) {
     logger.warn("Confirmation without conversation");
   } else {
@@ -97,12 +111,12 @@ if (lastDA() >= #Confirm(Call)) {
     if (lastDA().sender != prevDA.addressee) {
       logger.warn("Confirmation sender does not match last addressee");
     }
-    if (! lastDA().addressee && prevDA >= #Request(Call)) { // true most of the time
+    if (! lastDA().addressee && prevDA >= #Request(Communication)) { // true most of the time
       lastDA().addressee = prevDA.sender;
     }
   }
   m = newMessage(lastDA());
-  if (prevDA && prevDA >= #Request(Call)) { // true most of the time
+  if (prevDA && prevDA >= #Request(Communication)) { // true most of the time
     m.da.refersTo += lastMsg.da;
   }
   messageProcessed(m);
@@ -120,12 +134,6 @@ if (lastDA() >= #Inform(top) || lastDA() >= #Order(top)) {
       lastDA().addressee = prevDA.sender;
     }
   }
-  m = newMessage(lastDA());
-  messageProcessed(m);
-}
-
-unrecognized:
-if (lastDA() >= #OutOfDomain(top)) {
   m = newMessage(lastDA());
   messageProcessed(m);
 }

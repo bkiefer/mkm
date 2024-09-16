@@ -57,11 +57,16 @@ NLU:
         class: de.dfki.mlt.rudimant.agent.nlp.TrivialTokenizer
         toLower: true           # turn all output to lower case
         removePunctuation: true  # remove all punctuation tokens
-    - class: de.dfki.mlt.rudimant.agent.nlp.RasaNlu
+    - class: de.dfki.drz.mkm.nlu.IntentInterpreter
       host: localhost
-      port: 9797
-      min_confidence: 0.8
-      converter: src/main/resources/cplanner/rasaconv
+      port: 8665
+      converter: src/main/resources/cplanner/intentconv
+#    - class: de.dfki.mlt.rudimant.agent.nlp.RasaNlu
+#      host: localhost
+#      port: 9797
+#      min_confidence: 0.8
+#      converter: src/main/resources/cplanner/rasaconv
+
 
 # ########## DEBUGGER/GUI SETTINGS ##########
 debugPort: 9777
@@ -76,5 +81,15 @@ defaultCompileCommand: compile
 # Evaluation of language services (parsing)
 language: de_DE
 corpora:
-  - rasa/call_confirm.yml
-  - rasa/call_request.yml
+  - rasa/data/confirm.yml
+  - rasa/data/everythingelse.yml
+  - rasa/data/inform.yml
+  - rasa/data/order.yml
+  - rasa/data/question.yml
+  - rasa/data/rasatraintradr.yml
+  - rasa/data/turnconfirm.yml
+  - rasa/data/turnrequest.yml
+
+#  - rasa/call_confirm.yml
+#  - rasa/call_request.yml
+#  - rasa/tradr_comm_confreq.yml

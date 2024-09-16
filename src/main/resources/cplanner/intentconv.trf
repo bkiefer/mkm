@@ -1,0 +1,43 @@
+// convert JSON output of bert intent analyser into dag
+
+<mostLikely> "AcceptOffer" -> # ^ :Confirm ^ (top), # !<mostLikely>.
+<mostLikely> "AcceptSuggestion" -> # ^ :Confirm ^ (top), # !<mostLikely>.
+<mostLikely> "AddressOffer" -> # ^ :Confirm ^ (top), # !<mostLikely>.
+<mostLikely> "AddressRequest" -> # ^ :Confirm ^ (top), # !<mostLikely>.
+<mostLikely> "Agreement" -> # ^ :Confirm ^ (top), # !<mostLikely>.
+<mostLikely> "Auto-positive" -> # ^ :AutoPositive ^ (top), # !<mostLikely>.
+<mostLikely> "Allo-positive" -> # ^ :AlloPositive ^ (top), # !<mostLikely>.
+<mostLikely> "Auto-negative" -> # ^ :AutoNegative ^ (top), # !<mostLikely>.
+<mostLikely> "Allo-negative" -> # ^ :AlloNegative ^ (top), # !<mostLikely>.
+<mostLikely> "CheckQuestion" -> # ^ :YNQuestion ^ (top), # !<mostLikely>.
+<mostLikely> "ChoiceQuestion" -> # ^ :WHQuestion ^ (top), # !<mostLikely>.
+<mostLikely> "Communicative Function" -> # ^ :EverythingElse ^ (top), # !<mostLikely>.
+<mostLikely> "DeclineOffer" -> # ^ :Disconfirm ^ (top), # !<mostLikely>.
+<mostLikely> "DeclineRequest" -> # ^ :Disconfirm ^ (top), # !<mostLikely>.
+<mostLikely> "Disagreement" -> # ^ :Disconfirm ^ (top), # !<mostLikely>.
+<mostLikely> "Feedback Elicitation" -> # ^ :EverythingElse ^ (top), # !<mostLikely>.
+<mostLikely> "FeedbackElicitation" -> # ^ :EverythingElse ^ (top), # !<mostLikely>.
+<mostLikely> "Instruct" -> # ^ :Request ^ (top), # !<mostLikely>.
+<mostLikely> "Interaction Structuring" -> # ^ :EverythingElse ^ (top), # !<mostLikely>.
+<mostLikely> "InteractionStructuring" -> # ^ :EverythingElse ^ (top), # !<mostLikely>.
+<mostLikely> "Opening" -> # ^ :EverythingElse ^ (top), # !<mostLikely>.
+<mostLikely> "Pausing" -> # ^ :EverythingElse ^ (top), # !<mostLikely>.
+<mostLikely> "Promise" -> # ^ :Confirm ^ (top), # !<mostLikely>.
+<mostLikely> "PropositionionalQuestion" -> # ^ :WHQuestion ^ (top), # !<mostLikely>.
+<mostLikely> "Retraction" -> # ^ :Disconfirm ^ (top), # !<mostLikely>.
+<mostLikely> "Opening" -> # ^ :EverythingElse ^ (top), # !<mostLikely>.
+<mostLikely> "SelfCorrection" -> # ^ :EverythingElse ^ (top), # !<mostLikely>.
+<mostLikely> "SelfError" -> # ^ :EverythingElse ^ (top), # !<mostLikely>.
+<mostLikely> "SetQuestion" -> # ^ :WHQuestion ^ (top), # !<mostLikely>.
+<mostLikely> "Stalling" -> # ^ :EverythingElse ^ (top), # !<mostLikely>.
+<mostLikely> "Suggestion" -> # ^ :Offer ^ (top), # !<mostLikely>.
+<mostLikely> "Thanking" -> # ^ :EverythingElse ^ (top), # !<mostLikely>.
+<mostLikely> "TurnTake" -> # ^ :Request ^ (Communication), # !<mostLikely>.
+<mostLikely> TurnAccept -> # ^ :Confirm ^ (Communication), # !<mostLikely>.
+<mostLikely> TurnAssign -> # ^ :Confirm ^ (Communication), # !<mostLikely>.
+<mostLikely> TurnRelease -> # ^ :EverythingElse ^ (top), # !<mostLikely>.
+
+<old> -> # ! <old>.
+<new> -> # ! <new>.
+<success> -> # ! <success>.
+<request> -> # ! <request>.

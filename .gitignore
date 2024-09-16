@@ -40,3 +40,4 @@ rasa/.cache
 rasa/.config
 rasa/.keras
 rasa/train_test_split
+**/.idea

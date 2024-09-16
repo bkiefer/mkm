@@ -59,8 +59,6 @@ public class MkmClient implements CommunicationHub {
   private static final String STRING_TOPIC = "test/string";
   private static final String CONTROL_TOPIC = "mkm/control";
 
-  private static final String CFG_ONTOLOGY_FILE = "ontologyFile";
-
   /** How much time in milliseconds must pass between two behaviours, if
    *  no message came back that the previous behaviour was finished.
    */
@@ -90,16 +88,16 @@ public class MkmClient implements CommunicationHub {
    * to temporarily disconnect from the broker.
    *
    * @param userId the user id for which a new agent shall be created
-   * @throws IOException 
-   * @throws WrongFormatException 
+   * @throws IOException
+   * @throws WrongFormatException
    */
   private void initAgent() throws WrongFormatException, IOException {
     _agent = new MissionKnowledge();
     String language = "de_DE";
     logger.debug("Initialising agent with language {}", language);
     _agent.init(_configDir, language, _configs);
-    // needs to be done after grammar loading
-    Interpreter.NO_RESULT = new DialogueAct("OutOfDomain(top)");
+    // needs to be done after grammar loading, but this is the default!
+    //Interpreter.NO_RESULT = new DialogueAct("OutOfDomain(top)");
 
     _agent.logAllRules();
     _agent.setCommunicationHub(this);
@@ -124,7 +122,7 @@ public class MkmClient implements CommunicationHub {
     }
     return sb.toString();
   }
-  
+
   private boolean receiveString(byte[] b) {
     String str = bytesToString(b);
     if (! str.isEmpty()) {
@@ -149,7 +147,7 @@ public class MkmClient implements CommunicationHub {
     }
     return ! cmd.isEmpty();
   }
-  
+
   private void initMqtt(Map<String, Object> configs) throws MqttException {
     mapper = new JsonMarshaller();
     client = new MqttHandler(configs);
@@ -209,36 +207,39 @@ public class MkmClient implements CommunicationHub {
     }
     da.setValue("fromTime", num2xsd(start));
     da.setValue("toTime", num2xsd(end));
-    _agent.addLastDA(da);
-    _agent.newData();
+    inQueue.push(da);
   }
 
   // depends on the concrete Event class
   private void onEvent(Object evt) {
     if (evt instanceof Intention) {
+      logger.info("Incoming Intention: {}", evt);
       _agent.executeProposal((Intention)evt);
     } else if (evt instanceof DialogueAct) {
+      logger.info("Incoming DialogueAct: {}", evt);
       _agent.addLastDA((DialogueAct)evt);
       _agent.newData();
     } else if (evt instanceof String) {
       logger.info("Incoming String message: {}", evt);
-      DialogueAct da = _agent.analyse(((String)evt).trim());
+      String text = ((String)evt).trim();
+      DialogueAct da = _agent.analyse(text);
       long now = System.currentTimeMillis();
+      da.setValue("text", text);
       addWithMetaData(da, now, now);
-      da.setValue("text", (String)evt);
     } else if (evt instanceof IdString) {
       IdString is = (IdString)evt;
       _agent.startEvaluation();
       logger.info("Incoming IdString message: {}|{}|{}", is.id, is.text, is.speaker);
-      DialogueAct da = _agent.analyse((is.text).trim());
+      String text = (is.text).trim();
+      DialogueAct da = _agent.analyse(text);
       long now = System.currentTimeMillis();
       if (!da.hasSlot("sender") && is.speaker != null) {
         // we have to change this since we only send the token, not the callsign
         da.setValue("sender", _agent.hu.resolveSpeaker(is.speaker));
       }
-      addWithMetaData(da, now, now);
-      da.setValue("text", is.text);
+      da.setValue("text", text);
       da.setValue("id", is.id);
+      addWithMetaData(da, now, now);
     } else if (evt instanceof AsrResult) {
       AsrResult res = ((AsrResult)evt);
       // TODO: check if we can filter out nonsense based on info from AsrResult
@@ -262,7 +263,7 @@ public class MkmClient implements CommunicationHub {
   private boolean isRunning() {
     return isRunning;
   }
-  
+
   public void sendEvent(Object in) {
     inQueue.addLast(in);
   }
@@ -270,12 +271,16 @@ public class MkmClient implements CommunicationHub {
   private void runReceiveSendCycle() {
     while (isRunning()) {
       boolean emptyRun = true;
-      while (! inQueue.isEmpty()) {
+      if (! inQueue.isEmpty() && (_agent.lastDA() == null
+          || _agent.lastDA().getDialogueActType() != "Bottom")) {
         Object event = inQueue.pollFirst();
-        if (event instanceof DialogueAct) {
-          if (Agent.exists(_agent.lastDA())) break;
-        }
         onEvent(event);
+        emptyRun = false;
+        /*
+        if (event instanceof IdString) {
+          logger.info("id {}", ((IdString)event).id);
+        }
+        */
       }
       // if a proposal was executed, handle pending events now
       if (!_agent.waitForIntention()) {

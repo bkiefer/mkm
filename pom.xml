@@ -28,6 +28,12 @@
       </dependency>
 
       <dependency>
+        <groupId>de.dfki.mlt.drz</groupId>
+        <artifactId>fraunhofer-openapi</artifactId>
+        <version>0.1.0</version>
+      </dependency>
+
+      <dependency>
         <groupId>junit</groupId>
         <artifactId>junit</artifactId>
         <version>${junit.version}</version>
