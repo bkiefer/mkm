@@ -8,22 +8,23 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Writer;
-import java.text.SimpleDateFormat;
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import de.dfki.lt.hfc.WrongFormatException;
 import de.dfki.lt.hfc.db.HfcDbHandler;
 import de.dfki.lt.hfc.db.rdfProxy.DbClient;
 import de.dfki.lt.hfc.db.rdfProxy.Rdf;
 import de.dfki.lt.hfc.db.rdfProxy.RdfProxy;
-import de.dfki.mlt.drz.fraunhofer_openapi.ApiException;
-import de.dfki.mlt.drz.fraunhofer_openapi.api.DefaultApi;
-import de.dfki.mlt.drz.fraunhofer_openapi.model.RadioMessage;
+import de.dfki.mlt.drz.eurocommand_api.model.MissionResourceRestApiContract;
+import de.dfki.mlt.drz.fraunhofer_api.ApiException;
+import de.dfki.mlt.drz.fraunhofer_api.api.DefaultApi;
+import de.dfki.mlt.drz.fraunhofer_api.model.RadioMessage;
 import de.dfki.mlt.rudimant.agent.Agent;
 import de.dfki.mlt.rudimant.agent.Behaviour;
 import de.dfki.mlt.rudimant.agent.nlp.DialogueAct;
@@ -40,9 +41,11 @@ public abstract class KnowledgeManager extends Agent {
   HfcUtils hu;
 
   private static final DefaultApi api = new DefaultApi();
-  private static SimpleDateFormat sdf =
-      new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+  //private static final SimpleDateFormat sdf =
+  //    new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
 
+  EuroCommandClient ECclient = new EuroCommandClient();
+  UUID missionId;
 
   private RdfProxy startClient(File configDir, Map<String, Object> configs)
       throws IOException, WrongFormatException {
@@ -63,6 +66,18 @@ public abstract class KnowledgeManager extends Agent {
     api.getApiClient().setPassword("LookMomNoVPN!");
   }
 
+  private void initECApi() {
+    try {
+      List<MissionResourceRestApiContract> missionResources =
+          ECclient.getMissionResources(missionId);
+      if (!missionResources.isEmpty()) {
+        missionId = missionResources.get(0).getMissionId();
+      }
+    } catch (de.dfki.mlt.drz.eurocommand_api.ApiException ex) {
+      missionId = null;
+    }
+  }
+
   @SuppressWarnings({ "rawtypes", "unchecked" })
   public void init(File configDir, String language, Map configs)
           throws IOException, WrongFormatException {
@@ -72,8 +87,9 @@ public abstract class KnowledgeManager extends Agent {
     // log all rules to stdout
     this.logAllRules();
     this.ruleLogger.filterUnchangedRules = false;
-    // start first round of rule evaluations
     initIAISApi();
+    initECApi();
+    // start first round of rule evaluations
     newData();
   }
 
@@ -115,10 +131,27 @@ public abstract class KnowledgeManager extends Agent {
     }
   }
 
-  protected void printEval(String id, String speaker, String addressee, String intent, String text) {
+  protected void printEval(String id, String speaker, String addressee,
+      String daType, String proposition, String text) {
     try {
+      if (daType.charAt(0) == '<') {
+        int col = daType.indexOf(':');
+        daType = daType.substring(col + 1, daType.length() - 1);
+      }
+      if (proposition != null && !proposition.isBlank()) {
+        if (proposition.charAt(0) != '<') {
+          daType += '_' + proposition;
+        } else {
+          if (! proposition.equals("<rdf:top>")) {
+            int col = daType.indexOf(':');
+            proposition = proposition.substring(col, proposition.length() - 1);
+            daType += proposition;
+          }
+        }
+      }
+
       w.append(id + "," + na(speaker) + "," + na(addressee) + ","
-          + intent + ", \"" + text + '"');
+          + daType + ", \"" + text + '"');
       w.append(System.lineSeparator());
       w.flush();
     } catch (IOException ex) {
@@ -153,6 +186,15 @@ public abstract class KnowledgeManager extends Agent {
       // if there is no exception, putting messages was successful
     } catch (ApiException e) {
       logger.error("Sending Message failed: {}", e.getMessage());
+    }
+  }
+
+  protected void sendMessageToEC(String sender, String receiver,
+      String message, long fromTime, long toTime) {
+    try {
+      ECclient.sendMessage(message, sender, receiver, missionId);
+    } catch (de.dfki.mlt.drz.eurocommand_api.ApiException ex) {
+      logger.error("EC sending: {}", ex);
     }
   }
 }

@@ -19,7 +19,7 @@ pipeline:
   min_ngram: 1
   max_ngram: 5
 - name: DIETClassifier
-  epochs: 40
+  epochs: 30
   constrain_similarities: true
 # - name: RegexEntityExtractor
 #       # text will be processed with case insensitive as default

@@ -30,6 +30,7 @@ test.rudi
 **/VondaGrammar.output
 **/persistent.nt
 wechrasa/.rasa
+eval/
 rasa/nlu
 rasa/entities.py
 rasa/evaluation.ipynb

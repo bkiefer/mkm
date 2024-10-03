@@ -1,10 +1,10 @@
 <http://www.dfki.de/lt/onto/common/dialogue.owl#Agent> <http://www.w3.org/2002/07/owl#equivalentClass> <http://www.dfki.de/lt/onto/drz/disaster.owl#Einsatzkraft> .
 <http://www.dfki.de/lt/onto/drz/disaster.owl#hasCallsign> <http://www.w3.org/2000/01/rdf-schema#domain> <http://www.dfki.de/lt/onto/drz/disaster.owl#Einsatzkraft> .
-<http://www.dfki.de/lt/onto/drz/toplevel#hasToken> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
-<http://www.dfki.de/lt/onto/drz/toplevel#hasToken> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
-<http://www.dfki.de/lt/onto/drz/toplevel#hasToken> <http://www.w3.org/2000/01/rdf-schema#comment> "Mainly for evaluation purposes, where we have a token that is different from the callsign" .
-<http://www.dfki.de/lt/onto/drz/toplevel#hasToken> <http://www.w3.org/2000/01/rdf-schema#domain> <http://www.dfki.de/lt/onto/drz/disaster.owl#Einsatzkraft> .
-<http://www.dfki.de/lt/onto/drz/toplevel#hasToken> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#string> .
-<http://www.dfki.de/lt/onto/drz/toplevel> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Ontology> .
-<http://www.dfki.de/lt/onto/drz/toplevel> <http://www.w3.org/2002/07/owl#imports> <http://www.dfki.de/lt/onto/drz/communication.owl> .
-<http://www.dfki.de/lt/onto/drz/toplevel> <http://www.w3.org/2002/07/owl#imports> <http://www.dfki.de/lt/onto/drz/disaster.owl> .
+<http://www.dfki.de/lt/onto/drz/toplevel.owl#hasToken> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<http://www.dfki.de/lt/onto/drz/toplevel.owl#hasToken> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<http://www.dfki.de/lt/onto/drz/toplevel.owl#hasToken> <http://www.w3.org/2000/01/rdf-schema#comment> "Mainly for evaluation purposes, where we have a token that is different from the callsign" .
+<http://www.dfki.de/lt/onto/drz/toplevel.owl#hasToken> <http://www.w3.org/2000/01/rdf-schema#domain> <http://www.dfki.de/lt/onto/drz/disaster.owl#Einsatzkraft> .
+<http://www.dfki.de/lt/onto/drz/toplevel.owl#hasToken> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#string> .
+<http://www.dfki.de/lt/onto/drz/toplevel.owl> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Ontology> .
+<http://www.dfki.de/lt/onto/drz/toplevel.owl> <http://www.w3.org/2002/07/owl#imports> <http://www.dfki.de/lt/onto/drz/communication.owl> .
+<http://www.dfki.de/lt/onto/drz/toplevel.owl> <http://www.w3.org/2002/07/owl#imports> <http://www.dfki.de/lt/onto/drz/disaster.owl> .

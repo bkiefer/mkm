@@ -27,7 +27,7 @@ Message newMessage(DialogueAct da) {
     String sender = s ? s.hasToken : "NA";
     String addr = a ? a.hasToken : "NA";
     printEval(da.getValue("id"), sender, addr,
-              da.getDialogueActType() + "_" + da.getProposition(),
+              da.getDialogueActType(), da.getProposition(),
               m.text);
   }
   return m;
@@ -79,8 +79,8 @@ if (lastDA() >= #Request(Communication)) {
   // TODO: maybe do that internally when receiving the DA
   running_conversation:
   if (current) {
-    if (current.issuer != lastDA().sender
-        || current.isAddressed != lastDA().addressee) {
+    if ((current.issuer && current.issuer != lastDA().sender)
+        || (current.isAddressed && current.isAddressed != lastDA().addressee)) {
       logger.warn("new call request in conversation with different partners");
     }
     // start new conversation now?
@@ -103,15 +103,16 @@ if (lastDA() >= #Confirm(Communication)) {
   if (! current) {
     logger.warn("Confirmation without conversation");
   } else {
-    if (lastDA().sender != current.isAddressed) {
+    if (lastDA().sender && lastDA().sender != current.isAddressed) {
       logger.warn("Confirmation sender does not match conversation participant");
     }
   }
   if (prevDA) {
-    if (lastDA().sender != prevDA.addressee) {
+    if (lastDA().sender && lastDA().sender != prevDA.addressee) {
       logger.warn("Confirmation sender does not match last addressee");
     }
-    if (! lastDA().addressee && prevDA >= #Request(Communication)) { // true most of the time
+    if (! lastDA().addressee && prevDA >= #Request(Communication)
+        && prevDA.sender) { // true most of the time
       lastDA().addressee = prevDA.sender;
     }
   }
@@ -123,7 +124,7 @@ if (lastDA() >= #Confirm(Communication)) {
 }
 
 inform_or_order:
-if (lastDA() >= #Inform(top) || lastDA() >= #Order(top)) {
+if (lastDA() >= #Inform(top) || lastDA() >= #Request(top)) {
   if (! lastDA().sender) {
     if (prevDA && prevDA >= #Confirm(top) && prevDA.addressee) { // TODO: is that all?
       lastDA().sender = prevDA.addressee;

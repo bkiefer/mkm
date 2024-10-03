@@ -1,0 +1,97 @@
+<top:teamleader> <rdfs:type> <owl:NamedIndividual> .
+<top:teamleader> <top:hasToken> "TL" .
+<top:teamleader> <drz:hasCallsign> "Teamleader" .
+<top:teamleader> <drz:hasCallsign> "Einsatzleiter" .
+<top:teamleader> <drz:hasCallsign> "Teamleiter" .
+<top:teamleader> <drz:hasCallsign> "Teamleiter 1" .
+<top:teamleader> <drz:hasCallsign> "Teamleiter eins" .
+<top:teamleader> <drz:hasCallsign> "Markus" .
+<top:teamleader> <drz:hasCallsign> "Benno" .
+
+<top:teamleader> <drz:hasCallsign> "teamleader" .
+<top:teamleader> <drz:hasCallsign> "einsatzleiter" .
+<top:teamleader> <drz:hasCallsign> "teamleiter" .
+<top:teamleader> <drz:hasCallsign> "teamleiter 1" .
+<top:teamleader> <drz:hasCallsign> "teamleiter eins" .
+<top:teamleader> <drz:hasCallsign> "markus" .
+<top:teamleader> <drz:hasCallsign> "benno" .
+
+<top:teamleader2> <rdfs:type> <owl:NamedIndividual> .
+<top:teamleader2> <top:hasToken> "TL2" .
+<top:teamleader2> <drz:hasCallsign> "Thorsten" .
+
+<top:teamleader2> <drz:hasCallsign> "thorsten" .
+
+<top:uavoperator> <rdfs:type> <owl:NamedIndividual> .
+<top:uavoperator> <top:hasToken> "UAV" .
+<top:uavoperator> <drz:hasCallsign> "UAV 1" .
+<top:uavoperator> <drz:hasCallsign> "UAV" .
+<top:uavoperator> <drz:hasCallsign> "Operator UAV" .
+<top:uavoperator> <drz:hasCallsign> "UAV Operator" .
+<top:uavoperator> <drz:hasCallsign> "UAV Drohne" .
+<top:uavoperator> <drz:hasCallsign> "Gruppe Drohne" .
+<top:uavoperator> <drz:hasCallsign> "Drohne" .
+<top:uavoperator> <drz:hasCallsign> "UAV Operator" .
+<top:uavoperator> <drz:hasCallsign> "Drohnenoperator" .
+<top:uavoperator> <drz:hasCallsign> "Dirk" .
+<top:uavoperator> <drz:hasCallsign> "Lena" .
+
+<top:uavoperator> <drz:hasCallsign> "uav 1" .
+<top:uavoperator> <drz:hasCallsign> "uav" .
+<top:uavoperator> <drz:hasCallsign> "operator uav" .
+<top:uavoperator> <drz:hasCallsign> "uav operator" .
+<top:uavoperator> <drz:hasCallsign> "uav drohne" .
+<top:uavoperator> <drz:hasCallsign> "gruppe drohne" .
+<top:uavoperator> <drz:hasCallsign> "drohne" .
+<top:uavoperator> <drz:hasCallsign> "uav operator" .
+<top:uavoperator> <drz:hasCallsign> "drohnenoperator" .
+<top:uavoperator> <drz:hasCallsign> "dirk" .
+<top:uavoperator> <drz:hasCallsign> "lena" .
+
+<top:ugv2> <rdfs:type> <owl:NamedIndividual> .
+<top:ugv2> <top:hasToken> "UGV-2" .
+<top:ugv2> <drz:hasCallsign> "Bodenroboter 2" .
+<top:ugv2> <drz:hasCallsign> "Bodenroboter zwei" .
+<top:ugv2> <drz:hasCallsign> "Bodenoperator 2" .
+<top:ugv2> <drz:hasCallsign> "Daniel" .
+<top:ugv2> <drz:hasCallsign> "Sven" .
+<top:ugv2> <drz:hasCallsign> "UGV 2" .
+<top:ugv2> <drz:hasCallsign> "UGV zwei" .
+<top:ugv2> <drz:hasCallsign> "Operator 2" .
+<top:ugv2> <drz:hasCallsign> "Operator Boden 2" .
+
+<top:ugv2> <drz:hasCallsign> "bodenroboter 2" .
+<top:ugv2> <drz:hasCallsign> "bodenroboter zwei" .
+<top:ugv2> <drz:hasCallsign> "bodenoperator 2" .
+<top:ugv2> <drz:hasCallsign> "daniel" .
+<top:ugv2> <drz:hasCallsign> "sven" .
+<top:ugv2> <drz:hasCallsign> "ugv 2" .
+<top:ugv2> <drz:hasCallsign> "ugv zwei" .
+<top:ugv2> <drz:hasCallsign> "operator 2" .
+<top:ugv2> <drz:hasCallsign> "operator boden 2" .
+
+<top:ugv1> <rdfs:type> <owl:NamedIndividual> .
+<top:ugv1> <top:hasToken> "UGV-1" .
+<top:ugv1> <drz:hasCallsign> "Operator 1" .
+<top:ugv1> <drz:hasCallsign> "Andreas" .
+<top:ugv1> <drz:hasCallsign> "UGV 1" .
+<top:ugv1> <drz:hasCallsign> "UGV eins" .
+<top:ugv1> <drz:hasCallsign> "Bodenoperator 1" .
+<top:ugv1> <drz:hasCallsign> "Operator Boden 1" .
+<top:ugv1> <drz:hasCallsign> "Roboter Operator" .
+
+<top:ugv1> <drz:hasCallsign> "operator 1" .
+<top:ugv1> <drz:hasCallsign> "andreas" .
+<top:ugv1> <drz:hasCallsign> "ugv 1" .
+<top:ugv1> <drz:hasCallsign> "ugv eins" .
+<top:ugv1> <drz:hasCallsign> "bodenoperator 1" .
+<top:ugv1> <drz:hasCallsign> "operator boden 1" .
+<top:ugv1> <drz:hasCallsign> "roboter operator" .
+
+<top:mc> <rdfs:type> <owl:NamedIndividual> .
+<top:mc> <top:hasToken> "MC" .
+<top:mc> <drz:hasCallsign> "Mission Commander" .
+<top:mc> <drz:hasCallsign> "Mission Operator" .
+
+<top:mc> <drz:hasCallsign> "mission commander" .
+<top:mc> <drz:hasCallsign> "mission operator" .

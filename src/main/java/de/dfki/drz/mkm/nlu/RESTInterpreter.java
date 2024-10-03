@@ -15,13 +15,15 @@ import okhttp3.Response;
 public abstract class RESTInterpreter extends Interpreter {
   protected static Logger log = LoggerFactory.getLogger(RESTInterpreter.class);
   protected String uri;
-
+  protected String aliveEndpoint = "/alive";
+  protected String predictEndpoint = "/predict";
+      
   protected final OkHttpClient client = new OkHttpClient();
 
   protected boolean connect() throws IOException {
     Request request = new Request.Builder()
-        .url(uri + "/alive")
-        .addHeader("Accept", "application/json")
+        .url(uri + aliveEndpoint)
+        .addHeader("Accept", "application/json; charset=utf-8")
         .build();
 
     try (Response response = client.newCall(request).execute()) {
@@ -58,7 +60,7 @@ public abstract class RESTInterpreter extends Interpreter {
       throws IOException {
 
     Request request = new Request.Builder()
-        .url(uri + "/predict")
+        .url(uri + predictEndpoint)
         .addHeader("Accept", "application/json; charset=utf-8")
         .post(formBody)
         .build();

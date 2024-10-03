@@ -23,6 +23,7 @@ public class IntentInterpreter extends RESTInterpreter {
   @Override
   @SuppressWarnings("rawtypes")
   public boolean init(File configDir, String language, Map config) {
+    name = "DIT_DIA_" + language;
     boolean result = super.init(configDir, language, config);
     if (! result) return result;
     uri = "http://" + (String) config.get(KEY_HOST)
@@ -40,6 +41,7 @@ public class IntentInterpreter extends RESTInterpreter {
 
   protected JSONObject classify(String transcript_new, String transcript_old)
       throws IOException {
+    // TODO: generalise: maybe pass a <String, String> dict?
     return classify(new FormBody.Builder()
         .add(TRANSCRIPT_NEW_LABEL, transcript_new)
         .add(TRANSCRIPT_OLD_LABEL, transcript_old)

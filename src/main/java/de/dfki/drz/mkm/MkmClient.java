@@ -233,7 +233,7 @@ public class MkmClient implements CommunicationHub {
       String text = (is.text).trim();
       DialogueAct da = _agent.analyse(text);
       long now = System.currentTimeMillis();
-      if (!da.hasSlot("sender") && is.speaker != null) {
+      if (!da.hasSlot("sender") && is.speaker != null && !is.speaker.isBlank()) {
         // we have to change this since we only send the token, not the callsign
         da.setValue("sender", _agent.hu.resolveSpeaker(is.speaker));
       }
@@ -276,11 +276,6 @@ public class MkmClient implements CommunicationHub {
         Object event = inQueue.pollFirst();
         onEvent(event);
         emptyRun = false;
-        /*
-        if (event instanceof IdString) {
-          logger.info("id {}", ((IdString)event).id);
-        }
-        */
       }
       // if a proposal was executed, handle pending events now
       if (!_agent.waitForIntention()) {
