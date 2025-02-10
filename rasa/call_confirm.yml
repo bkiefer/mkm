@@ -1,0 +1,62 @@
+version: "3.1"
+
+nlu:
+- intent: 'Confirm_Communication'
+  examples: |
+    -  [gruppenführer](callsign) hört
+    -  [d2](callsign) hier kommen
+    -  [d1](callsign) hier
+    -  [gruppenführer](callsign) hört
+    -  [d2](callsign) hier kommen
+    -  [whs](callsign) hier kommen
+    -  [gruppenführer](callsign) hört
+    -  hier [zugführer](callsign) kommen
+    -  ja hier [zugführer](callsign) kommen
+    -  ja hier [zugführer](callsign) kommen
+    -  [d2](callsign) hier kommen
+    -  [gruppenführer](callsign) hört
+    -  [gruppenführer](callsign) hört
+    -  [d1](callsign) hört kommen
+    -  [gruppenführer](callsign) hört
+    -  hier [whs](callsign) kommen
+    -  [whs](callsign) hört kommen
+    -  [gruppenführer](callsign) hört
+    -  [d1](callsign) hört
+    -  [whs](callsign) hört
+    -  [gruppenführer](callsign) hört
+    -  [d2](callsign) hört kommen
+    -  [d2](callsign) hört kommen
+    -  [d1](callsign) hier kommen
+    -  [d2](callsign) hört kommen
+    -  [gruppenführer](callsign) hört
+    -  hier [zugführer](callsign) kommen
+    -  [d2](callsign) hört kommen
+    -  hier [zugführer](callsign) kommen
+    -  hier [whs](callsign) kommen
+    -  [d2](callsign) hört kommen
+    -  hier [zugführer](callsign) kommen
+    -  [gruppenführer](callsign) hört
+    -  hier [zugführer](callsign) kommen
+    -  hier [whs](callsign) kommen
+    -  hier [whs](callsign) kommen
+    -  [gruppenführer](callsign) hört
+    -  [gruppenführer](callsign) hört
+    -  hier [zugführer](callsign) kommen
+    -  hier [zugführer](callsign) kommen
+    -  [gruppenführer](callsign) hört
+    -  hier [zugführer](callsign) kommen
+    -  hier [d1](callsign) kommen
+    -  hier [zugführer](callsign) kommen
+    -  ja hier [zugführer](callsign) kommen
+    -  [gruppenführer](callsign) hört
+    -  hier [zugführer](callsign) hört
+    -  [d1](callsign) hört
+    -  [d2](callsign) hört kommen
+    -  hier [zugführer](callsign) kommen
+    -  [gruppenführer](callsign) hört
+    -  [d2](callsign) hört kommen
+    -  hier [zugführer](callsign) kommen
+    -  hier [zugführer](callsign) kommen
+    -  [zugführer](callsign) hört
+    -  hier [zugführer](callsign) kommen
+    -  ja hier [zugführer](callsign) kommen

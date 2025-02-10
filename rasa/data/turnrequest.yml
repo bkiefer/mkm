@@ -1,0 +1,209 @@
+version: "3.1"
+
+nlu:
+- intent: 'Request_Communication'
+  examples: |
+    - [markus](callsign) für [dirk](callsign)
+    - [markus](callsign) für [dirk](callsign)
+    - [andreas](callsign) von daniel
+    - [markus](callsign) von daniel
+    - hier [markus](callsign) an alle roboter
+    - [markus](callsign) für [dirk](callsign)
+    - [markus](callsign) für [dirk](callsign)
+    - [markus](callsign) für [dirk](callsign)
+    - [markus](callsign) für [dirk](callsign)
+    - [markus](callsign) von [andreas](callsign)
+    - [markus](callsign) für [dirk](callsign)
+    - hier [markus](callsign) an alle operator
+    - hier [markus](callsign) an alle operator
+    - [thorsten](callsign) für [dirk](callsign)
+    - [thorsten](callsign) für [dirk](callsign)
+    - [teamleader](callsign) von [roboter 1](callsign)
+    - [thorsten](callsign) für [dirk](callsign)
+    - [teamleader](callsign) von operator 1
+    - der [einsatzleiter](callsign) vom operator [uav](callsign) kommen
+    - [teamleader](callsign) von [ugv 2](callsign)
+    - [teamleader](callsign) von [ugv 1](callsign)
+    - [teamleader](callsign) von [ugv 2](callsign)
+    - [teamleader](callsign) von [ugv 1](callsign)
+    - [ugv 2](callsign) von [teamleader](callsign)
+    - [teamleader](callsign) von [ugv 1](callsign)
+    - [teamleader](callsign) [ugv 1](callsign)
+    - [ugv 1](callsign) von [teamleader](callsign)
+    - [teamleader](callsign) von [ugv 1](callsign)
+    - [uav](callsign) für [einsatzleiter](callsign)
+    - [uav](callsign) für [teamleader](callsign)
+    - [teamleader](callsign) von [ugv 1](callsign)
+    - [ugv 1](callsign) von [teamleader](callsign)
+    - [teamleader](callsign) von [ugv 2](callsign)
+    - [teamleader](callsign) von [ugv 2](callsign)
+    - [teamleader](callsign) von [ugv 2](callsign)
+    - [teamleader](callsign) von [ugv 1](callsign)
+    - [ugv 1](callsign) [ugv 2](callsign)
+    - [teamleader](callsign) von [ugv 1](callsign)
+    - [ugv 1](callsign) [teamleader](callsign) von [ugv 1](callsign)
+    - [teamleader](callsign) von [ugv 1](callsign)
+    - [ugv 2](callsign) von [teamleader](callsign)
+    - ja hier ist der [ugv 1](callsign) von [teamleader](callsign)
+    - [teamleader](callsign) von [ugv 1](callsign)
+    - ja [teamleader](callsign) von [ugv 1](callsign)
+    - [ugv 1](callsign) [ugv 2](callsign) kommen
+    - ja [ugv 1](callsign) von [ugv 2](callsign)
+    - ja [teamleader](callsign) von [ugv 2](callsign)
+    - [ugv 1](callsign)
+    - [ugv 2](callsign) von [ugv 1](callsign)
+    - [ugv 1](callsign) von [teamleader](callsign)
+    - [teamleader](callsign) von [ugv 1](callsign)
+    - [teamleader](callsign) von [ugv 1](callsign)
+    - [ugv 2](callsign) wie siehts bei euch aus [ugv 2](callsign) von [teamleader](callsign) kommen
+    - [teamleader](callsign) von [ugv 1](callsign)
+    - [teamleader](callsign) von [ugv 1](callsign)
+    - was ist mit der drohne [teamleader](callsign) kommen
+    - [uav drohne](callsign)
+    - [uav drohne](callsign)
+    - [teamleader](callsign)
+    - [uav](callsign) 1 von [ugv 1](callsign)
+    - [uav](callsign) 1 von [ugv 1](callsign)
+    - drohne von [ugv 1](callsign)
+    - [teamleader](callsign) von [ugv 1](callsign)
+    - [teamleader](callsign) von [ugv 1](callsign)
+    - [teamleader](callsign) von [uav](callsign)
+    - [uav drohne](callsign)
+    - [teamleader](callsign) von der [uav drohne](callsign)
+    - [teamleader](callsign) an alle
+    - sven kommen
+    - so [uav](callsign) one über den [benno](callsign) kommen
+    - operator 1 für [benno](callsign)
+    - [benno](callsign) für [uav](callsign) operator
+    - [lena](callsign) für [benno](callsign)
+    - [teamleader](callsign) vom operator 1
+    - [teamleiter](callsign) 1 für [uav](callsign) operator
+    - [lena](callsign) für [benno](callsign)
+    - [benno](callsign) für [lena](callsign)
+    - [benno](callsign) für [lena](callsign)
+    - der [teamleader](callsign) von operator 1
+    - [benno](callsign) für [lena](callsign)
+    - [benno](callsign) für [lena](callsign)
+    - [benno](callsign) für [lena](callsign)
+    - [benno](callsign) für [lena](callsign)
+    - [benno](callsign) für [lena](callsign)
+    - operator 1 und 2 für [teamleader](callsign) kommen
+    - [benno](callsign) für [lena](callsign)
+    - [lena](callsign) für [benno](callsign)
+    - [benno](callsign) für [lena](callsign)
+    - [lena](callsign) für [benno](callsign)
+    - ja [benno](callsign) für den operator 2 kommen
+    - [lena](callsign) für [benno](callsign)
+    - so der [benno](callsign) für operator 2 kommen
+    - operator 2 für [teamleader](callsign)
+    - so der [benno](callsign) an alle
+    - [einsatzleiter](callsign) von [uav drohne](callsign)
+    - [einsatzleiter](callsign) von [uav](callsign)
+    - [einsatzleiter](callsign) von [ugv 1](callsign)
+    - [ugv 2](callsign) von [einsatzleiter](callsign)
+    - [uav](callsign) von [einsatzleiter](callsign)
+    - [ugv 1](callsign) von [einsatzleiter](callsign)
+    - [ugv 2](callsign) von [einsatzleiter](callsign)
+    - [einsatzleiter](callsign) von [uav](callsign)
+    - [ugv 2](callsign) von [einsatzleiter](callsign)
+    - [einsatzleiter](callsign) von [uav](callsign)
+    - [ugv 2](callsign) von [einsatzleiter](callsign)
+    - [einsatzleiter](callsign) von [uav](callsign)
+    - [einsatzleiter](callsign) von [uav](callsign)
+    - [einsatzleiter](callsign) von [uav](callsign) 1
+    - [uav](callsign) von [einsatzleiter](callsign)
+    - [ugv 2](callsign) von [einsatzleiter](callsign)
+    - [einsatzleiter](callsign) von [uav](callsign)
+    - [einsatzleiter](callsign) von [uav](callsign)
+    - [ugv 2](callsign) von [einsatzleiter](callsign)
+    - [einsatzleiter](callsign) von [uav](callsign)
+    - [einsatzleiter](callsign) von [ugv 1](callsign)
+    - [ugv 1](callsign) von [einsatzleiter](callsign)
+    - [einsatzleiter](callsign) von [uav](callsign)
+    - [einsatzleiter](callsign) von [ugv 1](callsign)
+    - [einsatzleiter](callsign) von [ugv 2](callsign)
+    - [ugv 1](callsign) von [einsatzleiter](callsign)
+    - [ugv 1](callsign) von [einsatzleiter](callsign)
+    - [einsatzleiter](callsign) von [uav](callsign)
+    - [einsatzleiter](callsign) von [ugv 1](callsign)
+    - [einsatzleiter](callsign) von [uav](callsign)
+    - [einsatzleiter](callsign) von [ugv 1](callsign)
+    - [ugv 2](callsign) von [einsatzleiter](callsign)
+    - [einsatzleiter](callsign) von [ugv 1](callsign)
+    - [einsatzleiter](callsign) von [uav](callsign)
+    - [ugv 2](callsign) von [einsatzleiter](callsign)
+    - [einsatzleiter](callsign) von [ugv 1](callsign)
+    - [ugv 2](callsign) von [einsatzleiter](callsign)
+    - [einsatzleiter](callsign) von [ugv 2](callsign)
+    - [einsatzleiter](callsign) von [ugv 1](callsign)
+    - [ugv 2](callsign) von [einsatzleiter](callsign)
+    - [ugv 2](callsign) von [einsatzleiter](callsign)
+    - einsatzführer von [uav](callsign)
+    - [einsatzleiter](callsign) von [ugv 1](callsign)
+    - [ugv 2](callsign) von [einsatzleiter](callsign)
+    - [uav](callsign) von [einsatzleiter](callsign)
+    - [einsatzleiter](callsign) von [uav](callsign)
+    - [ugv 2](callsign) von [einsatzleiter](callsign)
+    - [ugv 1](callsign) von [einsatzleiter](callsign)
+    - [einsatzleiter](callsign) von [uav](callsign)
+    - [ugv 1](callsign) von [uav](callsign) 1
+    - [uav](callsign) von [einsatzleiter](callsign)
+    - [ugv 1](callsign) von [uav](callsign)
+    - [ugv 1](callsign) von [einsatzleiter](callsign)
+    - [uav](callsign) von [einsatzleiter](callsign)
+    - [einsatzleiter](callsign) von [uav](callsign)
+    - an allen an alle einsatz eingesetzten kräfte [ugv 1](callsign) [ugv 2](callsign) und [uav](callsign)
+    - operator boden 2 hörst du mich
+    - operator boden 1 für [teamleader](callsign) kommen
+    - mission commander für [teamleader](callsign)
+    - [teamleader](callsign) für mission commander
+    - hier ist operator boden 2
+    - [uav](callsign)
+    - [teamleader](callsign) von mission commander
+    - operator boden 1
+    - operator boden 2
+    - [teamleader](callsign) von mission commander
+    - [teamleader](callsign) zu [bodenoperator](callsign) 1 kommen
+    - [uav](callsign) operator
+    - mission commander für [teamleader](callsign)
+    - [teamleader](callsign) von [bodenoperator](callsign) 1
+    - mission commander für [teamleader](callsign)
+    - operator boden 1 für [teamleader](callsign) kommen
+    - mission commander für [teamleader](callsign)
+    - [bodenoperator](callsign) 1 für [teamleader](callsign)
+    - [uav operator](callsign) für team leader
+    - [uav operator](callsign) an [teamleader](callsign)
+    - [teamleader](callsign) von [bodenoperator](callsign) 1
+    - [teamleader](callsign) für [bodenoperator](callsign) 1
+    - [teamleader](callsign) für [uav](callsign) bereit da
+    - [teamleader](callsign) für robotoperator 2
+    - [teamleader](callsign) für [bodenoperator](callsign) 1
+    - [teamleader](callsign) für [bodenoperator](callsign) 1
+    - [teamleader](callsign) für boden[roboter 1](callsign)
+    - [teamleader](callsign) für [bodenoperator](callsign) 1
+    - [teamleader](callsign) für [uav operator](callsign)
+    - [teamleader](callsign) für [uav operator](callsign)
+    - [teamleader](callsign) für [bodenoperator](callsign) 1
+    - [teamleader](callsign) für [bodenoperator](callsign) 1
+    - [ugv 1](callsign) von [teamleader](callsign)
+    - [ugv 2](callsign) von [teamleader](callsign)
+    - [uav](callsign) 1 von [teamleader](callsign)
+    - an [ugv 1](callsign) [ugv 2](callsign) [uav](callsign)
+    - hören sie mit
+    - [ugv 1](callsign) von [teamleader](callsign)
+    - [ugv 2](callsign) von [teamleader](callsign)
+    - [mission commander](callsign) von [teamleader](callsign)
+    - [teamleader](callsign) von [ugv 1](callsign)
+    - [ugv 1](callsign) [ugv 2](callsign)
+    - [mission commander](callsign) von [teamleader](callsign)
+    - [teamleader](callsign) für [ugv 2](callsign)
+    - [teamleader](callsign) von [mission commander](callsign) kommen
+    - [ugv 2](callsign) für [teamleader](callsign)
+    - [teamleader](callsign) für mission commander
+    - mission commander von [teamleader](callsign)
+    - [ugv 1](callsign) von [teamleader](callsign)
+    - [teamleader](callsign) für mission commander
+    - [teamleader](callsign) von mission commander
+    - [ugv 2](callsign) von 1
+    - [ugv 2](callsign) von [teamleader](callsign)
+    - [teamleader](callsign) für mission commander

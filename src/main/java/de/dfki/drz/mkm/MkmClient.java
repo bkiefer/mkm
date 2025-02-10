@@ -24,6 +24,7 @@ import org.slf4j.LoggerFactory;
 
 import de.dfki.drz.mkm.util.Listener;
 import de.dfki.lt.hfc.WrongFormatException;
+import de.dfki.lt.hfc.db.rdfProxy.Rdf;
 import de.dfki.mlt.mqtt.JsonMarshaller;
 import de.dfki.mlt.mqtt.MqttHandler;
 import de.dfki.mlt.rudimant.agent.Agent;
@@ -56,8 +57,11 @@ public class MkmClient implements CommunicationHub {
   private final static Logger logger = LoggerFactory.getLogger(MkmClient.class);
 
   private static final String ASR_TOPIC = "whisperasr/asrresult/de";
+  private static final String SPEAKER_TOPIC = "whisperasr/speakeridentification";
   private static final String STRING_TOPIC = "test/string";
   private static final String CONTROL_TOPIC = "mkm/control";
+
+  private static double CONFIDENCE_THRESHOLD = 0.5;
 
   /** How much time in milliseconds must pass between two behaviours, if
    *  no message came back that the previous behaviour was finished.
@@ -193,13 +197,62 @@ public class MkmClient implements CommunicationHub {
     inQueue.push(new Intention(intention, 0.0));
   }
 
-  private void addWithMetaData(DialogueAct da, long start, long end) {
+  public void addSpeaker(Speaker speaker) {
+    client.sendMessage(SPEAKER_TOPIC,
+        String.format("{ \"id\": %d, \"speaker\": \"%s\" }",
+            speaker.id, speaker.speaker));
+  }
+
+  private void addWithMetaData(DialogueAct da, long start, long end, Speaker speaker) {
     if (da == null) {
       da = Interpreter.NO_RESULT;
     }
-    // resolve sender and addressee names to uris, eventually creating new
-    // Einsatzkraft/Agent instances
-    if (da.hasSlot("sender")) {
+    // do we have a result from audio speaker recognition?
+    if (speaker != null) {
+      if (speaker.speaker != "Unknown") {
+        // it's a URI!
+        if (da.hasSlot("sender")) {
+          Rdf sender = _agent.hu.resolveAgent(da.getValue("sender"));
+          // agent found for callsign in transcription ?
+          if (sender != null) {
+            String senderUri = sender.getURI().trim();
+            if (senderUri == speaker.speaker) {
+              addSpeaker(speaker);
+            } else {
+              // NLU and audio identify two different (known) people
+              // How confident is the audio speaker recognition?
+              if (speaker.confidence >= CONFIDENCE_THRESHOLD) {
+                // TODO: overwrite speaker of DA, is this good?
+                da.setValue("sender", speaker.speaker);
+              } else {
+                // add new speaker evidence to audio speaker recognition
+                speaker.speaker = senderUri;
+                addSpeaker(speaker);
+              }
+            }
+          } else {
+            // add callsign to the agent from audio identification (and NLU?)
+            _agent.hu.addCallsign(speaker.speaker, da.getValue("sender"));
+            // use audio identification for the DialogueAct
+            da.setValue("sender", speaker.speaker);
+          }
+        }
+      } else {
+        // audio identification is unsure or new speaker
+        // check if we have something from transcription
+        if (da.hasSlot("sender")) {
+          Rdf sender = _agent.hu.resolveAgent(da.getValue("sender"));
+          speaker.speaker = sender.getURI().trim();
+          addSpeaker(speaker);
+        }
+      }
+    }
+
+    // resolve sender and addressee names to uris if necessary, eventually
+    // creating new Einsatzkraft/Agent instances
+    if (da.hasSlot("sender") &&
+        ! (da.getValue("sender").charAt(0) == '<'
+           || da.getValue("sender").charAt(0) == '#')) {
       da.setValue("sender", _agent.hu.resolveSpeaker(da.getValue("sender").trim()));
     }
     if (da.hasSlot("addressee")) {
@@ -225,7 +278,7 @@ public class MkmClient implements CommunicationHub {
       DialogueAct da = _agent.analyse(text);
       long now = System.currentTimeMillis();
       da.setValue("text", text);
-      addWithMetaData(da, now, now);
+      addWithMetaData(da, now, now, null);
     } else if (evt instanceof IdString) {
       IdString is = (IdString)evt;
       _agent.startEvaluation();
@@ -239,14 +292,22 @@ public class MkmClient implements CommunicationHub {
       }
       da.setValue("text", text);
       da.setValue("id", is.id);
-      addWithMetaData(da, now, now);
+      addWithMetaData(da, now, now, null);
     } else if (evt instanceof AsrResult) {
       AsrResult res = ((AsrResult)evt);
       // TODO: check if we can filter out nonsense based on info from AsrResult
       String asr = res.getText();
       logger.info("Incoming ASR message: {}", asr);
       DialogueAct da = _agent.analyse(asr);
-      addWithMetaData(da, res.start, res.end);
+      // id is speaker id, this comes from speaker identification
+      if (res.speaker != null) {
+        // fill the lastSpeaker
+        _agent.lastSpeaker = new Speaker(res.embedid, res.speaker,
+            res.confidence);
+      } else {
+        _agent.lastSpeaker = null;
+      }
+      addWithMetaData(da, res.start, res.end, _agent.lastSpeaker);
     } else {
       logger.warn("Unknown incoming object: {}", evt);
     }

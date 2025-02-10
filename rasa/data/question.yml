@@ -1,0 +1,52 @@
+version: "3.1"
+
+nlu:
+- intent: 'WHQuestion_Communication'
+  examples: |
+    - frage lautstärke verständigung kommen
+    - frage lautstärke und verständigung kommen
+    - bei dir auch frage lautstärke und verständigung kommen
+    - ja auch für euch frage lautstärke und verständigung kommen
+
+- intent: 'Request_Repeat'
+  examples: |
+    - nochmal bitte kommen
+    - bitte die aussage wiederholen kommen
+
+- intent: 'YNQuestion'
+  examples: |
+    - frage seid ihr einsatzbereit kommen
+    - frage sind sie einsatzbereit kommen
+    - frage hat der erkundungsauftrag lagerhalle außen schon erkenntnisse hervorgebracht kommen
+    - von außen keine erkenntnise ist das korrekt kommen
+    - frage an sie sie hatten auch das aufnahmebild vom inneren der lagerhalle gesehen kommen
+    - frage ist die position des überfasses ausreichend kommen
+    - frage ich kann das bild ihrer drohne auf dem bildschirm sehen können sie die kamera so positionieren dass man das gefahrgut kennzeichen sieht kommen
+    - frage der [d3](callsign) soll noch nicht zurückgesetzt werden kommen
+    - frage wolltet ihr nicht landen kommen
+    - korrektur der [d3](callsign) fragezeichen kommen
+    - ja frage einsatzbefehl für den [d2](callsign) der [d2](callsign) steht zum abstransport mit behälter bereit
+    - soll das überfass auch abgedichtet werden kommen
+    - ist das im lagebildsystem zu erkennen kommen
+    - das überfass wurde versiegelt ist das korrekt kommen
+    - frage ausreichend bildmaterial zur unterstützung erhalten kommen
+    - soll das panoramabild über der lagerhalle gemacht werden kommen
+
+- intent: 'WHQuestion'
+  examples: |
+    - was soll mit dem kanister geschehen kommen
+    - frage status [d3](callsign) kommen
+    - frage status lagebildsystem
+    - wer hat gerufen kommen
+    - ja frage status erkundungsergebnisse vom [d5](callsign) kommen
+    - wie sieht der status dafür aus den [d3](callsign) gleich mit geschlossenem überfass aus der lagerhalle zu fahren kommen
+
+- intent: 'Disconfirm'
+  examples: |
+    - wir haben gerade kein Material und wir müssen noch ins auto fahren also circa 5 minuten kommen
+    - bisher nichts zu sehen
+    - im lagebildsystem ist nicht kann es nicht erkannt werden kommen
+
+- intent: 'Disconfirm_Communication'
+  examples: |
+    - nur eine sekunde ende

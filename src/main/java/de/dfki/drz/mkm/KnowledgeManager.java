@@ -40,6 +40,8 @@ public abstract class KnowledgeManager extends Agent {
 
   HfcUtils hu;
 
+  Speaker lastSpeaker = null;
+
   private static final DefaultApi api = new DefaultApi();
   //private static final SimpleDateFormat sdf =
   //    new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
@@ -87,6 +89,9 @@ public abstract class KnowledgeManager extends Agent {
     // log all rules to stdout
     this.logAllRules();
     this.ruleLogger.filterUnchangedRules = false;
+    this.evaluation = configs.containsKey("evaluation") &&
+        (boolean)configs.get("evaluation");
+
     initIAISApi();
     initECApi();
     // start first round of rule evaluations

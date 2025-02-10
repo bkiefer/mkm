@@ -12,12 +12,12 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public abstract class RESTInterpreter extends Interpreter {
+public class RESTInterpreter {
   protected static Logger log = LoggerFactory.getLogger(RESTInterpreter.class);
   protected String uri;
   protected String aliveEndpoint = "/alive";
   protected String predictEndpoint = "/predict";
-      
+
   protected final OkHttpClient client = new OkHttpClient();
 
   protected boolean connect() throws IOException {

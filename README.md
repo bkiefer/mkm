@@ -44,3 +44,7 @@ id is always present, this is the line number of the text string sent.
 ## Evaluation based on a list of transcribed utterances with id and optional speaker
 
 `testcsvclient.py` needs a .csv file with appropriate information and works similar to `testclient.py`. It sends the message id with the text and optionally also the speaker information to simulate an ideal speaker recognition module.
+
+## Evaluation with real speaker identification module
+
+This runs with real ASR and speaker identification, so audio must be fed to the asrident module using either the file functionality of asrident or via gstreamer. For the MKM, evaluation mode is defined in the config file, specifying an _evaluation_ key with value _true_.

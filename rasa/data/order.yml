@@ -1,0 +1,46 @@
+version: '3.1'
+
+nlu:
+- intent: 'Request'
+  examples: |
+    - ja für sie auftrag einmal kommunikation zu den robotertrupps checken und fragen ob einsatzbereitschaft kommen
+    - einmal die kommunikation der robotertrupps checken und die einsatzbereitschaft herstellen
+    - das ist soweit verstanden dann bitte selbständig anfunken kommen
+    - an alle einsatzkräfte übungsbeginn kommen
+    - einmal bitte zum gefahrenbereich vor den eingang der halle kommen
+    - einsatzszenario ist jetzt beginnend
+    - für sie bitte die inbetriebnahme der roboter [d3](callsign) und [d5](callsign) kommen
+    - das ist so korrekt sie warten bitte noch auf weitere einsatzbefehle kommen
+    - wir warten in bereitschaft verstanden
+    - ein stückchen näher ran
+    - für sie [whs](callsign) rückzug aus der lagerhalle erkundungsauftrag beendet kommen
+    - für sie paralleleinsatz der [d2](callsign) geht zur manipulation in die lagerhalle vor für sie bereitstellung eines luftbildes aus der halle kommen
+    - für sie auch erkundungsauftrag mit dem [d5](callsign) an der linken flanke außerhalb der lagerhalle erkundung kommen
+    - keine einsatzkraft betritt den gefahrenbereich kommen
+    - bitte auf übungsbeginn warten kommen
+    - für sie erkundungsauftrag außerhalb der halle danach bei mir melden kommen
+    - für sie auftrag es wird eine manipulation vorbereitet mit dem [d2](callsign) kommen
+    - für sie als auftrag mit dem [d2](callsign) einen umgefallenen kanister der sich geöffnet hat der die flüssigkeit enthält aufnehmen und in ein überfass befördern kommen
+    - warten sie noch auf den [d3](callsign) der wird ihnen als logistikaufgabe das überfass bereitstellen kommen
+    - für sie beginn des auftrages bergung des behältnisses kommen
+    - für sie übergangsaufrag bilddarstellung in der lagerhalle innen kommen
+    - bitte melden wenn durchgeführt
+    - [d1](callsign) mitgehört sie können wieder die innenerkundung starten kommen
+    - bitte einmal die gasse komplett durch
+    - ja für sie unterstützung durch bildübertragung des [d2](callsign) bei der fassversiegelung kommen
+    - dann für sie neuer erkundungsauftrag in die halle einfahren und den [d2](callsign) durch eine bildübertragung unterstützen kommen
+    - sofortiger stop des roboters kontaminationsverschleppung bitte verweilen sie am gefahrenbereich kommen
+    - schön wieder zurück das zeug wollen wir hier nicht draußen haben
+    - für sie auch bitte die drohne in der nähe des gefahrenbereiches an der grenze absetzen kommen
+    - dann auftrag für den [d3](callsign) das fass an die gefahrengrenze bringen
+    - für sie logistische unterstützung durch den [d3](callsign) mit dem überfass kommen
+    - für sie erkundungsauftrag panoramabild der gesamten lagerhalle kommen
+    - für sie noch kein einsatz
+    - für sie rückkehr an den gefahrenbereich vor die halle kommen
+
+- intent: 'Request_End'
+  examples: |
+    - für sie ist der einsatz hier beendet der roboter wird an den dekontaminationstrupp übergeben kommen
+    - verstanden für sie hier auch einsatzende der [d3](callsign) wir dan dem dekontaminationstrupp übergeben kommen
+    - für sie ist der erkundungsauftrag beendet kommen
+    - verstanden für sie hier auch einsatzende

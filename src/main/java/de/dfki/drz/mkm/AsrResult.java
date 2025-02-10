@@ -81,6 +81,10 @@ public class AsrResult {
   public List<Segment> segments;
   public long start, end;
 
+  public Integer embedid;   // id of embedding (optional)
+  public Double confidence; // confidence of embedding (optional)
+  public String speaker;    // speaker id (optional)
+
   public String getText() {
     StringBuffer sb = new StringBuffer();
     for (Segment s : segments) {

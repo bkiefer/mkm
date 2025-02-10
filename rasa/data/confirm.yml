@@ -1,0 +1,117 @@
+version: "3.1"
+
+nlu:
+
+- intent: 'Confirm'
+  examples: |
+    - das ist so verstanden
+    - ja das ist soweit verstanden
+    - ja
+    - ja das ist verstanden
+    - ja das ist so korrekt kommen
+    - ja das ist so korrekt
+    - ja verstanden
+    - ja verstanden
+    - verstanden kommen
+    - verstanden kommen
+    - ja verstanden
+    - verstanden kommen
+    - ja verstanden
+    - ja das ist verstanden
+    - ja verstanden
+    - [whs](callsign) hier verstanden
+    - [whs](callsign) hat verstanden kommen
+    - ja das ist verstanden
+    - ja das ist verstanden
+    - ja das ist verstanden
+    - ja das ist korrekt
+    - ja das ist verstanden
+    - ja perfekt
+    - das ist verstanden
+    - ja das ist so korrekt
+    - ja soweit verstanden
+    - das ist korrekt kommen
+    - alles klar
+    - ja das ist verstanden
+    - ja das ist korrekt
+    - verstanden kommen
+    - ja das ist verstanden
+    - haben verstanden kommen
+    - ja das ist soweit verstanden
+    - ja das ist verstanden
+    - ja das ist so korrekt
+
+- intent: 'Confirm_EndCall'
+  examples: |
+    - ja das ist so verstanden ende
+    - das ist verstanden ende
+    - ja das ist verstanden ende
+    - verstanden ende
+    - ja verstanden ende
+    - das ist verstanden ende
+    - verstanden ende
+    - ja das ist verstanden ende
+    - ja das ist verstanden ende
+    - verstanden ende
+    - ja das ist verstanden ende
+    - haben verstanden ende
+    - haben verstanden ende
+    - verstanden ende
+    - haben verstanden ende
+    - ja ende
+    - ja verstanden ende
+    - ja das ist verstanden ende
+    - ja genau ende
+    - verstanden ende
+    - verstanden ende
+    - so korrekt ende
+    - ja so korrekt ende
+    - so verstanden ende
+    - ja habe verstanden ende
+    - ja verstanden ende
+    - ja das ist so korrekt ende
+    - auftrag verstanden ende
+    - ja verstanden ende
+    - das ist so korrekt ende
+    - verstanden ende
+    - verstanden ende
+    - [whs](callsign) hat verstanden ende
+    - ja das ist so korrekt ende
+    - ja so korrekt ende
+    - ja so korrekt ende
+    - alles klar ende
+    - verstanden ende
+    - ja so korrekt ende
+    - ja verstanden ende
+
+- intent: 'Confirm_CommunicationOK'
+  examples: |
+    - ja lautstärke und verständigung gut kommen
+    - lautstärke und verständigung sind super kommen
+    - lautstärke und verständigung ende
+    - lautstärke ok
+
+- intent: 'Confirm_Information'
+  examples: |
+    - ja erster erkundungsflug mit der drohne gestartet verstanden kommen
+    - [d3](callsign) und [d5](callsign) ist einsatzbereit das ist verstanden
+    - einsatzszenario beginnt verstanden
+    - erkundung ergeben stoffidentifikation schwefelsäure keine einsatzkraft betritt den gefahrenbereich verstanden
+    - [d3](callsign) fährt zum [d2](callsign) vor und vorbereitung des überfasses kommen
+    - erkundungsauftrag mit dem [d5](callsign) linke seite der lagerhalle kommen
+    - [d3](callsign) und [d5](callsign) können nicht im lagebild dargestellt werden das ist verstanden
+    - [d5](callsign) zur erkundung linker seite das ist verstanden
+    - behältnis wurde ins überfass verfrachtet
+    - der gefahrgutbehälter wurde geborgen das überfass wird verschlossen habe verstanden kommen
+    - [d2](callsign) ist einsatzbereit das ist verstanden
+
+- intent: 'Confirm_Order'
+  examples: |
+    - [whs](callsign) hat verstanden kommen erkundung innen verstanden kommen
+    - inbetriebnahme [d3](callsign) und [d5](callsign) verstanden
+    - [d2](callsign) auf der anfahrt zur manipulation [d3](callsign) zur unterstützung vor das ist verstanden kommen
+    - verstanden wir warten kommen
+    - verstanden auftrag wird ausgeführt ende
+    - ja das überfass mit dem [d3](callsign) an die gefahrengrenze bringen verstanden
+    - ja den [d2](callsign) duch eine bildübertragung unterstützen kommen
+    - positiv das fass soll geschlossen werden kommen

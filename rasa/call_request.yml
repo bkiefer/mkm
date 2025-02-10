@@ -1,0 +1,76 @@
+version: "3.1"
+
+nlu:
+- intent: 'Request_Communication'
+  examples: |
+    -  [zugführer](callsign) von [whs](callsign) kommen
+    -  [gruppenführer](callsign) von [zugführer](callsign) kommen
+    -  das [whs](callsign) von [zugführer](callsign) kommen
+    -  [d2](callsign) von [zugführer](callsign) kommen
+    -  [whs](callsign) von [zugführer](callsign) kommen
+    -  [d1](callsign) von [zugführer](callsign) kommen
+    -  [d1](callsign) von [zugführer](callsign) kommen
+    -  [gruppenführer](callsign) von [zugführer](callsign) kommen
+    -  [d2](callsign) von [zugführer](callsign) kommen
+    -  [whs](callsign) von [zugführer](callsign) kommen
+    -  [gruppenführer](callsign) von [zugführer](callsign) kommen
+    -  [zugführer](callsign) von [whs](callsign)
+    -  [zugführer](callsign) von [gruppenführer](callsign) kommen
+    -  [zugführer](callsign) von [d2](callsign) kommen
+    -  [d2](callsign) von [zugführer](callsign) kommen
+    -  [gruppenführer](callsign) von [zugführer](callsign) kommen
+    -  [gruppenführer](callsign) von [zugführer](callsign) kommen
+    -  [d1](callsign) von [zugführer](callsign) kommen
+    -  [gruppenführer](callsign) von [zugführer](callsign) kommen
+    -  [whs](callsign) von [zugführer](callsign) kommen
+    -  [gruppenführer](callsign) von [zugführer](callsign) kommen
+    -  [d1](callsign) von [zugführer](callsign) kommen
+    -  [whs](callsign) von [zugführer](callsign) kommen
+    -  [gruppenführer](callsign) von [zugführer](callsign) kommen
+    -  [d2](callsign) von [zugführer](callsign) kommen
+    -  [gruppenführer](callsign) von [zugführer](callsign) kommen
+    -  [d2](callsign) von [zugführer](callsign) kommen
+    -  [d1](callsign) von [zugführer](callsign) kommen
+    -  [gruppenführer](callsign) von [zugführer](callsign) kommen
+    -  [d2](callsign) von [zugführer](callsign) kommen
+    -  [d2](callsign) von [zugführer](callsign) kommen
+    -  [gruppenführer](callsign) von [zugführer](callsign) kommen
+    -  [zugführer](callsign) von [gruppenführer](callsign) kommen
+    -  [d2](callsign) von [zugführer](callsign) kommen
+    -  [zugführer](callsign) [d1](callsign) bitte kommen
+    -  [whs](callsign) von [zugführer](callsign) kommen
+    -  [d2](callsign) von [zugführer](callsign) kommen
+    -  [zugführer](callsign) an [whs](callsign) kommen
+    -  [zugführer](callsign) von [d1](callsign)
+    -  [gruppenführer](callsign) von [zugführer](callsign) kommen
+    -  [zugführer](callsign) von [d2](callsign) kommen
+    -  [whs](callsign) von [zugführer](callsign) kommen
+    -  [whs](callsign) von [zugführer](callsign) kommen
+    -  [gruppenführer](callsign) von [zugführer](callsign) kommen
+    -  [gruppenführer](callsign) von [zugführer](callsign) kommen
+    -  [zugführer](callsign) von [gruppenführer](callsign) kommen
+    -  [zugführer](callsign) von [whs](callsign) kommen
+    -  [zugführer](callsign) von [gruppenführer](callsign) kommen
+    -  d5 von [gruppenführer](callsign) kommen
+    -  [gruppenführer](callsign) von [zugführer](callsign) kommen
+    -  [zugführer](callsign) von [d2](callsign) kommen
+    -  [zugführer](callsign) von [d2](callsign) kommen
+    -  [d1](callsign) von [zugführer](callsign) kommen
+    -  [zugführer](callsign) von [whs](callsign) kommen
+    -  [zugführer](callsign) von [whs](callsign) kommen
+    -  [gruppenführer](callsign) von [zugführer](callsign) kommen
+    -  [zugführer](callsign) von [gruppenführer](callsign)
+    -  [d1](callsign) von [zugführer](callsign) kommen
+    -  [d2](callsign) für [zugführer](callsign) kommen
+    -  [d2](callsign) für [zugführer](callsign) kommen
+    -  [zugführer](callsign) von [d2](callsign) kommen
+    -  [zugführer](callsign) von [gruppenführer](callsign) kommen
+    -  [gruppenführer](callsign) von [zugführer](callsign) kommen
+    -  [zugführer](callsign) von [d1](callsign) kommen
+    -  [d2](callsign) von [zugführer](callsign) kommen
+    -  [zugführer](callsign) von [d1](callsign) bitte kommen
+    -  [zugführer](callsign) von [gruppenführer](callsign) kommen
+    -  [d2](callsign) von [zugführer](callsign) kommen
+    -  [d2](callsign) kommen
+    -  [zugführer](callsign) von [gruppenführer](callsign) kommen
+    -  [zugführer](callsign) von [whs](callsign) kommen

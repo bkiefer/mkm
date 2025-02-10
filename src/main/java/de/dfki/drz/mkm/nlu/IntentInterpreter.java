@@ -1,6 +1,9 @@
 package de.dfki.drz.mkm.nlu;
 
-import static de.dfki.drz.mkm.nlu.Constants.*;
+import static de.dfki.drz.mkm.nlu.Constants.KEY_HOST;
+import static de.dfki.drz.mkm.nlu.Constants.KEY_PORT;
+import static de.dfki.drz.mkm.nlu.Constants.TRANSCRIPT_NEW_LABEL;
+import static de.dfki.drz.mkm.nlu.Constants.TRANSCRIPT_OLD_LABEL;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,14 +14,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import de.dfki.mlt.rudimant.agent.nlp.DialogueAct;
+import de.dfki.mlt.rudimant.agent.nlp.Interpreter;
 import okhttp3.FormBody;
 
-public class IntentInterpreter extends RESTInterpreter {
+public class IntentInterpreter extends Interpreter {
   static final Logger log = LoggerFactory.getLogger(IntentInterpreter.class);
 
   boolean ready = false;
 
+  private RESTInterpreter ri = new RESTInterpreter();
+
   private String transcription_old = "";
+
 
   @Override
   @SuppressWarnings("rawtypes")
@@ -26,10 +33,10 @@ public class IntentInterpreter extends RESTInterpreter {
     name = "DIT_DIA_" + language;
     boolean result = super.init(configDir, language, config);
     if (! result) return result;
-    uri = "http://" + (String) config.get(KEY_HOST)
+    ri.uri = "http://" + (String) config.get(KEY_HOST)
           + ":" + (int)config.get(KEY_PORT);
     try {
-      if (connect()) {
+      if (ri.connect()) {
         log.info("BERT intent recognition connected");
         ready = true;
       }
@@ -42,7 +49,7 @@ public class IntentInterpreter extends RESTInterpreter {
   protected JSONObject classify(String transcript_new, String transcript_old)
       throws IOException {
     // TODO: generalise: maybe pass a <String, String> dict?
-    return classify(new FormBody.Builder()
+    return ri.classify(new FormBody.Builder()
         .add(TRANSCRIPT_NEW_LABEL, transcript_new)
         .add(TRANSCRIPT_OLD_LABEL, transcript_old)
         .build());

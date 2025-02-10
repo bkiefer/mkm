@@ -43,6 +43,10 @@ public class HfcUtils {
     return speaker.getURI();
   }
 
+  public void addCallsign(String uri, String callsign) {
+    proxy.getRdf(uri).setValue("<drz:hasCallsign>", callsign);
+  }
+  
   /*
   public Rdf findUserByName(String firstname) {
     List<Object> results = proxy.query(

@@ -78,8 +78,11 @@ customCompileCommands:
   vcompile: vondac -v -c config.yml
 defaultCompileCommand: compile
 
-# Evaluation of language services (parsing)
 language: de_DE
+
+evaluation: true
+
+# Evaluation of language services (parsing)
 # corpora:
 #   reader: de.dfki.mlt.rudimant.agent.nlp.RasaCorpusReader
 #   files:
@@ -92,24 +95,24 @@ language: de_DE
 #     - rasa/data/turnconfirm.yml
 #     - rasa/data/turnrequest.yml
 
-corpora:
-  reader: de.dfki.mlt.rudimant.agent.nlp.CsvCorpusReader
-  keys:
-    intent: "Communicative Function"
-    text: "Functional Segment Text"
-    #frame: "Frame"
-    #theme: "Theme"
-  mappings:
-    "ConfirmComm": Confirm_Communication
-    "RequestComm": Request_Communication
-  files:
-    - TRADR/TEval_2015_de_day1_speaker_addresse_text_iso_da_dialog_relations.csv
-    - TRADR/TEval_2015_de_day2_speaker_addresse_text_iso_da_dialog_relations.csv
-    - TRADR/TEval_2015_de_day3_speaker_addresse_text_iso_da_dialog_relations.csv
-    - TRADR/TEval_2015_de_day4_speaker_addresse_text_iso_da_dialog_relations.csv
-    - TRADR/TJex_2015_de_day1_1_speaker_addresse_text_iso_da_dialog_relations.csv
-    - TRADR/TJex_2015_de_day1_2_speaker_addresse_text_iso_da_dialog_relations.csv
-    - TRADR/TJex_2015_de_day2_speaker_addresse_text_iso_da_dialog_relations.csv
+# corpora:
+#   reader: de.dfki.mlt.rudimant.agent.nlp.CsvCorpusReader
+#   keys:
+#     intent: "Communicative Function"
+#     text: "Functional Segment Text"
+#     #frame: "Frame"
+#     #theme: "Theme"
+#   mappings:
+#     "ConfirmComm": Confirm_Communication
+#     "RequestComm": Request_Communication
+#   files:
+#     - TRADR/TEval_2015_de_day1_speaker_addresse_text_iso_da_dialog_relations.csv
+#     - TRADR/TEval_2015_de_day2_speaker_addresse_text_iso_da_dialog_relations.csv
+#     - TRADR/TEval_2015_de_day3_speaker_addresse_text_iso_da_dialog_relations.csv
+#     - TRADR/TEval_2015_de_day4_speaker_addresse_text_iso_da_dialog_relations.csv
+#     - TRADR/TJex_2015_de_day1_1_speaker_addresse_text_iso_da_dialog_relations.csv
+#     - TRADR/TJex_2015_de_day1_2_speaker_addresse_text_iso_da_dialog_relations.csv
+#     - TRADR/TJex_2015_de_day2_speaker_addresse_text_iso_da_dialog_relations.csv
 
 #corpora:
 #  reader: de.dfki.mlt.rudimant.agent.nlp.RasaCorpusReader
