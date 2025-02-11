@@ -7,7 +7,7 @@
 ### Linux
 These instructions are for Linux-Systems (concretely: Ubuntu 22.04 or higher).
 
-### TODO: drz and dialogue ontologies are currently links!
+### TODO: dialogue ontology is currently a link! needs own repo&submodule.
 
 In order to compile this, make sure the VOnDA compiler `vondac` (version 3) is available the default path, or adapt the `compile` script in this directory.
 

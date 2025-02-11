@@ -1,0 +1,129 @@
+# Points to the HFC config file
+ontologyFile:       src/main/resources/ontology/mkm.yml
+
+# ########## COMPILE CONFIGURATION SETTINGS ##########
+inputFile:          src/main/rudi/MissionKnowledge.rudi
+outputDirectory:    src/main/gen-java
+agentBase:          de.dfki.drz.mkm.KnowledgeManager
+typeDef:            KnowledgeManager.rudi
+checkTypes:         true
+failOnError:        false
+verbose:            false
+rootPackage:        de.dfki.drz.mkm
+
+nameToURI:
+  Agent: <dial:Agent>
+  DialAct: <dial:DialogueAct>
+
+#nameToClass:
+#  Date: de.dfki.drz.mkm.util.Date
+#printErrors: false   # prints compile errors to terminal, true is the default
+#visualise: true      # produces a graphical representation of the parsed
+                      # rule files
+                      # with type resolution information
+#persistentVars: true # puts compiler into persistent variables mode: local
+                      # variables in included rule files also keep their
+                      # values during runtime
+
+# ########## RUN CONFIGURATION SETTINGS ##########
+
+NLG:
+  de_DE:
+    class: de.dfki.mlt.rudimant.agent.nlp.LanguageGenerator
+    mapperProject: src/main/resources/cplanner/allrules-mapper
+    generationProject: src/main/resources/cplanner/allrules
+    #translateNumbers: true  # translates numbers to text internally, if, e.g., the TTS
+                             # can not do it by itself
+NLU:
+  de_DE:
+    # class: de.dfki.mlt.rudimant.agent.nlp.RegexInterpreter
+    # expressions:
+    #   '(?:das )?(.*?) (?:für|an|von) (.*?) (?:bitte )?kommen':
+    #     'Request(Call, sender="{2}", adressee="{1}")'
+    #   '(.*) hört(?: kommen)?':
+    #     'Confirm(Call, sender="{1}")'
+    #   '(?:ja )?ich höre':
+    #     'Confirm(Call, sender="PRON1SG")'
+    #   '(.*?) hier(?: kommen)?':
+    #     'Confirm(Call, sender="{1}")'
+    #   '(?:ja )?hier (.*?)(?: hört)?(?: kommen)?':
+    #     'Confirm(Call, sender="{1}")'
+    class: de.dfki.mlt.rudimant.agent.nlp.CombinedInterpreter
+    instances:
+    - class: de.dfki.mlt.rudimant.agent.nlp.SrgsParser
+      grammar: src/main/resources/grammars/srgs/call.abnf
+      converter: src/main/resources/cplanner/srgsconv
+      tokenizer:
+        class: de.dfki.mlt.rudimant.agent.nlp.TrivialTokenizer
+        toLower: true           # turn all output to lower case
+        removePunctuation: true  # remove all punctuation tokens
+    # - class: de.dfki.drz.mkm.nlu.IntentInterpreter
+    #   host: localhost
+    #   port: 8665
+    #   converter: src/main/resources/cplanner/intentconv
+    - class: de.dfki.mlt.rudimant.agent.nlp.RasaNlu
+      host: localhost
+      port: 9797
+      min_confidence: 0.8
+      converter: src/main/resources/cplanner/rasaconv
+
+
+# ########## DEBUGGER/GUI SETTINGS ##########
+debugPort: 9777
+
+customCompileCommands:
+  compile: ./compile
+  mvncompile: ./compile && mvn install
+  mvncleancmp: mvn clean && ./compile && mvn install
+  vcompile: vondac -v -c config.yml
+defaultCompileCommand: compile
+
+language: de_DE
+
+evaluation: true
+
+# ######### MQTT SETTINGS ##########
+mqtt:
+  brokerhost: mqtt-broker
+  #brokerport: 1883
+  #brokerprotocol: tcp
+  #millis_reconnect: 100
+
+# Evaluation of language services (parsing)
+# corpora:
+#   reader: de.dfki.mlt.rudimant.agent.nlp.RasaCorpusReader
+#   files:
+#     - rasa/data/confirm.yml
+#     - rasa/data/everythingelse.yml
+#     - rasa/data/inform.yml
+#     - rasa/data/order.yml
+#     - rasa/data/question.yml
+#     - rasa/data/rasatraintradr.yml
+#     - rasa/data/turnconfirm.yml
+#     - rasa/data/turnrequest.yml
+
+# corpora:
+#   reader: de.dfki.mlt.rudimant.agent.nlp.CsvCorpusReader
+#   keys:
+#     intent: "Communicative Function"
+#     text: "Functional Segment Text"
+#     #frame: "Frame"
+#     #theme: "Theme"
+#   mappings:
+#     "ConfirmComm": Confirm_Communication
+#     "RequestComm": Request_Communication
+#   files:
+#     - TRADR/TEval_2015_de_day1_speaker_addresse_text_iso_da_dialog_relations.csv
+#     - TRADR/TEval_2015_de_day2_speaker_addresse_text_iso_da_dialog_relations.csv
+#     - TRADR/TEval_2015_de_day3_speaker_addresse_text_iso_da_dialog_relations.csv
+#     - TRADR/TEval_2015_de_day4_speaker_addresse_text_iso_da_dialog_relations.csv
+#     - TRADR/TJex_2015_de_day1_1_speaker_addresse_text_iso_da_dialog_relations.csv
+#     - TRADR/TJex_2015_de_day1_2_speaker_addresse_text_iso_da_dialog_relations.csv
+#     - TRADR/TJex_2015_de_day2_speaker_addresse_text_iso_da_dialog_relations.csv
+
+#corpora:
+#  reader: de.dfki.mlt.rudimant.agent.nlp.RasaCorpusReader
+#  files:
+#    - rasa/call_confirm.yml
+#    - rasa/call_request.yml
+#    - rasa/tradr_comm_confreq.yml

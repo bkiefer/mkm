@@ -1,0 +1,67 @@
+networks:
+  mlt:
+    driver: bridge
+
+services:
+  broker:
+    image: 'eclipse-mosquitto:2.0.15'
+    networks:
+      - mlt
+    restart: always
+    container_name: 'mqtt-broker'
+    hostname: 'mqtt-broker'
+    ports:
+      - '1883:1883'
+      - '9001:9001'
+    volumes:
+      - ./mkm/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
+
+  asrident:
+    depends_on:
+      - broker
+    image: 'asrident'
+    command: ["/bin/sh", "-c", "./run_whisper.sh -c config.yml"]
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    networks:
+      - mlt
+    container_name: 'asrident'
+    restart: always
+    hostname: 'asrident'
+    volumes:
+      - ./asrident/docker_de_config.yml:/app/config.yml:ro
+      - ./asrident/pretrained_models:/app/pretrained_models
+      - ./asrident/whisper-models:/app/whisper-models
+      - ./asrident/audio:/app/audio
+      - ./asrident/outputs:/app/outputs
+
+  rasa_server:
+    image: 'rasa/rasa:3.6.20-full'
+    command: ["run", "--enable-api", "--port", "5005"]
+    networks:
+      - mlt
+    container_name: 'rasaserver'
+    restart: always
+    hostname: 'rasa_server'
+    volumes:
+      - ./mkm/rasa:/app
+
+  mkm:
+    depends_on:
+      - broker
+      - asrident
+      - rasa_server
+    image: 'mkm'
+    networks:
+      - mlt
+    container_name: 'mkm'
+    restart: always
+    hostname: 'mkm'
+    volumes:
+      - ./mkm/docker-config.yml:/app/config.yml:ro
+      - ./mkm/logs:/app/logs
