@@ -3,6 +3,17 @@ networks:
     driver: bridge
 
 services:
+  rasa_server:
+    image: 'rasa/rasa:3.6.20-full'
+    command: ["run", "--enable-api", "--port", "9797"]
+    networks:
+      - mlt
+    container_name: 'rasaserver'
+    restart: always
+    hostname: 'rasa_server'
+    volumes:
+      - ./mkm/rasa:/app
+
   broker:
     image: 'eclipse-mosquitto:2.0.15'
     networks:
@@ -19,8 +30,10 @@ services:
   asrident:
     depends_on:
       - broker
+      - rasa_server
+      - mkm
     image: 'asrident'
-    command: ["/bin/sh", "-c", "./run_whisper.sh -c config.yml"]
+    command: ["/bin/sh", "-c", "sleep 30 && ./run_whisper.sh -m -c config.yml TEval2015_day2/chunk*.wav"]
     deploy:
       resources:
         reservations:
@@ -39,22 +52,11 @@ services:
       - ./asrident/whisper-models:/app/whisper-models
       - ./asrident/audio:/app/audio
       - ./asrident/outputs:/app/outputs
-
-  rasa_server:
-    image: 'rasa/rasa:3.6.20-full'
-    command: ["run", "--enable-api", "--port", "9797"]
-    networks:
-      - mlt
-    container_name: 'rasaserver'
-    restart: always
-    hostname: 'rasa_server'
-    volumes:
-      - ./mkm/rasa:/app
+      - ./asrident/TEval2015_day2:/app/TEval2015_day2
 
   mkm:
     depends_on:
       - broker
-      - asrident
       - rasa_server
     image: 'mkm'
     networks:

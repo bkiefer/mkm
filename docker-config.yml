@@ -62,7 +62,7 @@ NLU:
     #   port: 8665
     #   converter: src/main/resources/cplanner/intentconv
     - class: de.dfki.mlt.rudimant.agent.nlp.RasaNlu
-      host: localhost
+      host: rasa_server
       port: 9797
       min_confidence: 0.8
       converter: src/main/resources/cplanner/rasaconv
