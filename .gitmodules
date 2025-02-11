@@ -1,0 +1,3 @@
+[submodule "src/main/resources/ontology/drz"]
+	path = src/main/resources/ontology/drz
+	url = git@mlt-gitlab.sb.dfki.de:kiefer/drz-ontology.git
