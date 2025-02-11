@@ -74,7 +74,8 @@ public class MkmClient implements CommunicationHub {
   private Random r = new Random();
 
   private boolean isRunning = true;
-
+  private int _running_id = 0;
+  
   private File _configDir;
   private Map<String, Object> _configs;
 
@@ -260,6 +261,9 @@ public class MkmClient implements CommunicationHub {
     }
     da.setValue("fromTime", num2xsd(start));
     da.setValue("toTime", num2xsd(end));
+    if (! da.hasSlot("id")) {
+      da.setValue("id", num2xsd(_running_id++));
+    }
     inQueue.push(da);
   }
 
