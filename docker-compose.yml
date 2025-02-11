@@ -42,7 +42,7 @@ services:
 
   rasa_server:
     image: 'rasa/rasa:3.6.20-full'
-    command: ["run", "--enable-api", "--port", "5005"]
+    command: ["run", "--enable-api", "--port", "9797"]
     networks:
       - mlt
     container_name: 'rasaserver'

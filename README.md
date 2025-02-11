@@ -7,7 +7,14 @@
 ### Linux
 These instructions are for Linux-Systems (concretely: Ubuntu 22.04 or higher).
 
-### TODO: dialogue ontology is currently a link! needs own repo&submodule.
+### TODO: dialogue ontology is currently a link! needs own repo & submodule.
+### Installation of Fraunhofer & Eurocommand connectors (submodule, mvn repo?)
+### Installation of F&E & vonda needs javac! (vonda only tests)
+
+```
+docker submodule update --init --recursive
+docker submodule update --recursive --remote
+```
 
 In order to compile this, make sure the VOnDA compiler `vondac` (version 3) is available the default path, or adapt the `compile` script in this directory.
 
