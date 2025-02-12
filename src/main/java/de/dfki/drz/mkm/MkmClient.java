@@ -75,6 +75,7 @@ public class MkmClient implements CommunicationHub {
 
   private boolean isRunning = true;
   private int _running_id = 0;
+  private int _running_userId = 0;
   
   private File _configDir;
   private Map<String, Object> _configs;
@@ -241,12 +242,14 @@ public class MkmClient implements CommunicationHub {
       } else {
         // audio identification is unsure or new speaker
         // check if we have something from transcription
-        if (da.hasSlot("sender")) {
-          Rdf sender = _agent.hu.resolveAgent(da.getValue("sender"));
-          speaker.speaker = sender.getURI().trim();
-          addSpeaker(speaker);
-        }
-      }
+        Rdf sender = da.hasSlot("sender")
+            ? _agent.hu.resolveAgent(da.getValue("sender"))
+            // create a new Einsatzkraft with unique intermediate name
+            : _agent.toRdf(_agent.hu.resolveSpeaker(
+                String.format("Unknown%02d", ++_running_userId)));
+        speaker.speaker = sender.getURI().trim();
+        addSpeaker(speaker);
+     }
     }
 
     // resolve sender and addressee names to uris if necessary, eventually
@@ -254,10 +257,12 @@ public class MkmClient implements CommunicationHub {
     if (da.hasSlot("sender") &&
         ! (da.getValue("sender").charAt(0) == '<'
            || da.getValue("sender").charAt(0) == '#')) {
-      da.setValue("sender", _agent.hu.resolveSpeaker(da.getValue("sender").trim()));
+      da.setValue("sender", 
+          _agent.hu.resolveSpeaker(da.getValue("sender").trim()));
     }
     if (da.hasSlot("addressee")) {
-      da.setValue("addressee", _agent.hu.resolveSpeaker(da.getValue("addressee").trim()));
+      da.setValue("addressee",
+          _agent.hu.resolveSpeaker(da.getValue("addressee").trim()));
     }
     da.setValue("fromTime", num2xsd(start));
     da.setValue("toTime", num2xsd(end));
@@ -311,6 +316,10 @@ public class MkmClient implements CommunicationHub {
       } else {
         _agent.lastSpeaker = null;
       }
+      if (!da.hasSlot("text")) { 
+        da.setValue("text", asr);
+      }
+      da.setValue("id", num2xsd(_running_id++));
       addWithMetaData(da, res.start, res.end, _agent.lastSpeaker);
     } else {
       logger.warn("Unknown incoming object: {}", evt);
