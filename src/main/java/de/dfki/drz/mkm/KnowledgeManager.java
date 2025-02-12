@@ -155,8 +155,8 @@ public abstract class KnowledgeManager extends Agent {
         }
       }
 
-      w.append(id + "," + na(speaker) + "," + na(addressee) + ","
-          + daType + ", \"" + text + '"');
+      w.append(na(id) + "," + na(speaker) + "," + na(addressee) + ","
+          + na(daType) + ", \"" + na(text) + '"');
       w.append(System.lineSeparator());
       w.flush();
     } catch (IOException ex) {
