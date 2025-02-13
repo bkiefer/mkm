@@ -89,9 +89,9 @@ public abstract class KnowledgeManager extends Agent {
     // log all rules to stdout
     this.logAllRules();
     this.ruleLogger.filterUnchangedRules = false;
-    this.evaluation = configs.containsKey("evaluation") &&
-        (boolean)configs.get("evaluation");
-    if (this.evaluation) startEvaluation();
+    if (configs.containsKey("evaluation") && (boolean)configs.get("evaluation")){
+      startEvaluation();
+    }
 
     initIAISApi();
     initECApi();
