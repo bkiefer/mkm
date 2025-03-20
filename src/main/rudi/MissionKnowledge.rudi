@@ -135,6 +135,7 @@ if (lastDA() >= #Inform(top) || lastDA() >= #Request(top)) {
       lastDA().addressee = prevDA.sender;
     }
   }
+  // TODO: if it's #Request(top) aka Order, check for recognised slots
   m = newMessage(lastDA());
   messageProcessed(m);
 }

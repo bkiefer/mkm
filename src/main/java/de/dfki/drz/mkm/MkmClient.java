@@ -76,7 +76,7 @@ public class MkmClient implements CommunicationHub {
   private boolean isRunning = true;
   private int _running_id = 0;
   private int _running_userId = 0;
-  
+
   private File _configDir;
   private Map<String, Object> _configs;
 
@@ -211,7 +211,7 @@ public class MkmClient implements CommunicationHub {
     }
     // do we have a result from audio speaker recognition?
     if (speaker != null) {
-      if (speaker.speaker != "Unknown") {
+      if (! speaker.speaker.equals("Unknown")) {
         // it's a URI!
         if (da.hasSlot("sender")) {
           Rdf sender = _agent.hu.resolveAgent(da.getValue("sender"));
@@ -243,7 +243,7 @@ public class MkmClient implements CommunicationHub {
         // audio identification is unsure or new speaker
         // check if we have something from transcription
         Rdf sender = da.hasSlot("sender")
-            ? _agent.hu.resolveAgent(da.getValue("sender"))
+            ? _agent.toRdf(_agent.hu.resolveSpeaker(da.getValue("sender")))
             // create a new Einsatzkraft with unique intermediate name
             : _agent.toRdf(_agent.hu.resolveSpeaker(
                 String.format("Unknown%02d", ++_running_userId)));
@@ -257,7 +257,7 @@ public class MkmClient implements CommunicationHub {
     if (da.hasSlot("sender") &&
         ! (da.getValue("sender").charAt(0) == '<'
            || da.getValue("sender").charAt(0) == '#')) {
-      da.setValue("sender", 
+      da.setValue("sender",
           _agent.hu.resolveSpeaker(da.getValue("sender").trim()));
     }
     if (da.hasSlot("addressee")) {
@@ -316,7 +316,7 @@ public class MkmClient implements CommunicationHub {
       } else {
         _agent.lastSpeaker = null;
       }
-      if (!da.hasSlot("text")) { 
+      if (!da.hasSlot("text")) {
         da.setValue("text", asr);
       }
       da.setValue("id", num2xsd(_running_id++));

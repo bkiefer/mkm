@@ -1,3 +1,5 @@
 <da>#da -> # ^ :#da, # ! <da>.
 
 <prop>#prop: -> # ^ (#prop), # ! <prop>.
+
+!<prop> ^ (!#prop) -> # ^ (top).

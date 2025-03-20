@@ -1,4 +1,0 @@
-flask>=3.0.3
-transformers>=4.44.2
-keras>=3.5.0
-pytorch-transformers>=1.2.0

@@ -57,15 +57,15 @@ NLU:
         class: de.dfki.mlt.rudimant.agent.nlp.TrivialTokenizer
         toLower: true           # turn all output to lower case
         removePunctuation: true  # remove all punctuation tokens
-    # - class: de.dfki.drz.mkm.nlu.IntentInterpreter
-    #   host: localhost
-    #   port: 8665
-    #   converter: src/main/resources/cplanner/intentconv
-    - class: de.dfki.mlt.rudimant.agent.nlp.RasaNlu
+    - class: de.dfki.drz.mkm.nlu.AdapterBertInterpreter
       host: localhost
-      port: 9797
-      min_confidence: 0.8
-      converter: src/main/resources/cplanner/rasaconv
+      port: 5050
+      converter: src/main/resources/cplanner/adapterbertconv
+    # - class: de.dfki.mlt.rudimant.agent.nlp.RasaNlu
+    #   host: localhost
+    #   port: 9797
+    #   min_confidence: 0.8
+    #   converter: src/main/resources/cplanner/rasaconv
 
 
 # ########## DEBUGGER/GUI SETTINGS ##########

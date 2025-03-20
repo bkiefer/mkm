@@ -20,7 +20,7 @@ public class HfcUtils {
         callsign);
     return agents.isEmpty() ? null : (Rdf)agents.get(0);
   }
-  
+
   public Rdf resolveAgent(String callsign) {
     List<Object> agents = proxy.query(
         "select distinct ?a where ?a <drz:hasCallsign> \"{}\" ?_ & ?a <rdf:type> <drz:Einsatzkraft> ?_",
@@ -46,7 +46,7 @@ public class HfcUtils {
   public void addCallsign(String uri, String callsign) {
     proxy.getRdf(uri).setValue("<drz:hasCallsign>", callsign);
   }
-  
+
   /*
   public Rdf findUserByName(String firstname) {
     List<Object> results = proxy.query(

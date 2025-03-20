@@ -24,8 +24,10 @@ public class EinsatzBefehlInterpreter {
   RESTInterpreter ri = new RESTInterpreter();
 
   public EinsatzBefehlInterpreter(Map<String, Object> config) {
-    ri.uri = "http://" + (String) config.get(KEY_HOST)
-          + ":" + (int)config.get(KEY_PORT);
+    ri.host = (String) config.get(KEY_HOST);
+    if (config.containsKey(KEY_PORT)) {
+      ri.port =  (int)config.get(KEY_PORT);
+    }
     try {
       if (ri.connect()) {
         logger.info("BERT Einsatzbefehl recognition connected");

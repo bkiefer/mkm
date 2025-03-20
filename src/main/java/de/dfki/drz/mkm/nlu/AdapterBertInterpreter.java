@@ -7,6 +7,7 @@ import static de.dfki.drz.mkm.nlu.Constants.TRANSCRIPT_OLD_LABEL;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.json.JSONObject;
@@ -15,10 +16,9 @@ import org.slf4j.LoggerFactory;
 
 import de.dfki.mlt.rudimant.agent.nlp.DialogueAct;
 import de.dfki.mlt.rudimant.agent.nlp.Interpreter;
-import okhttp3.FormBody;
 
-public class IntentInterpreter extends Interpreter {
-  static final Logger log = LoggerFactory.getLogger(IntentInterpreter.class);
+public class AdapterBertInterpreter extends Interpreter {
+  static final Logger log = LoggerFactory.getLogger(AdapterBertInterpreter.class);
 
   boolean ready = false;
 
@@ -30,18 +30,22 @@ public class IntentInterpreter extends Interpreter {
   @Override
   @SuppressWarnings("rawtypes")
   public boolean init(File configDir, String language, Map config) {
-    name = "DIT_DIA_" + language;
+    name = "DA_SLOT_" + language;
+    ri.predictEndpoint = "annotate";
     boolean result = super.init(configDir, language, config);
     if (! result) return result;
-    ri.uri = "http://" + (String) config.get(KEY_HOST)
-          + ":" + (int)config.get(KEY_PORT);
+    ri.host = (String) config.get(KEY_HOST);
+    if (config.containsKey(KEY_PORT)) {
+      ri.port =  (int)config.get(KEY_PORT);
+    }
+
     try {
       if (ri.connect()) {
-        log.info("BERT intent recognition connected");
+        log.info("Adapter intent and slot recognition connected");
         ready = true;
       }
     } catch (IOException e) {
-      log.error("Error connecting BERT intent recognition: {}", e);
+      log.error("Error connecting adapter intent and slot recognition: {}", e);
     }
     return ready;
   }
@@ -49,10 +53,10 @@ public class IntentInterpreter extends Interpreter {
   protected JSONObject classify(String transcript_new, String transcript_old)
       throws IOException {
     // TODO: generalise: maybe pass a <String, String> dict?
-    return ri.classify(new FormBody.Builder()
-        .add(TRANSCRIPT_NEW_LABEL, transcript_new)
-        .add(TRANSCRIPT_OLD_LABEL, transcript_old)
-        .build());
+    Map<String, String> params = new HashMap<>();
+    params.put(TRANSCRIPT_NEW_LABEL, transcript_new);
+    //params.put(TRANSCRIPT_OLD_LABEL, transcript_old);
+    return ri.classify_get(params);
   }
 
 
@@ -71,6 +75,10 @@ public class IntentInterpreter extends Interpreter {
     } else {
       try {
         json = classify(text, transcription_old);
+        if (json == null) {
+          log.error("Error calling BERT intent recognition: NULL");
+          return null;
+        }
       } catch (IOException e) {
         log.error("Error calling BERT intent recognition: {}", e);
         json = new JSONObject();
