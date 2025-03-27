@@ -1,3 +1,6 @@
 [submodule "src/main/resources/ontology/drz"]
 	path = src/main/resources/ontology/drz
 	url = git@mlt-gitlab.sb.dfki.de:kiefer/drz-ontology.git
+[submodule "src/main/resources/ontology/vonda"]
+	path = src/main/resources/ontology/vonda
+	url = https://github.com/bkiefer/vonda-ontologies.git
