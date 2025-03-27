@@ -6,10 +6,11 @@
 
 ### Linux
 These instructions are for Linux-Systems (concretely: Ubuntu 22.04 or higher).
+Java 11 (OpenJDK) and maven need to be installed.
 
-### TODO: dialogue ontology is currently a link! needs own repo & submodule.
+### TODO:
 ### Installation of Fraunhofer & Eurocommand connectors (submodule, mvn repo?)
-### Installation of F&E & vonda needs javac! (vonda only tests)
+### Installation of FH IAIS & EC & vonda needs javac! (vonda only tests)
 
 ```
 git submodule update --init --recursive
