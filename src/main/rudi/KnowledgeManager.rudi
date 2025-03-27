@@ -8,3 +8,4 @@ void printEval(String id, String speaker, String addressee,
 #Date String timeOfDay();
 String toString(Message m);
 Rdf toRdf(DialogueAct da);
+void sendFusion(DialogueAct da, String speaker, String addressee);

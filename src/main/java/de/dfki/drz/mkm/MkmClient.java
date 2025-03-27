@@ -58,10 +58,11 @@ public class MkmClient implements CommunicationHub {
 
   private static final String ASR_TOPIC = "whisperasr/asrresult/de";
   private static final String SPEAKER_TOPIC = "whisperasr/speakeridentification";
+  private static final String SLOTS_TOPIC = "mkm/result";
   private static final String STRING_TOPIC = "test/string";
   private static final String CONTROL_TOPIC = "mkm/control";
 
-  private static double CONFIDENCE_THRESHOLD = 0.5;
+  private static double CONFIDENCE_THRESHOLD = 0.7;
 
   /** How much time in milliseconds must pass between two behaviours, if
    *  no message came back that the previous behaviour was finished.
@@ -200,9 +201,17 @@ public class MkmClient implements CommunicationHub {
   }
 
   public void addSpeaker(Speaker speaker) {
-    client.sendMessage(SPEAKER_TOPIC,
+    sendToTopic(SPEAKER_TOPIC,
         String.format("{ \"id\": %d, \"speaker\": \"%s\" }",
             speaker.id, speaker.speaker));
+  }
+
+  public void sendCombined(String msg) {
+    sendToTopic(SLOTS_TOPIC, msg);
+  }
+
+  public void sendToTopic(String topic, String msg) {
+    client.sendMessage(topic, msg);
   }
 
   private void addWithMetaData(DialogueAct da, long start, long end, Speaker speaker) {
@@ -214,30 +223,29 @@ public class MkmClient implements CommunicationHub {
       if (! speaker.speaker.equals("Unknown")) {
         // it's a URI!
         if (da.hasSlot("sender")) {
-          Rdf sender = _agent.hu.resolveAgent(da.getValue("sender"));
+          String nluSenderName = da.getValue("sender");
+          Rdf nluSender = _agent.hu.resolveAgent(nluSenderName);
           // agent found for callsign in transcription ?
-          if (sender != null) {
-            String senderUri = sender.getURI().trim();
-            if (senderUri == speaker.speaker) {
+          if (nluSender != null) {
+            // the URI computed from the NLU result
+            String nluSenderUri = nluSender.getURI().trim();
+            if (nluSenderUri == speaker.speaker) {
+              // we agree, add supporting embedding
               addSpeaker(speaker);
             } else {
               // NLU and audio identify two different (known) people
               // How confident is the audio speaker recognition?
-              if (speaker.confidence >= CONFIDENCE_THRESHOLD) {
-                // TODO: overwrite speaker of DA, is this good?
-                da.setValue("sender", speaker.speaker);
-              } else {
+              if (speaker.confidence < CONFIDENCE_THRESHOLD) {
                 // add new speaker evidence to audio speaker recognition
-                speaker.speaker = senderUri;
+                speaker.speaker = nluSenderUri;
                 addSpeaker(speaker);
               }
             }
           } else {
             // add callsign to the agent from audio identification (and NLU?)
-            _agent.hu.addCallsign(speaker.speaker, da.getValue("sender"));
-            // use audio identification for the DialogueAct
-            da.setValue("sender", speaker.speaker);
+            _agent.hu.addCallsign(speaker.speaker, nluSenderName);
           }
+          da.setValue("sender", speaker.speaker);
         }
       } else {
         // audio identification is unsure or new speaker
@@ -249,6 +257,7 @@ public class MkmClient implements CommunicationHub {
                 String.format("Unknown%02d", ++_running_userId)));
         speaker.speaker = sender.getURI().trim();
         addSpeaker(speaker);
+        da.setValue("sender", speaker.speaker);
      }
     }
 

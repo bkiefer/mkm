@@ -16,7 +16,7 @@ import okhttp3.Response;
 public class RESTInterpreter {
   protected static Logger log = LoggerFactory.getLogger(RESTInterpreter.class);
   protected String scheme = "http";
-  protected String host;
+  protected String host = "localhost";
   protected int port = -1;
   protected String aliveEndpoint = "alive";
   protected String predictEndpoint = "predict";

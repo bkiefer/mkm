@@ -1,6 +1,7 @@
 package de.dfki.drz.mkm;
 
 import static de.dfki.drz.mkm.Constants.INSTANCE_NS_SHORT;
+import static de.dfki.lt.tr.dialogue.cplan.DagNode.PROP_FEAT_ID;
 import static de.dfki.mlt.rudimant.common.Configs.CFG_ONTOLOGY_FILE;
 
 import java.io.File;
@@ -12,15 +13,21 @@ import java.time.OffsetDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+
+import org.json.JSONWriter;
 
 import de.dfki.lt.hfc.WrongFormatException;
 import de.dfki.lt.hfc.db.HfcDbHandler;
 import de.dfki.lt.hfc.db.rdfProxy.DbClient;
 import de.dfki.lt.hfc.db.rdfProxy.Rdf;
 import de.dfki.lt.hfc.db.rdfProxy.RdfProxy;
+import de.dfki.lt.hfc.types.XsdAnySimpleType;
+import de.dfki.lt.tr.dialogue.cplan.DagEdge;
+import de.dfki.lt.tr.dialogue.cplan.DagNode;
 import de.dfki.mlt.drz.eurocommand_api.model.MissionResourceRestApiContract;
 import de.dfki.mlt.drz.fraunhofer_api.ApiException;
 import de.dfki.mlt.drz.fraunhofer_api.api.DefaultApi;
@@ -63,7 +70,7 @@ public abstract class KnowledgeManager extends Agent {
   }
 
   private void initIAISApi() {
-    api.setCustomBaseUrl("https://eve.iais.fraunhofer.de/radio-transcription");
+    api.setCustomBaseUrl("http://10.26.2.42:8080/radio-transcription");
     api.getApiClient().setUsername("development");
     api.getApiClient().setPassword("LookMomNoVPN!");
   }
@@ -121,8 +128,91 @@ public abstract class KnowledgeManager extends Agent {
   protected Rdf toRdf(DialogueAct da) {
     return da.toRdf(_proxy);
   }
-
+  
+  private static short firstId = -1, restId;
+  
+  private static String getAtom(DagNode dag) {
+    return dag.getValue(PROP_FEAT_ID).getTypeName();
+  }
+  
+  private static DagNode getDag(DagNode dag, String feature) {
+    DagEdge e = dag.getEdge(DagNode.getFeatureId(feature));
+    return e == null ? null : e.getValue();
+  }
+  
+  public static List<String> daList(DagNode dag) {
+    if (firstId < 0) {
+      firstId = DagNode.getFeatureId("first");
+      restId = DagNode.getFeatureId("rest");
+    }
+    List<String> result = new ArrayList<>();
+    while (dag != null && dag.getEdge(firstId) != null) {
+      String val = getAtom(dag.getValue(firstId));
+      result.add(val);
+      dag = dag.getValue(restId);
+    }
+    return result;
+  }
+  
   private String na(String in) { return in == null ? "NA" : in; }
+  
+  /** remove <> and namespace */
+  public static String rdf2name(String uriString) {
+    if (!uriString.startsWith("<") || !uriString.endsWith(">"))
+      return uriString;
+    String us = uriString.substring(1, uriString.length() - 1);
+    int i = us.lastIndexOf('#');
+    if (i < 0)
+      i = us.lastIndexOf(':');
+    return us.substring(i + 1);
+  }
+  
+  long toLong(String s) { 
+    if (s == null) return 0l;
+    try {
+      Long l = (Long)XsdAnySimpleType.getXsdObject(s).toJava();
+      return l;
+    } catch (Exception ex) {
+    }
+    return 0;
+  }
+  
+  @SuppressWarnings({ "unchecked", "rawtypes" })
+  void sendFusion(DialogueAct da, String sender, String addressee) {
+    String id = na(da.getValue("id"));
+    String daType = na(da.getDialogueActType());
+    String prop = na(da.getProposition());
+    String text = na(da.getValue("text"));
+    sender = na(sender);
+    addressee = na(addressee);
+    long fromTime = toLong(da.getValue("fromTime"));
+    long toTime= toLong(da.getValue("toTime"));
+    Map slots = new HashMap<String, List<String>>();
+    DagNode phrases = da.getDag("phrases");
+    if (phrases != null) {
+      // put identified slots into json
+      String[] slotnames = { "einheit", "auftrag", "mittel", "weg", "ziel" };
+      for (String slot: slotnames) {
+        if (getDag(phrases, slot) != null) {
+          slots.put(slot, daList(getDag(phrases, slot)));
+        }
+      }
+    }
+    
+    if (evaluation) { 
+      printEval(da.getValue("id"), sender, addressee, daType, prop, text);
+    }
+    
+    slots.put("id", id);
+    slots.put("sender", sender);
+    slots.put("addressee", addressee);
+    slots.put("intent", daType);
+    slots.put("frame", prop);
+    slots.put("text", text);
+    ((MkmClient)_hub).sendCombined(JSONWriter.valueToString(slots));
+    sendMessageToIAIS(sender, addressee, text, fromTime, toTime);
+  }
+
 
   protected void startEvaluation() {
     if (evaluation) return;

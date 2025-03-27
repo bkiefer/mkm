@@ -21,15 +21,12 @@ Message newMessage(DialogueAct da) {
     logger.error("Message without active conversation: {}-{}: {}",
                  m.da.fromTime, m.da.toTime, m.text);
   }
-  if (evaluation) {
-    Einsatzkraft s = m.da.sender;
-    Einsatzkraft a = m.da.addressee;
-    String sender = s ? s.hasToken : "NA";
-    String addr = a ? a.hasToken : "NA";
-    printEval(da.getValue("id"), sender, addr,
-              da.getDialogueActType(), da.getProposition(),
-              m.text);
-  }
+  Einsatzkraft s = m.da.sender;
+  Einsatzkraft a = m.da.addressee;
+  String sender = s ? (s.hasToken ? s.hasToken : s.getURI()) : null;
+  String addr = a ? (a.hasToken ? a.hasToken : a.getURI()) : null;
+
+  sendFusion(da, sender, addr);
   return m;
 }
 

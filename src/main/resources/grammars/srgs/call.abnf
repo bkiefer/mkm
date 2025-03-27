@@ -15,11 +15,13 @@ public $top = (
 
 $no = (1|eins|2|zwei);
 
-$callsign = (Andreas|Benno|Bodenoperator $no|Bodenroboter $no|Daniel|Dirk|
+$callsign_spec = (Andreas|Benno|Bodenoperator $no|Bodenroboter $no|Daniel|Dirk|
 Drohne|Drohnenoperator|Einsatzleiter|Lena|Markus|
 Mission Commander|Mission Operator|Operator $no|Operator Boden $no|
 Operator UAV|Sven|Teamleader|Teamleiter|Teamleiter $no|Thorsten|UAV|UAV $no|
-UAV Drohne|UAV Operator|UGV $no|Feuerwehr Bochum|Roboter $no);
+UAV Drohne|UAV Operator|UGV $no|Feuerwehr Bochum|Roboter $no|Zugführer|Einsatzleiter|Abschnittsleiter Löschzug|Zugführer Löschzug|Abschnittsleiter Erkundung|Abschnittsleiter Robotik|Zugführerassistent);
+
+$callsign = "$$.*"|($callsign_spec { out = "$$1"; });
 
 $callRequest = (
   [das|der] $callsign { addr = "$$1"; } (von|vom) $callsign { send = "$$1"; } [bitte] [kommen]

@@ -34,7 +34,9 @@ public class AdapterBertInterpreter extends Interpreter {
     ri.predictEndpoint = "annotate";
     boolean result = super.init(configDir, language, config);
     if (! result) return result;
-    ri.host = (String) config.get(KEY_HOST);
+    if (config.containsKey(KEY_HOST)) {
+      ri.host = (String) config.get(KEY_HOST);
+    }
     if (config.containsKey(KEY_PORT)) {
       ri.port =  (int)config.get(KEY_PORT);
     }
@@ -79,6 +81,7 @@ public class AdapterBertInterpreter extends Interpreter {
           log.error("Error calling BERT intent recognition: NULL");
           return null;
         }
+        log.info("Incoming JSON from " + name + " " + json.toString());
       } catch (IOException e) {
         log.error("Error calling BERT intent recognition: {}", e);
         json = new JSONObject();
@@ -87,7 +90,10 @@ public class AdapterBertInterpreter extends Interpreter {
     }
     log.debug("Classified: {} as {}", text, json);
     json.remove("success");
-    DialogueAct r = convert(json);
+    DialogueAct r = null;
+    if (json.has("dialogue_act")) {
+      r = convert(json);
+    }
     if (r == null) {
       logger.info("No {} result for {}", name, text);
     } else {
