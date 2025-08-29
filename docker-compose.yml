@@ -12,7 +12,7 @@ services:
     restart: always
     hostname: 'rasa_server'
     volumes:
-      - ./mkm/rasa:/app
+      - ./rasa:/app
 
   broker:
     image: 'eclipse-mosquitto:2.0.15'
@@ -25,7 +25,7 @@ services:
       - '1883:1883'
       - '9001:9001'
     volumes:
-      - ./mkm/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
+      - ./mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
 
   asrident:
     depends_on:
@@ -33,7 +33,36 @@ services:
       - rasa_server
       - mkm
     image: 'asrident'
-    command: ["/bin/sh", "-c", "sleep 30 && ./run_whisper.sh -m -c config.yml TEval2015_day2/chunk*.wav"]
+    command: ["/bin/sh", "-c", "sleep 30 && ./run_whisper.sh -m -c config.yml"]
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: 1
+    #           capabilities: [gpu]
+    networks:
+      - mlt
+    container_name: 'asrident'
+    restart: always
+    hostname: 'asrident'
+    environment:
+      PULSE_SERVER: "unix:${XDG_RUNTIME_DIR}/pulse/native"
+    volumes:
+      - ${XDG_RUNTIME_DIR}/pulse/native:${XDG_RUNTIME_DIR}/pulse/native \
+      - ${HOME}/.config/pulse/cookie:/root/.config/pulse/cookie \
+      - ./asrident/docker_de_config.yml:/app/config.yml:ro
+      - ./asrident/models:/app/models
+      - ./asrident/audio:/app/audio
+      - ./asrident/outputs:/app/outputs
+
+  drzintent:
+    depends_on:
+      - broker
+    image: drz_daslot
+    command: ["/bin/bash", "-c",
+    'python3 -u adapters_bio_tags_server.py 2>&1
+     | tee logs/server$(date -Iminutes).log']
     deploy:
       resources:
         reservations:
@@ -43,21 +72,21 @@ services:
               capabilities: [gpu]
     networks:
       - mlt
-    container_name: 'asrident'
+    container_name: 'drz_daslot'
     restart: always
-    hostname: 'asrident'
+    hostname: 'drzintent'
+    ports:
+      - 5050:5050
     volumes:
-      - ./asrident/docker_de_config.yml:/app/config.yml:ro
-      - ./asrident/pretrained_models:/app/pretrained_models
-      - ./asrident/whisper-models:/app/whisper-models
-      - ./asrident/audio:/app/audio
-      - ./asrident/outputs:/app/outputs
-      - ./asrident/TEval2015_day2:/app/TEval2015_day2
+      - ./drz_intentslot/logs:/app/logs
+      - ./drz_intentslot/adapters:/app/adapters
+      - ./drz_intentslot/bert-base-german-cased:/app/bert-base-german-cased
 
   mkm:
     depends_on:
       - broker
       - rasa_server
+      - drzintent
     image: 'mkm'
     networks:
       - mlt
@@ -65,5 +94,5 @@ services:
     restart: always
     hostname: 'mkm'
     volumes:
-      - ./mkm/docker-config.yml:/app/config.yml:ro
-      - ./mkm/logs:/app/logs
+      - ./docker-config.yml:/app/config.yml:ro
+      - ./logs:/app/logs

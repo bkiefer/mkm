@@ -4,3 +4,12 @@
 [submodule "src/main/resources/ontology/vonda"]
 	path = src/main/resources/ontology/vonda
 	url = https://github.com/bkiefer/vonda-ontologies.git
+[submodule "asrident"]
+	path = asrident
+	url = https://github.com/bkiefer/asrident.git
+[submodule "vonda"]
+	path = vonda
+	url = https://github.com/bkiefer/vonda.git
+[submodule "drz_intentslot"]
+	path = drz_intentslot
+	url = https://github.com/bkiefer/drz_intentslot
