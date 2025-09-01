@@ -22,10 +22,10 @@ services:
     container_name: 'mqtt-broker'
     hostname: 'mqtt-broker'
     ports:
-      - '1883:1883'
-      - '9001:9001'
+      - '9883:1883'
+    #   - '9001:9001'
     volumes:
-      - ./mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
+      - ./configs/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
 
   asrident:
     depends_on:
@@ -34,13 +34,13 @@ services:
       - mkm
     image: 'asrident'
     command: ["/bin/sh", "-c", "sleep 30 && ./run_whisper.sh -m -c config.yml"]
-    # deploy:
-    #   resources:
-    #     reservations:
-    #       devices:
-    #         - driver: nvidia
-    #           count: 1
-    #           capabilities: [gpu]
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              # count: 1
+              capabilities: [gpu]
     networks:
       - mlt
     container_name: 'asrident'
@@ -49,12 +49,12 @@ services:
     environment:
       PULSE_SERVER: "unix:${XDG_RUNTIME_DIR}/pulse/native"
     volumes:
-      - ${XDG_RUNTIME_DIR}/pulse/native:${XDG_RUNTIME_DIR}/pulse/native \
-      - ${HOME}/.config/pulse/cookie:/root/.config/pulse/cookie \
-      - ./asrident/docker_de_config.yml:/app/config.yml:ro
-      - ./asrident/models:/app/models
-      - ./asrident/audio:/app/audio
-      - ./asrident/outputs:/app/outputs
+      - ${XDG_RUNTIME_DIR}/pulse/native:${XDG_RUNTIME_DIR}/pulse/native
+      - ${HOME}/.config/pulse-cookie:/root/.config/pulse-cookie
+      - ./configs/asrident_de_config.yml:/app/config.yml:ro
+      - ./modules/asrident/models:/app/models
+      - ./modules/asrident/audio:/app/audio
+      - ./modules/asrident/outputs:/app/outputs
 
   drzintent:
     depends_on:
@@ -68,7 +68,7 @@ services:
         reservations:
           devices:
             - driver: nvidia
-              count: 1
+              # count: 1
               capabilities: [gpu]
     networks:
       - mlt
@@ -78,9 +78,9 @@ services:
     ports:
       - 5050:5050
     volumes:
-      - ./drz_intentslot/logs:/app/logs
-      - ./drz_intentslot/adapters:/app/adapters
-      - ./drz_intentslot/bert-base-german-cased:/app/bert-base-german-cased
+      - ./logs/intentslot:/app/logs
+      - ./modules/drz_intentslot/adapters:/app/adapters
+      - ./modules/drz_intentslot/bert-base-german-cased:/app/bert-base-german-cased
 
   mkm:
     depends_on:
@@ -94,5 +94,5 @@ services:
     restart: always
     hostname: 'mkm'
     volumes:
-      - ./docker-config.yml:/app/config.yml:ro
-      - ./logs:/app/logs
+      - ./configs/docker-config.yml:/app/config.yml:ro
+      - ./logs/mkm:/app/logs

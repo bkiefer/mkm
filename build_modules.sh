@@ -7,27 +7,27 @@ git pull --recurse-submodules
 git submodule update --init --recursive --remote
 
 # ASR and speaker identification
-pushd asrident
+pushd modules/asrident
 ./build_docker.sh
 # download silero, speaker identification and whisper models
 ./model_download.sh
 popd
 
 # Build docker for intent and slot recognition
-pushd drz_intentslot
+pushd modules/drz_intentslot
 ./model_download.sh
 ./build_docker.sh
 popd
 
 # Make sure VOnDA compiler is available
-pushd vonda
+pushd modules/vonda
 #git submodule init; git pull --recurse-submodules # do we need that?
 mvn install
 popd
 
 # Compile the MKM and build the MKM docker
 mvn clean
-./vonda/bin/vondac -c "config.yml"
+./modules/vonda/bin/vondac -c "config.yml"
 mvn install
 ./build_docker.sh
 popd
