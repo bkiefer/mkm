@@ -2,45 +2,38 @@
 
 # DRZ Mission Knowledge Manager
 
-## Installation instructions:
+## Installation instructions for use with Docker and docker compose
 
 ### Linux
-These instructions are for Linux-Systems (concretely: Ubuntu 22.04 or higher).
-Java 11 (OpenJDK) and maven need to be installed.
+These instructions are for Linux-Systems (concretely: Ubuntu 24.04 or higher).
+OS requirements:
 
+- Java 11 (OpenJDK)
+- maven
+- docker, docker-compose and NVidia Container Toolkit
+
+After cloning the repository, issue the following command from the command line:
+
+    ./build_modules.sh
+
+This will pull required submodules, build them (including docker images) and download ML models needed to run them.
+
+The `configs` directory contains files to be eventually adapted to the current runtime environment, e.g., the current sound system setup. See explanations in the files for details.
+
+<!--
 ### TODO:
 ### Installation of Fraunhofer & Eurocommand connectors (submodule, mvn repo?)
 ### Installation of FH IAIS & EC & vonda needs javac! (vonda only tests)
+-->
 
-```
-git submodule update --init --recursive
-git submodule update --recursive --remote
-```
+## Bare metal installation (for some modules) DISCOURAGED, NOT VERIFIED
 
-In order to compile this, make sure the VOnDA compiler `vondac` (version 3) is available the default path, or adapt the `compile` script in this directory.
+An additional requirement for local installation is the `uv` package manager for python. Make sure `uv` is working on your machine.
 
-To get the VOnDA compiler, check it out from github and compile it (needs Java 11 and maven installed)
+Then, run the `./prepare_localinst.sh` script, which will pull all submodules, eventually create new virtual environments, download the necessary ML models, and compile the MKM module.
 
-```
-git clone git@github.com:bkiefer/vonda.git
-cd vonda
-mvn -U clean install
-```
+<!-- Follow the instructions in `modules/asrident` and `modules/drz_intentslot` on how to install these. -->
 
-Now the `vondac` script is ready to run in the `bin/` directory, add it to your `PATH` or make sure it can be run otherwise.
-
-The example can now be build as follows:
-
-```
-# generate .java files from the .rudi source files (will call mvn clean first)
-./compile
-# compile the .java files into an executable .jar
-mvn install
-# start the MKM
-./run_mkm
-```
-
-**Attention:** Do **not** run `mvn clean install`, as this will delete the generated Java files and compilation will fail.
 
 ## Start the complete system, ASR&SpeakerIdent, DA&Slot recognition and MKM
 
