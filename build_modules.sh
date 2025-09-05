@@ -30,4 +30,3 @@ mvn clean
 ./modules/vonda/bin/vondac -c "config.yml"
 mvn install
 ./build_docker.sh
-popd
