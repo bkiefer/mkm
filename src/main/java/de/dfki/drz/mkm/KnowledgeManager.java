@@ -9,14 +9,10 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Writer;
-import java.time.OffsetDateTime;
-import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 import org.json.JSONWriter;
 
@@ -28,10 +24,6 @@ import de.dfki.lt.hfc.db.rdfProxy.RdfProxy;
 import de.dfki.lt.hfc.types.XsdAnySimpleType;
 import de.dfki.lt.tr.dialogue.cplan.DagEdge;
 import de.dfki.lt.tr.dialogue.cplan.DagNode;
-import de.dfki.mlt.drz.eurocommand_api.model.MissionResourceRestApiContract;
-import de.dfki.mlt.drz.fraunhofer_api.ApiException;
-import de.dfki.mlt.drz.fraunhofer_api.api.DefaultApi;
-import de.dfki.mlt.drz.fraunhofer_api.model.RadioMessage;
 import de.dfki.mlt.rudimant.agent.Agent;
 import de.dfki.mlt.rudimant.agent.Behaviour;
 import de.dfki.mlt.rudimant.agent.nlp.DialogueAct;
@@ -49,12 +41,8 @@ public abstract class KnowledgeManager extends Agent {
 
   Speaker lastSpeaker = null;
 
-  private static final DefaultApi api = new DefaultApi();
   //private static final SimpleDateFormat sdf =
   //    new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
-
-  EuroCommandClient ECclient = new EuroCommandClient();
-  UUID missionId;
 
   private RdfProxy startClient(File configDir, Map<String, Object> configs)
       throws IOException, WrongFormatException {
@@ -67,24 +55,6 @@ public abstract class KnowledgeManager extends Agent {
     RdfProxy proxy = new RdfProxy(handler);
     hu = new HfcUtils(proxy);
     return proxy;
-  }
-
-  private void initIAISApi() {
-    api.setCustomBaseUrl("http://10.26.2.42:8080/radio-transcription");
-    api.getApiClient().setUsername("development");
-    api.getApiClient().setPassword("LookMomNoVPN!");
-  }
-
-  private void initECApi() {
-    try {
-      List<MissionResourceRestApiContract> missionResources =
-          ECclient.getMissionResources(missionId);
-      if (!missionResources.isEmpty()) {
-        missionId = missionResources.get(0).getMissionId();
-      }
-    } catch (de.dfki.mlt.drz.eurocommand_api.ApiException ex) {
-      missionId = null;
-    }
   }
 
   @SuppressWarnings({ "rawtypes", "unchecked" })
@@ -100,8 +70,6 @@ public abstract class KnowledgeManager extends Agent {
       startEvaluation();
     }
 
-    initIAISApi();
-    initECApi();
     // start first round of rule evaluations
     newData();
   }
@@ -209,8 +177,9 @@ public abstract class KnowledgeManager extends Agent {
     slots.put("intent", daType);
     slots.put("frame", prop);
     slots.put("text", text);
+    slots.put("fromTime", Long.toString(fromTime));
+    slots.put("toTime", Long.toString(toTime));
     ((MkmClient)_hub).sendCombined(JSONWriter.valueToString(slots));
-    sendMessageToIAIS(sender, addressee, text, fromTime, toTime);
   }
 
 
@@ -259,38 +228,6 @@ public abstract class KnowledgeManager extends Agent {
       }
       w = null;
       evaluation = false;
-    }
-  }
-
-  private OffsetDateTime toODT(long l) {
-    return new Date(l).toInstant().atZone(ZoneId.systemDefault())
-      .toOffsetDateTime();
-  }
-
-  protected void sendMessageToIAIS(String sender, String receiver,
-      String message, long fromTime, long toTime) {
-
-    List<RadioMessage> radioMessages = new ArrayList<>();
-    radioMessages.add(new RadioMessage()
-        .sender(sender)
-        .receiver(receiver)
-        .message(message)
-        .startTime(toODT(fromTime))
-        .endTime(toODT(toTime)));
-    try {
-      api.addRadioMessagesAddMessagesPut(radioMessages);
-      // if there is no exception, putting messages was successful
-    } catch (ApiException e) {
-      logger.error("Sending Message failed: {}", e.getMessage());
-    }
-  }
-
-  protected void sendMessageToEC(String sender, String receiver,
-      String message, long fromTime, long toTime) {
-    try {
-      ECclient.sendMessage(message, sender, receiver, missionId);
-    } catch (de.dfki.mlt.drz.eurocommand_api.ApiException ex) {
-      logger.error("EC sending: {}", ex);
     }
   }
 }
