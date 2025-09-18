@@ -13,19 +13,20 @@ pushd modules/asrident
 ./model_download.sh
 popd
 
-# Build docker for intent and slot recognition
+# Build docker for intent and slot recognition, NEEDS git-lfs!!
 pushd modules/drz_intentslot
 ./model_download.sh
 ./build_docker.sh
 popd
 
-# Make sure VOnDA compiler is available
+# Make sure VOnDA compiler is available, needs installed JDK, not only JRE!
 pushd modules/vonda
 #git submodule init; git pull --recurse-submodules # do we need that?
 mvn install
 popd
 
-# Compile the MKM and build the MKM docker
+# Download rasa ML model, compile the MKM and build the MKM docker
+./model_download.sh
 mvn clean
 ./modules/vonda/bin/vondac -c "config.yml"
 mvn install
