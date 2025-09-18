@@ -33,7 +33,8 @@ services:
       - rasa_server
       - mkm
     image: 'asrident'
-    command: ["/bin/sh", "-c", "sleep 30 && ./run_whisper.sh -m -c config.yml"]
+    command: ["/bin/sh", "-c",
+              "sleep 15 && uv run ./run_whisper.sh -m -c config.yml"]
     deploy:
       resources:
         reservations:
@@ -51,10 +52,10 @@ services:
     volumes:
       - ${XDG_RUNTIME_DIR}/pulse/native:${XDG_RUNTIME_DIR}/pulse/native
       - ${HOME}/.config/pulse-cookie:/root/.config/pulse-cookie
-      - ./configs/asrident_de_config.yml:/app/config.yml:ro
-      - ./modules/asrident/models:/app/models
-      - ./modules/asrident/audio:/app/audio
-      - ./modules/asrident/outputs:/app/outputs
+      - ./configs/asrident_de_config.yml:/app/asrident/config.yml:ro
+      - ./modules/asrident/models:/app/asrident/models
+      - ./modules/asrident/audio:/app/asrident/audio
+      - ./modules/asrident/outputs:/app/asrident/outputs
 
   drzintent:
     depends_on:

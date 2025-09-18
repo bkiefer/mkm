@@ -1,13 +1,10 @@
 package de.dfki.drz.mkm;
 
-import static de.dfki.drz.mkm.util.Utils.*;
+import static de.dfki.drz.mkm.util.Utils.num2xsd;
+import static de.dfki.mlt.mqtt.MqttHandler.bytesToString;
 
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.nio.charset.Charset;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
@@ -115,19 +112,6 @@ public class MkmClient implements CommunicationHub {
     Optional<AsrResult> asr;
     (asr = mapper.unmarshal(b, AsrResult.class)).ifPresent(this::sendEvent);
     return ! asr.isEmpty();
-  }
-
-  private String bytesToString(byte[] b) {
-    StringBuilder sb = new StringBuilder();
-    int c;
-    try (Reader r = new InputStreamReader(new ByteArrayInputStream(b),
-        Charset.forName("UTF-8"))) {
-      while ((c = r.read()) >= 0) {
-        sb.append((char)c);
-      }
-    } catch (IOException ex) { // will not happen
-    }
-    return sb.toString();
   }
 
   private boolean receiveString(byte[] b) {

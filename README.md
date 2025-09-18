@@ -12,6 +12,7 @@ These instructions have been tested on **Ubuntu 24.04** and higher, but they sho
 
 * **Java 11** or higher (`openjdk-11-jdk`)
 * **Maven**
+* **git** and **git-lfs**
 
 Additionally, the following tools are required:
 
