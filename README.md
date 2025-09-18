@@ -4,26 +4,52 @@
 
 ## Installation instructions for use with Docker and docker compose
 
-### Linux
-These instructions are for Linux-Systems (concretely: Ubuntu 24.04 or higher).
-OS requirements:
+## Prerequisites
 
-- Java 11 (OpenJDK)
-- maven
-- docker, docker-compose and NVidia Container Toolkit
+These instructions have been tested on **Ubuntu 24.04** and higher, but they should also work on other Linux distributions.
 
-After cloning the repository, issue the following command from the command line:
+### OS Requirements:
 
-    ./build_modules.sh
+* **Java 11** or higher (`openjdk-11-jdk`)
+* **Maven**
 
-This will pull required submodules, build them (including docker images) and download ML models needed to run them.
+Additionally, the following tools are required:
 
-The `configs` directory contains files to be eventually adapted to the current runtime environment, e.g., the current sound system setup. See explanations in the files for details.
+* **Docker** and **Docker Compose**
+* **NVIDIA Container Toolkit**
+  (For installation, it's recommended to follow the official procedure on the Docker website.)
+
+Ensure that the user installing the software is part of the **docker** group. You can add a user to this group using the following command:
+
+```bash
+sudo usermod -aG docker <username>
+```
+
+---
+
+## Setup Instructions
+
+After cloning the repository, run the following command to set up the environment:
+
+```bash
+./build_modules.sh
+```
+
+This script will:
+
+* Pull the necessary submodules
+* Build the modules, including Docker images
+* Download the required machine learning models for the setup
+
+---
+
+## Configuration
+
+The `configs` directory contains configuration files that may need to be adapted to your specific runtime environment. For example, you may need to adjust settings for your current sound system setup. Detailed explanations can be found within each of the configuration files.
 
 <!--
 ### TODO:
 ### Installation of Fraunhofer & Eurocommand connectors (submodule, mvn repo?)
-### Installation of FH IAIS & EC & vonda needs javac! (vonda only tests)
 -->
 
 ## Bare metal installation (for some modules) DISCOURAGED, NOT VERIFIED
