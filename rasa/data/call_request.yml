@@ -1,0 +1,76 @@
+version: "3.1"
+
+nlu:
+- intent: 'Request_Communication'
+  examples: |
+    -  [zugführer](addressee) von [whs](sender) kommen
+    -  [gruppenführer](addressee) von [zugführer](sender) kommen
+    -  das [whs](addressee) von [zugführer](sender) kommen
+    -  [d2](addressee) von [zugführer](sender) kommen
+    -  [whs](addressee) von [zugführer](sender) kommen
+    -  [d1](addressee) von [zugführer](sender) kommen
+    -  [d1](addressee) von [zugführer](sender) kommen
+    -  [gruppenführer](addressee) von [zugführer](sender) kommen
+    -  [d2](addressee) von [zugführer](sender) kommen
+    -  [whs](addressee) von [zugführer](sender) kommen
+    -  [gruppenführer](addressee) von [zugführer](sender) kommen
+    -  [zugführer](addressee) von [whs](sender)
+    -  [zugführer](addressee) von [gruppenführer](sender) kommen
+    -  [zugführer](addressee) von [d2](sender) kommen
+    -  [d2](addressee) von [zugführer](sender) kommen
+    -  [gruppenführer](addressee) von [zugführer](sender) kommen
+    -  [gruppenführer](addressee) von [zugführer](sender) kommen
+    -  [d1](addressee) von [zugführer](sender) kommen
+    -  [gruppenführer](addressee) von [zugführer](sender) kommen
+    -  [whs](addressee) von [zugführer](sender) kommen
+    -  [gruppenführer](addressee) von [zugführer](sender) kommen
+    -  [d1](addressee) von [zugführer](sender) kommen
+    -  [whs](addressee) von [zugführer](sender) kommen
+    -  [gruppenführer](addressee) von [zugführer](sender) kommen
+    -  [d2](addressee) von [zugführer](sender) kommen
+    -  [gruppenführer](addressee) von [zugführer](sender) kommen
+    -  [d2](addressee) von [zugführer](sender) kommen
+    -  [d1](addressee) von [zugführer](sender) kommen
+    -  [gruppenführer](addressee) von [zugführer](sender) kommen
+    -  [d2](addressee) von [zugführer](sender) kommen
+    -  [d2](addressee) von [zugführer](sender) kommen
+    -  [gruppenführer](addressee) von [zugführer](sender) kommen
+    -  [zugführer](addressee) von [gruppenführer](sender) kommen
+    -  [d2](addressee) von [zugführer](sender) kommen
+    -  [zugführer](addressee) [d1](sender) bitte kommen
+    -  [whs](addressee) von [zugführer](sender) kommen
+    -  [d2](addressee) von [zugführer](sender) kommen
+    -  [zugführer](sender) an [whs](addressee) kommen
+    -  [zugführer](addressee) von [d1](sender)
+    -  [gruppenführer](addressee) von [zugführer](sender) kommen
+    -  [zugführer](addressee) von [d2](sender) kommen
+    -  [whs](addressee) von [zugführer](sender) kommen
+    -  [whs](addressee) von [zugführer](sender) kommen
+    -  [gruppenführer](addressee) von [zugführer](sender) kommen
+    -  [gruppenführer](addressee) von [zugführer](sender) kommen
+    -  [zugführer](addressee) von [gruppenführer](sender) kommen
+    -  [zugführer](addressee) von [whs](sender) kommen
+    -  [zugführer](addressee) von [gruppenführer](sender) kommen
+    -  [d5](callsign] von [gruppenführer](sender) kommen
+    -  [gruppenführer](addressee) von [zugführer](sender) kommen
+    -  [zugführer](addressee) von [d2](sender) kommen
+    -  [zugführer](addressee) von [d2](sender) kommen
+    -  [d1](addressee) von [zugführer](sender) kommen
+    -  [zugführer](addressee) von [whs](sender) kommen
+    -  [zugführer](addressee) von [whs](sender) kommen
+    -  [gruppenführer](addressee) von [zugführer](sender) kommen
+    -  [zugführer](addressee) von [gruppenführer](sender)
+    -  [d1](addressee) von [zugführer](sender) kommen
+    -  [d2](sender) für [zugführer](addressee) kommen
+    -  [d2](sender) für [zugführer](addressee) kommen
+    -  [zugführer](addressee) von [d2](sender) kommen
+    -  [zugführer](addressee) von [gruppenführer](sender) kommen
+    -  [gruppenführer](addressee) von [zugführer](sender) kommen
+    -  [zugführer](addressee) von [d1](sender) kommen
+    -  [d2](addressee) von [zugführer](sender) kommen
+    -  [zugführer](addressee) von [d1](sender) bitte kommen
+    -  [zugführer](addressee) von [gruppenführer](sender) kommen
+    -  [d2](addressee) von [zugführer](sender) kommen
+    -  [d2](addressee) kommen
+    -  [zugführer](addressee) von [gruppenführer](sender) kommen
+    -  [zugführer](addressee) von [whs](sender) kommen

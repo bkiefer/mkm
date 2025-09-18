@@ -1,0 +1,8 @@
+[Settings]
+language=de_DE
+
+[Rules Stage 0]
+adapterbertconv.trf
+
+[Rules Stage 1]
+adapterbertconv-default.trf

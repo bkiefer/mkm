@@ -1,0 +1,99 @@
+networks:
+  mlt:
+    driver: bridge
+
+services:
+  rasa_server:
+    image: 'rasa/rasa:3.6.20-full'
+    command: ["run", "--enable-api", "--port", "9797"]
+    networks:
+      - mlt
+    container_name: 'rasaserver'
+    restart: always
+    hostname: 'rasa_server'
+    volumes:
+      - ./rasa:/app
+
+  broker:
+    image: 'eclipse-mosquitto:2.0.15'
+    networks:
+      - mlt
+    restart: always
+    container_name: 'mqtt-broker'
+    hostname: 'mqtt-broker'
+    ports:
+      - '9883:1883'
+    #   - '9001:9001'
+    volumes:
+      - ./configs/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
+
+  asrident:
+    depends_on:
+      - broker
+      - rasa_server
+      - mkm
+    image: 'asrident'
+    command: ["/bin/sh", "-c",
+              "sleep 15 && uv run ./run_whisper.sh -m -c config.yml"]
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              # count: 1
+              capabilities: [gpu]
+    networks:
+      - mlt
+    container_name: 'asrident'
+    restart: always
+    hostname: 'asrident'
+    environment:
+      PULSE_SERVER: "unix:${XDG_RUNTIME_DIR}/pulse/native"
+    volumes:
+      - ${XDG_RUNTIME_DIR}/pulse/native:${XDG_RUNTIME_DIR}/pulse/native
+      - ${HOME}/.config/pulse-cookie:/root/.config/pulse-cookie
+      - ./configs/asrident_de_config.yml:/app/asrident/config.yml:ro
+      - ./modules/asrident/models:/app/asrident/models
+      - ./modules/asrident/audio:/app/asrident/audio
+      - ./modules/asrident/outputs:/app/asrident/outputs
+
+  drzintent:
+    depends_on:
+      - broker
+    image: drz_daslot
+    command: ["/bin/bash", "-c",
+    'python3 -u adapters_bio_tags_server.py 2>&1
+     | tee logs/server$(date -Iminutes).log']
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              # count: 1
+              capabilities: [gpu]
+    networks:
+      - mlt
+    container_name: 'drz_daslot'
+    restart: always
+    hostname: 'drzintent'
+    ports:
+      - 5050:5050
+    volumes:
+      - ./logs/intentslot:/app/logs
+      - ./modules/drz_intentslot/adapters:/app/adapters
+      - ./modules/drz_intentslot/bert-base-german-cased:/app/bert-base-german-cased
+
+  mkm:
+    depends_on:
+      - broker
+      - rasa_server
+      - drzintent
+    image: 'mkm'
+    networks:
+      - mlt
+    container_name: 'mkm'
+    restart: always
+    hostname: 'mkm'
+    volumes:
+      - ./configs/docker-config.yml:/app/config.yml:ro
+      - ./logs/mkm:/app/logs

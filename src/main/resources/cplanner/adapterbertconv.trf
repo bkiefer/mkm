@@ -1,0 +1,20 @@
+// convert JSON output of bert intent analyser into dag
+/*
+{ "dialogue_act": "Einsatzbefehl",
+  "text": "Wassertrupp mit dem Rollschlauch zur Brandbek\u00e4mpfung vor",
+  "phrases": {"einheit": ["Wassertrupp"],
+              "auftrag": ["mit dem Rollschlauch zur Brandbek\u00e4mpfung vor"],
+              "mittel": ["mit dem Rollschlauch"]}
+              "weg"
+              "ziel"
+}
+*/
+
+<dialogue_act> "Einsatzbefehl" -> # ^ :Order ^ (top), # !<dialogue_act>.
+<dialogue_act> "Absage" -> # ^ :Disconfirm ^ (top), # !<dialogue_act>.
+<dialogue_act> "Information_geben" -> # ^ :Inform ^ (top), # !<dialogue_act>.
+<dialogue_act> "Information_nachfragen" -> # ^ :Question ^ (top), # !<dialogue_act>.
+<dialogue_act> "Kontakt_Anfrage" -> # ^ :Request ^ (Communication), # !<dialogue_act>.
+<dialogue_act> "Kontakt_Bestaetigung" -> # ^ :Confirm ^ (Communication), # !<dialogue_act>.
+<dialogue_act> "Sonstiges" -> # ^ :OutOfDomain ^ (top), # !<dialogue_act>.
+<dialogue_act> "Zusage" -> # ^ :Confirm ^ (top), # !<dialogue_act>.

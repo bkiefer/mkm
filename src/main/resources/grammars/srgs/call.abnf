@@ -1,0 +1,48 @@
+#ABNF 1.0 UTF-8;
+
+language de-DE;
+root $top;
+mode voice;
+tag-format "semantics/1.0";
+
+public $top = (
+  $callRequest |
+  $callConfirm |
+  $autoPositive |
+  $confirm |
+  $disconfirm
+) { out = $%1; };
+
+$no = (1|eins|2|zwei);
+
+$callsign_spec = (Andreas|Benno|Bodenoperator $no|Bodenroboter $no|Daniel|Dirk|
+Drohne|Drohnenoperator|Einsatzleiter|Lena|Markus|
+Mission Commander|Mission Operator|Operator $no|Operator Boden $no|
+Operator UAV|Sven|Teamleader|Teamleiter|Teamleiter $no|Thorsten|UAV|UAV $no|
+UAV Drohne|UAV Operator|UGV $no|Feuerwehr Bochum|Roboter $no|Zugführer|Einsatzleiter|Abschnittsleiter Löschzug|Zugführer Löschzug|Abschnittsleiter Erkundung|Abschnittsleiter Robotik|Zugführerassistent);
+
+$callsign = "$$.*"|($callsign_spec { out = "$$1"; });
+
+$callRequest = (
+  [das|der] $callsign { addr = "$$1"; } (von|vom) $callsign { send = "$$1"; } [bitte] [kommen]
+   |
+
+  [das|der] $callsign { send = "$$1"; } (für|an) $callsign { addr = "$$1"; } [bitte] [kommen]
+  )
+  {
+    out.da="Request"; out.prop="Communication"; out.sender=send; out.addressee=addr;
+  };
+
+$callConfirm = (
+  $callsign { send="$$1"; } hört [kommen] |
+  [ja] ich { send="PRON1SG"; } höre [dich] [kommen] |
+  $callsign { send="$$1"; } hier [kommen] |
+  [ja] hier [ist] $callsign { send="$$1"; } [hört] [kommen] |
+  ja $callsign { send="$$1"; } [hört] [kommen]
+  ) { out.da="Confirm"; out.prop="Communication"; out.sender=send } ;
+
+$autoPositive = ([ja] [das] [ist] verstanden) { out.da="AutoPositive"; };
+
+$confirm = (ja | okay)  { out.da="Confirm"; };
+
+$disconfirm = (nein | negativ) { out.da="Disconfirm"; };

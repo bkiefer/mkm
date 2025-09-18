@@ -1,0 +1,67 @@
+version: '3.1'
+
+nlu:
+- intent: 'Inform'
+  examples: |
+    - ja für sie zur information der [d1](callsign) ist startklar der [d2](callsign) brauch noch circa 5 minuten bis zur einsatzbereitschaft kommen
+    - der erste erkundungsflug ist jetzt mit der ersten drohne gestartet worden kommen
+    - [whs](callsign) für sie zur information die drohne [d1](callsign) ist zur außenerkundung vor für sie auftrag erkundung innen der halle kommen
+    - es handelt sich um einen umgekippten 20liter kanister der vom regal runtegefallen ist und sich geöffnet hat
+    - ja erkundungsergebnisse von dem innenflug haben ergeben es handelt sich nach hon nummer um schwefelsäure
+    - die einsatzstelle wurde begangen wir haben einen gefahrstoffunfall in einem lager
+    - ja perfekt so ist es zu erkennen die nummer wird jetzt in die datenbank eingegeben
+    - für sie zur information der [d1](callsign) ist zur erkundung des außenbereiches vor
+    - die [whs](callsign) drohne ist zur innenerkundung vor kommen
+    - die manipulation wird vom trupp [d2](callsign) vorgenommen wir warten weiter ab
+    - für sie zur information es handelt sich um folgenden stoff schwefelsäure
+    - der befindet sich gerade in der anfahrt zum gefahrgutobjekt
+    - ja für sie zur information bitte warten bis der [d3](callsign) als logistikunterstützung kommt
+    - er wird ihnen das überfass zum sichern des behältnisses bereitstellen kommen
+    - der [d3](callsign) fährt zum objekt vor
+    - der [d2](callsign) ist schon dort stellt das überfass bereit kommen
+    - die standorte der roboter sind im lagebild nicht zu erkennen kommen
+    - gebe das an den techniker hier weiter kommen
+    - [d3](callsign) mit überfass ist am standort angekommen
+    - auftrag wird ausgeführt kommen
+    - [d1](callsign) müsste nachladen bitte kommen
+    - [d1](callsign) müsste neue batterien bekommen  dazu müssen wir landen bitte kommen
+    - der [d1](callsign) ist jetzt gerade im akkuwechsel
+    - die position von [d3](callsign) ist ok kommen
+    - für sie noch kurze pause [whs](callsign) ist gerade im erkundungsflug kommen
+    - ja die roboter [d1](callsign) und [d2](callsign) im lagebild ersichtlich kommen
+    - [d3](callsign) und [d5](callsign) können nicht im lagebild dargestellt werden
+    - [d2](callsign) hat den kanister aufgenommen und fährt ihn jetzt zu [d3](callsign) kommen
+    - [d1](callsign) mitgehört sie können wieder die innenerkundung starten kommen
+    - [whs](callsign) muss landen kommen
+    - der [d1](callsign) ist noch im flug im inneren kommen
+    - ja noch keine auffälligkeiten bei erkundung durch [d5](callsign)
+    - zur information [d5](callsign) zur erkundung vor kommen
+    - panoramabild wurde erstellt kommen
+    - bitte ich sehe das bild vom [d5](callsign) im lagebildsystem
+    - es soll wohl noch rauch aus den schächten an der seite kommen kommen
+    - [d2](callsign) hat das fass in das überfass abgelegt
+    - die drohne muss jetzt landen weil der akku leer ist kommen
+    - für sie noch zur information der kanister wurde geborgen das fass wird nun versiegelt kommen
+    - ja für sie zur information der [d5](callsign) kommt auch noch zur unterstützung mittels bildübertragung in die halle kommen
+    - ja zur information der [d5](callsign) fährt jetzt in die halle ein um [d2](callsign) zu unterstützen kommen
+    - das überfass wurde verschlossen kommen
+    - der [d5](callsign) hat den zielort erreicht
+    - das bild ist super
+    - für sie zur information das überfass wurde versiegelt und der [d2](callsign) fährt jetzt an der gefahrenbereich heran kommen
+    - [d1](callsign) muss landen bitte kommen
+    - auch für sie zur information der [d2](callsign) hat seinen auftrag erledigt
+    - ja der [d3](callsign) ist jetzt mit überfass an der gefahrengrenze kommen
+    - der [d3](callsign) wir dan den dekontaminationstrupp übergeben kommen
+    - für sie zur information der [d5](callsign) kommt jetzt auch zur unterstützung mit bildübertragung in die halle kommen
+    - wir warten noch auf die verfrachtung des behälters und danach wird er verschlossen kommen
+    - wir haben noch 4 minuten mindestens
+
+- intent: 'Inform_Ready'
+  examples: |
+    - sind einsatzbereit kommen
+    - wir wären bereit ende
+    - der [d3](callsign) und [d5](callsign) einsatzbereit kommen
+    - unsere drohne ist wieder einsatzbereit kommen
+    - der [d3](callsign) ist einsatzbereit und wartet auf einen befehl
+    - [d2](callsign) ist einsatzbereit kommen
+    - [d1](callsign) ist wieder bereit bitte kommen

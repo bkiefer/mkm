@@ -1,0 +1,25 @@
+version: "3.1"
+
+nlu:
+- intent: 'Everything_Else'
+  examples: |
+    - nur eine sekunde ende
+    - ja sie wollten etwas sagen kommen
+    - falsch den hast du ja gar nicht
+    - sie haben sprechwunsch
+    - ja ich melde mich gleich kommen
+    - falsches funkgerät
+    - schon wieder dann schicken wir doch wieder whs ins rennen kommen
+    - whs mitgehört kommen
+    - ja bleiben sie kurz dran
+    - gruppenführer warten sie kurz ende
+    - sie hatten vorhin sprechwunsch kommen
+
+- intent: 'Request_Communication'
+  examples: |
+    - der (d3)[callsign] kommen
+    - (zugführer)[callsign] kommen
+
+- intent: 'Confirm_Communication'
+  examples: |
+    - ja hier (zugführer)[callsign]

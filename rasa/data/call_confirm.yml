@@ -1,0 +1,62 @@
+version: "3.1"
+
+nlu:
+- intent: 'Confirm_Communication'
+  examples: |
+    -  [gruppenführer](sender) hört
+    -  [d2](sender) hier kommen
+    -  [d1](sender) hier
+    -  [gruppenführer](sender) hört
+    -  [d2](sender) hier kommen
+    -  [whs](sender) hier kommen
+    -  [gruppenführer](sender) hört
+    -  hier [zugführer](sender) kommen
+    -  ja hier [zugführer](sender) kommen
+    -  ja hier [zugführer](sender) kommen
+    -  [d2](sender) hier kommen
+    -  [gruppenführer](sender) hört
+    -  [gruppenführer](sender) hört
+    -  [d1](sender) hört kommen
+    -  [gruppenführer](sender) hört
+    -  hier [whs](sender) kommen
+    -  [whs](sender) hört kommen
+    -  [gruppenführer](sender) hört
+    -  [d1](sender) hört
+    -  [whs](sender) hört
+    -  [gruppenführer](sender) hört
+    -  [d2](sender) hört kommen
+    -  [d2](sender) hört kommen
+    -  [d1](sender) hier kommen
+    -  [d2](sender) hört kommen
+    -  [gruppenführer](sender) hört
+    -  hier [zugführer](sender) kommen
+    -  [d2](sender) hört kommen
+    -  hier [zugführer](sender) kommen
+    -  hier [whs](sender) kommen
+    -  [d2](sender) hört kommen
+    -  hier [zugführer](sender) kommen
+    -  [gruppenführer](sender) hört
+    -  hier [zugführer](sender) kommen
+    -  hier [whs](sender) kommen
+    -  hier [whs](sender) kommen
+    -  [gruppenführer](sender) hört
+    -  [gruppenführer](sender) hört
+    -  hier [zugführer](sender) kommen
+    -  hier [zugführer](sender) kommen
+    -  [gruppenführer](sender) hört
+    -  hier [zugführer](sender) kommen
+    -  hier [d1](sender) kommen
+    -  hier [zugführer](sender) kommen
+    -  ja hier [zugführer](sender) kommen
+    -  [gruppenführer](sender) hört
+    -  hier [zugführer](sender) hört
+    -  [d1](sender) hört
+    -  [d2](sender) hört kommen
+    -  hier [zugführer](sender) kommen
+    -  [gruppenführer](sender) hört
+    -  [d2](sender) hört kommen
+    -  hier [zugführer](sender) kommen
+    -  hier [zugführer](sender) kommen
+    -  [zugführer](sender) hört
+    -  hier [zugführer](sender) kommen
+    -  ja hier [zugführer](sender) kommen

@@ -1,0 +1,1452 @@
+version: '3.1'
+
+nlu:
+- intent: 'Inform'
+  examples: |
+    - ich wäre soweit einsatzbereit
+    - sobald ich eine veränderung habe schicke ich dir ein bild
+    - die drohne wird startbereit gemacht
+    - wir werden gleich mit der personensuche starten
+    - der einsatzauftrag ist unverändert erkundung nach personen
+    - die drohne startet jetzt
+    - ich bin jetzt einen weg bis zum ende weitergefahren und dann gehe ich linker handregel weiter
+    - befinde mich noch in der startposition
+    - nein ich habe zur zeit überhaupt kein bild von der drohne
+    - ich bin eine etage hochgefahren als den startgang ganz durch dann links ein stockwerk gewechselt
+    - ich habe hier extreme rauchentwicklung
+    - aber aktuell noch keine hitzedirektion
+    - im ersten obergeschoss wo ich mich gerade aufhalte müsste auch der brandherd sein
+    - ich habe hier jetzt gerade eine hitzequelle ausgemacht definitiv keine person
+    - roboter hat zwei komplette aussetzer funktionert dann gar nicht
+    - habe im ersten og gerade in der brandentwicklung ein gefahrgutfass grün mit der kennzeichnung umweltgefährdender stoff entdeckt
+    - es handelt sich um ein 200literfass
+    - die drohne fliegt
+    - ich habe ein objekt von dem rauch austritt
+    - ich schick das foto
+    - eine person liegend am boden gefunden erstes og bei der brandentwicklung
+    - rechtsseitig vom hochofen das ding mit den löchern
+    - ich schicke dir gleich ein foto
+    - eine person am boden liegend gefunden
+    - erstes geschoss bei der brandentwicklung
+    - ich schicke dir gleich fotos
+    - bild kommt gleich
+    - funkübertragung zur zeit nicht möglich
+    - die drohne ist gelandet wir reparieren
+    - ich setze personensuche fort
+    - sollen also zwei bis drei vermisste sein nach den ersten aussagen
+    - ich habe dir einmal ein thermoimage der person geschickt und einmal ein livebild der person
+    - das thermoimage war eher danach hab ich ein wechsel vorgenommen um dir ein livebild zu schicken
+    - die drohne ist wieder in der luft
+    - ich habe ein infrarotbild geschickt da sind zwei personen zu sehen jetzt nähert sich dort eine dritte
+    - das bild hab ich dir zugesandt
+    - wir haben drei gehfähige und eine am boden liegende person
+    - so wie ich das gerade gesehen hatte war da noch ein kopf zu sehen
+    - also es passt gut dass das drei gehfähige personen an einer liegenden sind
+    - wir machen jetzt mal einen schnitt in der zeit mache ich eine übergabe
+    - zwei minuten funkstille zwecks übergabe
+    - wechsel des leaders
+    - ich hab zwei bilder gerade geschickt das eine mit vier personen die alle gehfähig sind
+    - dann ein weiteres bild einer person oberhalb von den anderen erkenntlich an der warnweste
+    - ich habe dir ebenfalls bilder von drei personen die aufeinander stehen rübergeschickt
+    - der weitere der steht war die person die vorhin gelegen hat optischen augenscheins nach
+    - ja ich werte gerade die bilder aus kommen
+    - die situation von gerade kann ich jetzt nicht mehr gut einsehen weil die rauchwolke genau davor ist
+    - ich erkunde das umfeld weiter
+    - hinweis an alle die vermisste person ist noch nicht gefunden kommen
+    - die drohne landet wir müssen akku tauschen
+    - und das bild hängt
+    - roboter 1 und roboter 2 ich habe hier zwei fotos auf einem foto ist ein wärmebild da kann sich eine am boden liegende person befinden
+    - nur die person steht jetzt
+    - gehe davon aus das ist trotzdem die liegende person ist die wir suchen und finden sollten
+    - habe standort nochmal angefahren
+    - foto ist versandt
+    - die drohne startet wieder
+    - weil mein roboter sich teilweise gar nicht bewegt
+    - der roboter ist momentan wieder ausgesetzt kann sich also gar nicht bewegen
+    - und ich hab probleme den zu bewegen
+    - weil die kameras auch nicht so funktionieren wie sie sollten
+    - als anhaltspunkt in dem bereich muss sich der roboter 1 befinden kommen
+    - ich bin jetzt an dem treppenabsatz sehe eine person in orangefarbener warnweste
+    - wir haben jetzt ein trupp auf dem weg zur verunfallten person
+    - und hab große aussetzer
+    - alle paar sekunden setzt mir der roboter aus
+    - ja habe die rettungstrupps zum standort der vermissten person gebracht
+    - ich hab gerade infrarot und diesen kunstrauch sieht man dann nicht
+    - hab gerade gehört feuer soll aus sein
+    - zur lage menschenrettung durchgeführt und abgeschlossen
+    - auf der etage wo die personen gefunden wurden befindet sich ein 200litergefahrstoffbehälter kennzeichnung umweltgefährdend
+    - behältnis scheint dicht zu sein
+    - zur lage die personen sind alle gerettet und der medizinischen versorgung zugeführt
+    - treppenaufgang und dann direkt links blauer kanister unbekannter inhalt sieht auch ebenfalls dicht aus
+    - foto ist versandt
+    - ich hab ein bild jetzt geschickt auf einem behältnis oben eine helle person
+    - es könnten personen sein das was hell leuchtet
+    - ich werte das bild aus
+    - ich habe dir gerade noch ein foto von dem grünen gefahrgutbehälter 200 liter rübergeschickt
+    - der ist in sichtweite zu dem blauen kanister
+    - hat zwar alles hier eine andere farbe aber das fass selber ist grün
+    - das bild gerade würde ich ganz klar als person einstufen
+    - links mittig ist die person liegend
+    - hinweis an alle eingeteilten kräfte übungsende
+    - also derzeit sind wir nicht startbereit mit der uav
+    - weil es noch zu sehr regnet
+    - ja ich hab ein grünes fass ausgemacht und rauch
+    - hab dir ein bild gemacht und geteilt
+    - starke rauchentwicklung vor mir
+    - ich mach ein foto und schick es dir
+    - im ersten obergeschoss ein grünes fass und starke rauchentwicklung
+    - ich verlasse das erdgeschoss und gehe ins erste obergeschoss
+    - ich habe die nebelmaschine gefunden
+    - ja ich hab ein blaues fass gefunden mit aufschrift
+    - hab dir ein foto geschickt und werde mich dem jetzt nähern
+    - ja es handelt sich um einen blauen kanister der aufrecht steht verschlossen ist mit dem inhalt otalin
+    - ich hab ein foto gemacht und schick es dir
+    - von außen keine gefahrensymbole von der vorderseite
+    - ich werde jetzt noch die rechte seite erkunden
+    - müsste ein blauer kanister sein
+    - ich habe weiterhin eine grüne tonne mit einer drauf befindlichen flasche gefunden
+    - auf dem weg zu der tonne mit der flasche obendrauf da befinde ich mich gerade
+    - ja okay dann müsste ich dich ja sehen
+    - und da bin ich auf einer seite vom geländer
+    - ich umfahre jetzt diese bullaugen und müsste dann direkt vor dem fass stehen
+    - ich stehe vor dem fass
+    - so kannst du auf deiner seite bleiben
+    - und ich drehe um und erkunde die andere seite
+    - grüne fass mit flasche drauf
+    - werde aber jetzt auch mal die rückwärtige seite des fasses erkunden
+    - also ich stehe jetzt genau vor dem fass
+    - ich werde nochmal ein foto machen und dir schicken
+    - weitere foto von grünen fass mit grüner flasche drauf wurde dir entsandt
+    - ja ugv 2 ich dreh dann um und erkunde die andere gebäudeseite
+    - ja jetzt haben wir die erkundung der rückwärtigen seite in nördlicher bereich
+    - ja von meiner jetztigen position aus ist quasi aus der halle raus kein rauch und keine gefahren zu erkennen
+    - hab ich schon
+    - ja ich hab dir jetzt erneut das foto geschickt
+    - ich konnte beide rauchquellen identifizieren beides nebelmaschinen
+    - hab dir jetzt ein übersichtsfoto geschickt von einmal den blauen kanister und dem grünen fass mit der grünen flasche drauf
+    - ich hab hier einen treppenraum
+    - ich muss mich erst mal orientiere und gucken ob ich irgendwo hochkomme
+    - zur zeit hier bei den fässern kann ich nicht hoch
+    - ja ich hab jetzt das fass einmal umkreist kann auf dem fass zwei gefahrensymbole identifizieren einmal rot mit flamme brennbar und einmal umweltgefährdend
+    - werde davon ein foto machen und dir zusanden
+    - und eine unnummer kann ich erkennen
+    - es handelt sich um die unnummer 12 03 moment
+    - fotos sind raus
+    - ich kann nur bestätigen unnummer 12 03 gefahrenzettel leicht entflammbar und umweltgefährdend
+    - noch als zusatz dieses fass scheint nicht auszulaufen
+    - steht aufrecht und ist keinerlei flüssigkeitsaustritt zu erkennen
+    - ich werde jetzt versuchen ins obergeschoss zu kommen
+    - ich werde jetzt auch einen weg suchen ins obergeschoss zu kommen
+    - ich hab hier gerade probleme mit mir selbst
+    - ja ich hab ein weiteres grünes fass gefunden beim erkunden der treppe gefunden in der nähe von dem anderen aufrecht stehenden fass festzustellen
+    - werde dies jetzt fotografieren und einmal umkreisen um eine leckage
+    - ich kann höchstens so fotografieren dass ich halt den hochofen drauf hab
+    - also ich werde das nachher nachvollziehen können
+    - ja das zweite fass ist liegt auf dem boden ist aber auch augenscheinlich verschlossen läuft nichts aus keine flüssigkeit läuft aus
+    - hab auch davon ein foto gemacht und dir zugesandt
+    - da siehst du im hinteren bereich des des fasses auch die öffnung die bullaugen des hochofens also können wir uns daran orientieren
+    - wenn du das foto von dem fass siehst siehst du im hinteren bereich hinter dem fass die bullaugen des hochofens
+    - maßnahme momentan warten wir machen hier gerade übergabe
+    - ja ich hab hier technische probleme
+    - ich kann meine flipper nicht bewegen und der laser hat hinter sich
+    - ich hab jetzt nochmal ein foto gesendet wo man das auch seiteliegende fass und den blauen kanister so im rückwärtigen bereich erkennen kann
+    - das fass wurde einmal umkreist es liegt wahrscheinlich genau darauf
+    - keine leckage aus dem fass läuft nichts aus
+    - beide verschlussstopfen sind fest verschlossen
+    - nur auf dem einen stehenden grünen fass steht noch eine grüne flasche
+    - da es ja eine explosion gewesen ist
+    - ja ich versuche eigentlich ins zweite obergeschoss zu kommen
+    - aber ich hab hier erhebliche probleme mit der technik mein roboter ist made in taiwan
+    - ich hab das fass jetzt hier drehen können und festgestellt dass es sich um dasselbe piktogramm beziehungsweise den selben piktogramme handelt wie bei dem ersten fass
+    - weiterhin das fass nicht beschädigt
+    - weil da wollte der tim hin und konnte nicht weiter erkunden wenn das okay ist
+    - also aufgrund der wetterlage
+    - wir müssen jedoch nochmal wieder warten
+    - weil noch eine schauerwolke durchläuft
+    - wir gehen automatisch in die operation sobald der regen nachlässt
+    - im moment ist wieder zu viel regen
+    - ich bin einmal jetzt um das gebäude rum tim war dat eine schräge treppe
+    - ja wie so eine stahltreppe halt aussieht ne biegt erst mal einer nach oben weiter konnte ich nicht sehen
+    - weil meine kamera nicht höher ge
+    - ja weil ich stehe vor einer da liegt auch ein trümmerteil davor
+    - es gab einmal eine treppe da stand ein schild kein durchgang
+    - dann bin ich natürlich nicht hochgefahren
+    - und dann war die andere treppe war mit so enem weißen geländer abgesperrt hier
+    - in dem bereich befinde ich mich
+    - ich hab einen weiteren kanister gefunden weiß
+    - werde jetzt ein foto davon machen und dir schicken
+    - ja der weiße kanister steht aufrecht
+    - scheint verschlossen zu sein ich werd ihn jetzt mal versuchen zu drehen um eventuell ein piktogramm darauf zu sehen
+    - ja mir ist jetzt gelungen das gefäß zu bergen beziehungsweise zu drehen
+    - werd jetzt einmal ne rundumschau von dem gefäß machen
+    - ich schick dir aber erst nochmal ein foto
+    - beim wenden des gefäßes ist ein leichter flüssiger stoff ausgetreten
+    - aber nur ein spritzer
+    - keine gefahr
+    - ja der kanister wurde jetzt von allen seiten begutachtet kanister ist verschlossen keine gefahr und piktogramme auf dem kanister
+    - ich beweg mich weiter fort
+    - ich versuche jetzt zur ugv 2 zu kommen
+    - es regnet zu sehr
+    - wir sind mit der drohne jetzt in der luft und werden hinter das gebäude fliegen
+    - aber ich seh jetzt wieder eine rauchentwicklung
+    - wir haben auch gerade mal zwei bilder gemacht
+    - die rauchentwicklung kommt neben dem hochofen zustande
+    - wir schalten jetzt mal auf infrarot um zu gucken ob wir irgendwo eine thermische entwicklung erkennen können
+    - weil ich seh dich auf dem anderen bild gerade nicht
+    - du kannst aber in die bilderbox gucken da müsstest du eigentlich das bild aus sichtweise der drohne sehen
+    - ja ich komme nicht weiter höher ins obergeschoss ohne dass ich eine absperrung durchfahre
+    - weil ich komm da gerade nochmal vorbei
+    - ja schick ich jetzt den angriff dorthin zum lesen
+    - wir haben ein neues livebild neue rauchentwicklung in dem hinteren bereich
+    - aber ich hab nochmal ein bild hinterher geschickt
+    - die rauchentwicklung die verringert sich zwischenzeitlich immer wieder
+    - es ist aber auch sehr schwierig genaue bilder zu erkennen
+    - aufgrund des windes weil die drohne noch sehr stark hin und her schwankt
+    - wir machen jetzt erst mal noch eine zwischenlandung für einen akkuwechsel
+    - übung beendet
+    - ja folgende lage im bereich zwischen den hochöfen hat es eine explosion gegeben
+    - ursache ist unbekannt rauchentwicklung vermutlich auch feuer mehrere vermisste personen anzahl der vermissten personen ist ebenfalls unbekannt
+    - unsere aufgabe ist es halt menschenrettung
+    - sven tom und lena zur kenntnis der angriffstrupp geht unter atemschutz im bereich zwischen den hochöfen vor und erkundet zunächst
+    - ja ich hab gerade ein foto geschossen hier sind zwei treppen auf der linken seite allerdings kein angriffstrupp
+    - rauchentwicklung weiter rechts
+    - der angriffstrupp steht an der rauchentwicklung
+    - ja das erste bild hab ich dir gerade schon gesch
+    - ich habe nichts gekriegt hier
+    - das bild müsstest du schon haben
+    - hab kein bild
+    - und da bin ich gerade am anfangen
+    - ja auftrag war sich mit dem angriffstrupp zu treffen zunächst
+    - ja angriffstrupp war nicht vor ort
+    - dann kümmere ich mich darum
+    - wir haben einmal den akku gewechselt bis jetzt noch kein rauch festzustellen aber wir haben eine person gefunden
+    - ich schick dir jetzt das foto
+    - also ich bin jetzt oben im ersten raum auch hier ist der angriffstrupp nicht vorzufinden
+    - der angriffstrupp musste raus
+    - der hatt keine luft mehr den raum weiter erkunden
+    - das ist könnte aber eventuell eine andere person sein
+    - ich habe jetzt bei der zweiten person auch eventuell rauch gefunden
+    - im ersten großen raum eine person gefunden
+    - ich schick dir den angriffstrupp
+    - operator 1 der angriffstrupp ist unterwegs
+    - ich habe rauch gefunden und weitere personen
+    - ich versuch dir nochmal die bilder zu schicken
+    - kann da noch nichts lokalisieren auch anhand der großen karte wo genau diese personen sich befinden
+    - ich weiß bloß nicht ob es angekommen ist
+    - also die person müsste hinter dem großen hochofen auf dem freien weg sein
+    - der akku ist jetzt leer
+    - wir müssen jetzt auch landen und warten am boden auf weitere anweisungen
+    - erst muss der angriffstrupp da gewesen sein
+    - wir sind jetzt wieder startklar
+    - wir sind jetzt wieder startklar
+    - neuer akku ist bereit
+    - ich melde mich sofort
+    - wenn du was findest dass man den weg nachvollziehen kann
+    - das fass das steht dort irgendwo das war nur zur orientierung
+    - lena du hast alle fotos jetzt von einer stelle aus gemacht
+    - ich melde mich gleich
+    - ich hab dir gerade ein übersichtsbild geschickt da erkennt man den gefüllten also den großen hochofen sag mir wo du hinmöchtest
+    - ich hab dir nochmal ein bild ein herangezoomtes bild geschickt wo der qualm besser zu sehen ist aber keine personen gefunden von dieser position aus
+    - ich seh dich auf dem bildschirm
+    - wir müssen gerade den akku tauschen
+    - ich schick dir jetzt noch mal ein bild von weit oben rechts auf dem bild was nicht mehr zu sehen ist sind diese drei klein hochöfen und links ist der ganz große gefüllte hochofen
+    - genau in der mitte davon also bei den grünen da kommt der qualm her
+    - ja ich hab den ersten raum weitestgehend abgesucht gerade so ein bisschen technische schwierigkeiten
+    - ich melde mich sofort
+    - wir stehen in der nähe des grünen fasses
+    - also ist das grüne fass kann ich durch die kamera sehen aber ich kann ihn nicht verfahren
+    - das radar scheint irgendwie nicht richtig zu funktionieren
+    - es sind ja mit drei vier technikern die ganze zeit am pc zugange
+    - ich mache hier gar nichts gerade am rechner
+    - ja ich gucke mal dass ich dir jetzt ein foto schicke
+    - scheint weiter zu gehen bei uns
+    - ja hier steht wieder alles
+    - aber hier geht im moment nichts
+    - zwischen den hochöfen da steht irgendwo ein grünes fass und da kommt die rauchentwicklung her
+    - ich hab im moment keinen roboter einsatzbereit
+    - ja es geht weiter
+    - ich habe dir ein foto geschickt von dem grünen fass und wo ich mich jetzt gerade befinde
+    - ich seh den rauch ab und zu
+    - übungsende
+    - ich hab gerade ein bild hochgeladen das müsstest du sehen
+    - ihr nehmt aber die westliche richtung
+    - ich schick dir mal ein bild dass du einen eindruck kriegst wo ich gerade stehe
+    - ich hab dir ein bild geschickt von der drohne aus der luft mit blickrichtung westen
+    - ich hab dir einen schnappschuss erstellt
+    - das wäre jetzt der blick in den westlichen teil der halle
+    - ich schick dir nochmal einen schnappschuss von ein bisschen weiter weg
+    - wir haben zur zeit technische probleme
+    - und können noch keine neuen bilder senden
+    - ich komme gleich mit enem neuen bild
+    - also wir haben diese ausrichtung westen und dieses gebäude angeguckt und konnten bisher keine glutnester feststellen
+    - wir tauschen jetzt den akku und fliegen dann nochmal aus einer anderen richtung an
+    - ja wir stehen hier wohl auf einer rampe ich kann nämlich genau sagen wo die ist
+    - habe den westlichen hallenteil bis zum ende jetzt erkundet keine weiteren erkenntnisse
+    - also ich kann auch hier keine glutnester erkennen
+    - ich guck mal gleich wieder
+    - ist schon etwas länger her
+    - wir haben massive probleme mit der steuerung
+    - ja da haben wir es gerade ein bisschen schwierig
+    - ich schick noch mal ein aktuelles foto von dem eingang vor dem ich jetzt stehe
+    - das bild ist geteilt
+    - das müsste irgendwo im westlichen bereich sein
+    - ich hab dir ein bild geschickt was den hochofen aus nördlicher richtung zeigt
+    - ich kann keine rauchentwicklung erkennen
+    - also wir haben jetzt doch eine leichte rauchentwicklung auf der nördlichen seite des gebäudes
+    - ich schicke dir ein bild
+    - ich korrigiere ugv 1
+    - ja ich stehe jetzt am fuß der rampe
+    - hab dir ein bild geschickt
+    - zur info das ist der blick in östlicher richtung
+    - wenn ich das richtig sehe kommt der rauch am rechten behälter blickrichtung süd raus
+    - ich hab dir ein bild von der wärmebildkamera geschickt
+    - unterhalb des tankes ist fleck der auffällig ist und recht oben am tank
+    - ja ich habe nochmal ein foto gezeigt
+    - ugv 1 ist gerade an uns vorbei gefahren
+    - wir müssen gleich nochmal den akku tauschen
+    - wir wären wieder startklar wenn du was neues für uns hast?
+    - ja ich melde mich gleich bei euch
+    - foto ist erstellt und geteilt
+    - man sieht die rauchentwicklung und einen behälter das ist blickrichtung ost
+    - ich schicke dir auch gleich nochmal ein bild mit der thermalkamera
+    - ja wir haben uns gerade die bilder noch einmal angeguckt
+    - da könnte nochmal was sein
+    - wir steigen nochmal auf und gucken uns das nochmal an
+    - da konnte man nicht viel erkennen
+    - schicke dir nochmal ein bild
+    - wir haben hier einen gefahrenzettel auf dem behälter
+    - ja wir haben mittlerweile die kontrolle gewonnen und sind jetzt auch bei ugv 1
+    - ich hab auch nochmal ein bild geschickt
+    - wir haben auf der rückseite also aus nördlicher sicht an der rauchentwicklung ein objekt festgestellt wir können keine gefahrstoffkennzeichnung erkennen
+    - ich hab dir jetzt zwei bilder geschickt eine detailaufnahme
+    - ich schau mal rein
+    - der behälter scheint leer zu sein ich hab dir ein bild geschickt
+    - ich hab dir oder ich schick dir gleich nochmal ein bild rüber du siehst auf der rückseite definitiv zwei orte wo sich noch glutnester befinden
+    - der eine ort das sind zwei kleine stellen das ist unter dem fass was ich gerade schon mal geschickt habe und rechts davon siehst du auch da im bild sehr deutlich eine wärmesignatur die etwas größer ist
+    - aber ich sehe gerade rauchentwicklung von hier aus
+    - ich habe jetzt hinter dem ersten hochofen in östlicher richtung einen weiteren behälter gefunden
+    - wir haben auch jetzt hier erhöhte rauchentwicklung
+    - ich hab dir doch noch ein bild geschickt in infrarot
+    - und zwar sind an dem objekt an dem tank selber unten links ist eine wärmesignatur möglicherweise oben am tank rechte seite und rechts des tankes
+    - weil das können wir selber klar nicht feststellen
+    - ja ich bin ein bisschen näher an den gefundenen an den zweiten gefundenen behälter rangefahren
+    - scheint keine flüssigkeit auszutreten und gefahrenzettel oder andere signaturen sind auch nicht zu sehen
+    - ja foto ist geteilt
+    - ja ich hab nochmal eine nahaufnahme von dem fass und eine wärmesignatur von dem fass geschickt
+    - scheint so als läge das fass auf dem gefahrzettel oder ähnlich
+    - ich bin drauf ich versuch das mal zu rollen
+    - ich müsste erneut zurück wegen akku tausch
+    - möglicherweise an dem objekt sind noch mehrere wärmequellen ich kann es zur zeit nicht genau sagen
+    - ja ich hab das fass jetzt gedreht man kann jetzt die signatur des fasses erkennen gefahrzettel
+    - ich würde dann die erkundung in östlicher richtung auf dieser ebene weiter fortsetzen
+    - ja zur info ich müsste mich jetzt genau zwischen beiden hochöfen befinden
+    - ja ich sehe dich
+    - das zweite war eine wärmesignatur die ist genau in ähnlicher position wo sich das uav gerade befindet – das erdgebundene fahrzeug
+    - hier liegt ein grünes fass und es ist starke rauchentwicklung zu erkennen
+    - ich breche dann die erkundung in östlicher richtung ab
+    - nähere mich der rauchquelle
+    - ich hab dir gerade noch mal ein bild geteilt und zwar ist genau in dem fadenkreuz sichtbar das sind zwei punkte die wärme abstrahlen da müsstest du nochmal nachgucken
+    - da bewegt sich das erdgebundene fahrzeug gerade darauf zu
+    - ja ich hab jetzt nochmal zwei bilder gemacht einmal von der rauchentwicklung und einmal von dem grünen fass was hier liegt
+    - und ich glaube da kommt ugv 1 auch wieder angerollt
+    - ich teile dir jetzt noch ein bild wo du zwei punkte siehst die wärmesignaturen plus dich deine position und deinen begleiter
+    - die wärmesignaturen sind schwarze punkte
+    - ich hab die brennenden punkte gefunden
+    - wir gehen runter zur landung akkutausch
+    - ja ich hab dir ein bild und eine wärmebild von den brennenden punkten geschickt
+    - ich kann momentan aus technischen gründen nur leider nichts sehen
+    - ja wir brauchen noch einen augenblick
+    - tauschen eben die kameras
+    - dann sind wir wieder dabei und suchen dann nach weiteren fässern
+    - in östlicher richtung sollte das gelände soweit abgesucht sein denke ich?
+    - übungsende
+    - wir sind soweit kommunikation klappt
+    - dann warten wir auf das startsignal das wird ein martinhorn sein
+    - auf dem gelände hat es eine explosion gegeben in nem unklaren raum
+    - wir haben im moment feuer drei gemeldet
+    - operator boden 1 hat gehört
+    - sehe dort schon rauch entwicklung
+    - zu ihrer information es werden zwei vermisste personen gemeldet
+    - das bild ist noch nicht angekommen
+    - ja es klappt irgendwie nicht
+    - ich hab auf meinem bildschirm ein bild der uav
+    - einer der arbeiter hat zuletzt auf einem höheren level der anlage gearbeitet im bereich des linken hochofens ungefähr in 50 meter höhe
+    - auf einem der fotos sind rauchentwicklungen zu erkennen
+    - leckage entdeckt über bodenroboter
+    - wir haben uns den hochofen jetzt von oben angeguckt es ist nirgendwo ein opfer zu sehen
+    - der operator boden 1 hat eine leckage entdeckt
+    - das ist auf der ersten etage und man könnte von hier unten einen löscheingriff aufbauen und das ganze eingrenzen
+    - dann überstelle ich ihnen einen trupp der sich auf der entgegengesetzten seite auf der brücke bereitet
+    -  es ist technisch nicht möglich bilder zu senden
+    - ein trupp ist in der nähe dort wo auch der operator boden 1 seinen roboter hat und hat dort ein fass entdeckt in grün und ein weiteres fass mit einer plakette drauf ätzend in gelb und braucht weitere unterstützung
+    - ich fordere weitere kräfte an
+    - okay dann ändern wir einsatzstichwort auf technische hilfe abc
+    - draußen steht ein löschzug mit blaulicht
+    - es kommt jetzt hier ein gruppenführer
+    - wir können jetzt gleich starten die drohne ist bereit
+    - wir sind einsatzbereit
+    - wir vermissen personen und eine unklare sache in der ganzen area
+    - ist eine unklare sache wir wissen noch nicht genau was da passiert ist
+    - personen sind vermisst
+    - ich habe ein bild veröffentlicht
+    - was zeigte dass keine rauchentwicklung gibt über der anlage
+    - aber so leichte rauchentwicklung ist jetzt zu sehen
+    - ich bin am ende der ersten rampe hab in beiden richtungen geguckt
+    - in keiner richtung was auffälliges
+    - wir versuchen weitere informationen zu bekommen
+    - wir mussten gerade die applikation nochmal neu starten
+    - auf meinem tablet ist nix zu sehen
+    - ein paar sekunden noch
+    - aber ich kann immer noch nichts empfangen
+    - die bilder habe ich jetzt bekommen
+    - man kann von oben sehen dass der rauch aus dem gebäude austritt
+    - ich schick da erst mal ein trupp ein
+    - wir haben leider probleme mit dem joystick und sitzen noch an der startposition fest
+    - wir versuchen das jetzt zu beheben
+    - vor mir ist ein grünes fass und da obendrauf steht noch ein gelbes und ich habe personen in dem rauch gesehen
+    - der rauch kommt von rechts
+    - ich versuche von dem fass ein gutes foto zu machen
+    - bodenoperator 1 hat die leckage gefunden an einem stromerzeuger
+    - foto wurde gesendet
+    - eine person gesichtet
+    - ist in der nähe von dem fass und von der leckage wo der rauch austritt
+    - foto habe ich dir geschickt
+    - wir haben ein opfer gefunden liegt auf liegt auf der hinteren seite des hochofens angelehnt scheint bewusstlos zu sein
+    - ja ich schick mal ein trupp hin
+    - da ist keine rauchentwicklung
+    - okay ich schick ein trupp hin
+    - ich kann nur noch kommunizieren ich kann keine bilder empfangen oder auch senden
+    - wir haben das problem behoben mit der fernsteuerung und machen uns auf auf den weg hinein
+    - wie gesagt ich kann keine bilder empfangen
+    - eine person gesichtet ist auf der ebene auf der auch die leckage ist hinter dem ersten hochofen
+    - halb liegend
+    - der einsatzauftrag kommt wunderbar
+    - vermutlich explosion oder irgendwas mit chemikalien
+    - wir wissen nicht ob es eine leckage ist oder was anderes
+    - rauchentwicklung ist schon gemeldet worden
+    - möglicherweise sind dann auch personen vermisst
+    - kurze lagedarstellung
+    - es gab einen zwischenfall zwischen zwei hochöfen
+    - dort werden eine oder mehrere personen vermisst
+    - eine rauchentwicklung ist zu erkennen
+    - und da ist das einsatzgebiet
+    - ich fahr rein
+    - erste maßnahmen eingeleitet wir erstellen ein lagebild mit der drohne von oben und per infrarot
+    - des weiteren die zwei ugvs eingeteilt die fahren vor zum schadensereignis zwecks menschensuche und weitere lagedarstellung
+    - die suchen verletzte feststellen was da genau los ist
+    - rauchentwicklung erste treppe nach oben
+    - ich schick dir mal ein screenshot
+    - aus dem ersten foto von der uav mit der übersicht ist da so ein heller fleck zu sehen
+    - ich weiß nicht was das ist ob das jetzt eine person ist oder das ist
+    - ich weiß nicht was das ist ob das jetzt eine person ist das ist unten am unteren rand da ist ein [<unintelligible>]
+    - ja ich werde jetzt die treppe mal hochfahren und weiter erkunden oben
+    - ich bin jetzt auch in der nähe vom hochofen angekommen ich sehe rauchentwicklung und auch einen umgestürtzten blauen kanister
+    - ich schicke ihnen gleich mal ein screenshot drüber
+    - ich habe jetzt d den kanister gefunden es handelt sich um otalin peracet zirka 20 bis 30 liter fassungsvermögen es scheint auch eine leckage da zu sein
+    - vvom gebäude
+    - also es ist die strukturelle integrität könnte gefährdet sein
+    - ja diese substanz wurde gefunden ein foto folgt
+    - ich habe jetzt ein foto gemacht und geschickt vom conta von dem kanister
+    - foto von dem blauen kanister ist eingetroffen
+    - auf nachfrage handelt es sich um kraftstoff
+    - aber mein laser ist ausgefallen ich kann nur noch optisch fahren ist schon sehr verraucht
+    - wir haben jetzt eine probe genommen und auch dabei
+    - ja rückmeldung
+    - trupp eine person gefunden wieder aus dem gefahrenbereich
+    - geht jetzt und an den rettungsdienst übergeben
+    - die verrauchung kommt aus einem grünen fass ich hab mal ein screenshot geschickt
+    - ich versuch die beschriftung noch besser zu fotografieren
+    - es ist aber sehr verraucht
+    - und mein laser ist ausgefallen
+    - wir sind jetzt auch an dem grünen kanister angekommen
+    - wir haben einen arm dabei sehen auch den zweiten roboter
+    - eine verletzte person hier in diesen strukturen
+    - teamleaderfunk ist ausgefallen
+    - teamleaderfunk ist ausgefallen
+    - so der team der teamleader hört wieder
+    - funk funktioniert wieder
+    - wir haben den grünen container identifiziert haben auch ein foto gemacht und es es müsste in der datenbank liegen
+    - es scheint handelt sich um eine gift giftige entzündliche hochentzündliche flüssigkeit
+    - entzündliche hochentzündliche
+    - davor ist noch ein gelber kanister brennbares material den hab ich auch mit fotografiert
+    - super den habe ich noch nicht gesehen
+    - ja ich bin an der grenze zur datenübertragung habe ich so den eindruck
+    - da geht alles etwas langsamer aber ich versuch mal hier die gegend noch weiter abzusuchen
+    - wir haben noch eine weitere flasche gefunden mit ener chemikalie
+    - wir haben ein foto gemacht
+    - das schicke ich jetzt rüber
+    - aus dem foto sehe ich jetzt drei behältnisse
+    - ja die bilder sind nicht so ganz scharf
+    - es ist sehr verraucht mittlerweile
+    - aber ich versuche bessere bilder aufzunehmen
+    - nach den fotos müsste die verletzte person am linken hochofen liegen und die ugv 2 müsste da dran vorbei gefahren sein
+    - und zwar zwischen der halle hier wo wir sind und dem hochofen
+    - da müsste die person liegen
+
+
+- intent: 'YNQuestion'
+  examples: |
+    - soll ich meinen erkundungsbefehl fortsetzen oder beginnen?
+    - gibt es schon irgendwelche nennenswerten erkenntnisse?
+    - hat er schon irgendwelche nenneswerten erkenntnisse mit hinblick auf besondere gefahren oder thermische ausbreitung?
+    - gibt es irgendwelche erkenntnisse zur personensuche?
+    - gibt es schon irgendwelche erkenntnisse über das ausmaß das schadenausmaß und gefahren?
+    - ist bis dahin gefahrlosen einsatz von einsatzkräften möglich?
+    - kannst du sehen ob irgendwelches medium ausläuft?
+    - aussetzung von thermik?
+    - treppenabsatz ersten og nach 10 bis 20 metern linker seite erste person korrekt?
+    - sind wir da gleich dass wir jetzt zwei personen gefunden haben oder bilder von zwei unterschiedlichen personen haben?
+    - also es handelt sich um eine person richtig?
+    - also gehfähige personen im gefahrenbereich?
+    - hast du erkenntnis über zwei gehfähige personen anhand dieses bildes was ich auch erhalten habe?
+    - andreas mitgehört?
+    - also haben wir insgesamt vier personen im gefahrenbereich?
+    - drei gehfähige personen richtig?
+    - andreas mitgehört?
+    - frage sind diese personen alle bei der liegenden person?
+    - frage die drei gehfähigen personen wurden aus der luft erkannt ist das richtig?
+    - wir haben keine am boden liegend befindliche person ist das korrekt?
+    - ich hoffe ihr habt auch eine landmarke gesetzt
+    - soll ich an diesen standort stehen bleiben?
+    - ist das ein foto von mir?
+    - in der zwischenzeit schon irgend etwas an personen festgestellt oder lageveränderungen?
+    - frage ist die drohne noch in der luft?
+    - also keine suche nach vermissten mehr?
+    - von dem fass?
+    - ugv 1 ugv 2 seid ihr startklar?
+    - ugv 1 hast du schon ein bild gemacht?
+    - bild hast du verschickt?
+    - hast du eine möglichkeit dass fass näher zu identifizieren was da drin ist?
+    - kommst du näher an das blaue fass dass wir eine erkennung haben?
+    - können wir weitermachen?
+    - frage einsatzbereitschaft?
+    - ja frage kommen meine fotos an?
+    - der steht ja vor die nebelmaschine?
+    - frage hast du ein foto von dem grünen fass gemacht?
+    - können wir weiterfahren oder warten wir noch?
+    - jetzt die frage ob ich mich weiter fortbewegen soll
+    - gab es möglichkeiten eine etage weiter nach oben zu kommen?
+    - nach oben?
+    - möglichkeiten mit dem bodenroboter da hochzufahren?
+    - viel erfolg mit dem treppenbesteigen?
+    - kannst du mir weitere details zu dem liegenden fass geben? eine nummer zum beispiel?
+    - sieht man irgendwo eine leckage in der nähe des fasses?
+    - kann man da irgendwo was sehen? sehen wo es ein drittes fass im umlauf liegen könnte
+    - kann man es denn manuell nicht beheben?
+    - kann man die temperatur von dem fass messen?
+    - wie sieht es aus könnt ihr fliegen?
+    - ugv 2 erreicht?
+    - könnt ihr was erkunden was da in lauter rauch steht?
+    - tim bist du so einen gang entlang gefahren?
+    - ugv 2 gerufen?
+    - ugv 2 gerufen?
+    - ja uav wie sieht es aus könnt ihr fliegen?
+    - uav 1 habt ihr das ziel erreicht?
+    - hast du mittlerweile den blauen kanister gesehen
+    - hattest du von dem blauen kanister noch ein foto gemacht?
+    - du hast den roboter mit der infrarotkamera ist das richtig?
+    - frage zur rauchentwicklung vorfahren?
+    - du hattest mich angesprochen?
+    - das heißt du bist da rechts abgebogen in den raum rein richtig?
+    - du hattest mich gerufen?
+    - könnten
+    - darauf kann ich sehen wo der standort ist?
+    - frage raum weiter erkunden?
+    - du hast mir jetzt ein weiteres foto geschickt ist das richtig?
+    - rechte treppe hoch rechts in den raum rein korrekt?
+    - hast du von der person ein foto gemacht und mir geschickt?
+    - ist das der mensch der da an einem pfeiler hockt?
+    - ist das der der von dir weiter entfernt ist?
+    - ja frage soll ich nach weiteren personen suchen?
+    - der raum ist vollständig abgesucht?
+    - gibt es noch mehr raum der noch nicht abgesucht ist?
+    - und das fass hast du gesagt da soll ich dran vorbei fahren ne?
+    - was machen die technischen probleme wieder einsatzbereit?
+    - kannst du dich denn noch bewegen?
+    - foto machen geht auch nicht?
+    - dieses grüne fass da ist der rauch korrekt?
+    - soll ich in die richtung fahren?
+    - die drohne ist auch einsatzbereit?
+    - wie ist bei dir auch einsatzbereit?
+    - sollen wir loslegen und erkunden? oder hast du noch was?
+    - teamleader ugv 2 gerufen?
+    - frage der einsatzbefehl gilt auch für ugv 1?
+    - die westliche richtungserkundung auf dieser ebene?
+    - habt ihr die möglichkeit die ebene zu wechseln?
+    - kannst du mal gucken ob dir das recht ist auf dieser ebene zu suchen?
+    - habt ihr schon neue erkenntnisse?
+    - ihr bewegt euch weiter in westlicher richtung?
+    - ihr seid also jetzt den eigentlichen hochofenbereich abgeflogen komplett ja?
+    - rauchentwicklung ist von dort aus auch nicht zu sehen?
+    - du hattest mir gerade das bild geschickt ja?
+    - frage sollen wir da jetzt reinfahren?
+    - sollen wir versuchen uns anzuschließen?
+    - hast du danach noch einen auftrag für uns?
+    - du sprachst eben von einer anderen ebene habt ihr die schon erreicht?
+    - das bild mit dem behälter war in östlicher richtung war es korrekt?
+    - reichen dir die bilder?
+    - ja kriegen wir auch noch einen auftrag?
+    - seht ihr die drei hochbehälter?
+    - frage das bild das ich gerade bekommen hab ist mit blick auf zwei runden öffnungen ist das richtig?
+    - frage könnt ihr aus eurer position den ugv 1 sehen?
+    - ja ihr hattet doch eben zwei fässer ausgemacht von oben könnt ihr den ugv 2 dorthin lotsen?
+    - frage ist das schon erfolgt?
+    - kannst du die bilder sehen? ugv?
+    - uav auf position?
+    - teamleader hast du jetzt ein bild?
+    - können sie ein bild senden?
+    - ist es möglich die quelle der rauchentwicklung mit dem bodenroboter zu finden?
+    - ist von oben verrauchung zu sehen?
+    - sie hatten was?
+    - gibt es eine information über die substanz die dort austritt?
+    - ist es möglich ein foto von dem fass zu machen was daneben steht?
+    - soll ich die mal ansprechen? nicht dass sie wegen dem rauch hier stehen
+    - verständigung einwandfrei
+    - verständigung war einwandfrei?
+    - sollen wir starten mit der uav und einen überblick verschaffen?
+    - ist bei euch was zu sehen?
+    - fährst du die falsche richtung?
+    - hast du denn es empfangen?
+    - du bist soweit?
+    - ihr seid auch soweit?
+    - ihr seid auch soweit?
+    - verstanden?
+    - bild von der uav eingetroffen?
+    - könnt ihr abschätzen ob das gebäude noch tragfähigkeit hat?
+    - sind schon verletzte gefunden worden?
+    - ja der kanister mit otalin ist er defekt?
+    - kannst du damit was erkennen?
+    - thorsten kannst du mich noch hören?
+
+
+- intent: 'Answer'
+  examples: |
+    - ja umgehend beginnen ohne möglichst wenig zeitverzögerung um eine höhere erfolgschance zur menschenrettung zu haben
+    - ob ein medium ausläuft kann ich dir aktuell nicht sagen
+    - gefühlte 10 bis 20 meter
+    - den flur geradeaus durch links die treppe rauf danach rechts abbiegen dann am hochofen den hochofen folgen
+    - dann finden sie die person
+    - es handelt sich um drei personen die nebeneinander stehen
+    - die drei gehfähigen sind nah beieinander
+    - das war roboter 1
+    - bin auf dem treppenabsatz aber weiter links gelegen
+    - ich möchte infrarotbilder haben mit dem ziel leckagen festzustellen beziehungsweise wärmestrahlung
+    - ich hab einen großen zeitunterschied zwischen bewegung und eingabe
+    - und ich bin auf dem weg zum roboter 1
+    - auf einem wärmebild ist links liegend die person auf einem zylindrigen gegenstand
+    - im ersten obergeschoss vor einem hochofen rechtsseitig ein grünes fass und rauchentwicklung
+    - ne ich bin vor diesem hochofen der mehrere bullaugen hat
+    - ja können weiter fahren
+    - mach mal ein foto zur orientierung für mich
+    - ja das ist negativ
+    - es sieht aus wie gerolsteiner
+    - also im moment kann ich dazu nichts sagen
+    - um diesen beiden fässern und dem kanister ist kein anschein von irgend einer leckageaber erneut nochmal versuchen muss
+    - ich versuche jetzt noch von dem liegenden fass die unnummer rauszukommen was ich bereits schon gedreht hab was ich
+    - ich sehe ein fass was einfach nur umgekippt ist keine leckage
+    - der mittlere gebäudeteil
+    - ja hab ich da müsstest ein foto von haben
+    - ja mein roboter hier der hat jetzt ne kette fast verloren
+    - also ich hab den uav 2 getroffen kann da aber mich nicht weiter
+    - ich hab gerade schwierigkeiten
+    - ich bin gerade dabei
+    - ja das ist der sven operator 2
+    - ja ich hätte jetzt einmal ein luftbild von oben einmal eins zu übersicht das schicke ich dir jetzt
+    - ist gerade die erste treppe nach oben gefahren zur rauchentwicklung ich erkunde dort im ersten raum
+    - die rechte treppe wo die rauchentwicklung zu sehen war
+    - ich schick dir eben noch zwei andere fotos da müsstest du es besser erkennen
+    - der eine ist nur das gerüst und der andere ist voll ich meine den vollen
+    - der bereich hinter dem pfeiler also hinter dem teil wo die person war
+    - ich bin gerade dabei einfach schon mal richtung den weg zu kommen wo der operator 1 lang gefahren ist
+    - wir haben gerade ein kleines technisches problem
+    - das gleiche bild was du jetzt gemacht hast da in die mitte reinzoomen da wo die rauchentwicklung ist
+    - ja das habe ich gemacht
+    - ja ich melde mich gleich
+    - immer noch in der nähe des grünen fasses
+    - versuchen noch den standort rauszufinden
+    - wir befinden uns auf einer rampe
+    - also aktuell stehe ich noch an dem flachen bereich der rampe
+    - ich fahr mal näher ran und erkunde
+    - wir sind noch in der nähe von dem ersten behälter der von ugv 1 untersucht wurde
+    - schwenk mal nach rechts dann müsstet ihr eigentlich in die halle reinblicken
+    - immer noch nicht klar
+    - ja auf der ersten ebene zu den rampen hin
+    - ja ich bin jetzt wieder im außenbereich
+    - bisher ist das einzige
+    - ja die punkte sind hier minimal ich würde sagen zirka fünf bis zehn zentimeter im durchmesser
+    - das bild habe ich auch ich versuch es gerade größer zu machen
+    - die ausströmende flüssigkeit ist ein dichter weißlicher nebel flüssigkeit unbekannt
+    - position beibehalten
+    - ich hab bilder freigegeben wir versuchen sie gerade sichtbar zu machen
+    - voraus ist eine treppe und da drüber relativ dichter rauch zu sehen
+    - ugv 1 und ugv 2
+    - ja zwölf metallstufen
+    - darüber hinaus habe ich auch sehe ich auch teile vvom gebäude hier liegen also es ist die strukturelle integrität könnte gefährdet sein
+    - bisher noch nicht wir haben eine erkenntnis auf auf einem foto dem gehen wir jetzt nach
+    - ich klär das
+    - so ich kann nicht genau einschätzen wie viel ausgelaufen ist
+    - aber eine leckage hat stattgefunden
+    - der kkanister hat zirka 30 liter fassvermögen
+    - der guv1 hat jetzt die treppe erklommen ich werd nach der rauchquelle suchen
+    - ja wir konnten bereits feststellen das otalin was es genau ist fortsetzen der suche
+    - ein trupp arbeitet sich vor der flugroboter fliegt vor die position des verletzten z zwecks besseres auffinden
+    - ja die erkenntnisse was auf dem foto zu erkennen ist
+    - brennbarer mit wasser gefährlicher gährender stoff alles weitere müsst ihr von der einsatzseite eruieren
+
+
+- intent: 'AutoPositive'
+  examples: |
+    - ja verstanden ich beginne mit der erkundung
+    - ja verstanden
+    - ja das ist gut zu wissen verstanden
+    - okay
+    - ja
+    - hier markus verstanden
+    - ja verstanden
+    - das ist verstanden
+    - das ist verstanden
+    - ja das ist verstanden
+    - das ist verstanden
+    - hier markus verstanden
+    - daniel ich hab dich verstanden
+    - okay
+    - verstanden
+    - hier markus verstanden
+    - hier markus verstanden
+    - ja verstanden
+    - ja verstanden zwei bis drei vermisste
+    - das ist verstanden
+    - hier markus verstanden
+    - hier markus verstanden
+    - hier markus verstanden
+    - ja verstanden
+    - hier markus verstanden
+    - ja verstanden
+    - andreas verstanden
+    - daniel verstanden
+    - dirk hat verstanden
+    - andreas hat verstanden
+    - daniel hat verstanden
+    - also ich wiederhole wir haben vier personen die sind gehfähig und eine weitere person mit warnweste auch gehfähig
+    - gut
+    - ja verstanden
+    - ja verstanden
+    - verstanden
+    - ja verstanden die drohne startet wieder
+    - roboter 2 hat gehört
+    - verstanden
+    - verstanden standort treppenabsatz
+    - verstanden roboteraussetzer
+    - okay
+    - verstanden
+    - ja verstanden
+    - ja hab ich mir fast gedacht
+    - stelle fest ein dichtes 200literfass umweltgefährdend gekennzeichnet
+    - ja verstanden
+    - wiederhole am treppenausgang blauer kanister
+    - verstanden
+    - ja verstanden
+    - roboter 1 hat verstanden übungsende
+    - roboter 2 hat verstanden übungsende
+    - drohne hat verstanden übungsende
+    - hab verstanden
+    - verstanden
+    - verstanden
+    - teamleader verstanden
+    - ja verstanden
+    - teamleader verstanden
+    - ja verstanden
+    - verstanden
+    - verstanden
+    - teamleiter verstanden
+    - das ist verstanden
+    - verstanden
+    - verstanden
+    - verstanden
+    - verstanden
+    - ja ist verstanden
+    - ja ist verstanden
+    - ja verstanden
+    - das ist verstanden
+    - verstanden
+    - okay
+    - hier ugv 2 verstanden
+    - ja ist verstanden
+    - beide fässer sind noch nicht beschädigt
+    - ja verstanden
+    - das ist verstanden
+    - ja verstanden
+    - ja verstanden
+    - ja hab ich verstanden ich guck nochmal
+    - ich gucke
+    - ja verstanden
+    - also defekt
+    - ja verstanden
+    - ja verstanden
+    - ja verstanden
+    - ja verstanden
+    - ja verstanden
+    - ja verstanden
+    - ja verstanden
+    - ja verstanden
+    - ja verstanden
+    - verstanden
+    - ja hab ich verstanden
+    - ja ist verstanden
+    - ja operator 2 hat verstanden
+    - uav operator verstanden
+    - verstanden
+    - verstanden
+    - ja verstanden
+    - ja verstanden
+    - ja ist verstanden
+    - ja habe verstanden
+    - prima
+    - verstanden
+    - ja verstanden
+    - ja das habe ich verstanden
+    - phantastisch
+    - ja verstanden
+    - hab ich verstanden
+    - ja verstanden
+    - ja
+    - jo
+    - ja
+    - verstanden
+    - das habe ich verstanden
+    - verstanden
+    - verstanden
+    - ja verstanden
+    - verstanden
+    - alles klar
+    - alles klar
+    - ja verstanden
+    - alles klar
+    - ja bild ist angekommen
+    - westliche richtung verstanden
+    - das ist verstanden
+    - ja verstanden
+    - ja verstanden
+    - ja verstanden
+    - ja ist verstanden
+    - ja verstanden
+    - ja verstanden
+    - ja verstanden
+    - ja verstanden
+    - ja ist verstanden
+    - das ist verstanden
+    - ja verstanden
+    - ja verstanden
+    - ja verstanden
+    - ja
+    - ja verstanden
+    - ja verstanden
+    - ja verstanden
+    - ja verstanden
+    - ja verstanden
+    - ja verstanden
+    - ja
+    - ja das ist verstanden
+    - ja verstanden
+    - ja das ist verstanden
+    - ja verstanden
+    - ja ist verstanden
+    - ja verstanden
+    - ja das ist schon mal gut ja
+    - ja das ist verstanden
+    - das ist verstanden
+    - ist verstanden
+    - ja ist verstanden
+    - ja verstanden
+    - ja ist verstanden
+    - okay
+    - ugv 1 verstanden
+    - ugv 2 verstanden
+    - uav auch verstanden
+    - großartig
+    - ja verstanden
+    - hier teamleader verstanden
+    - zwei vermisste personen verstanden
+    - hier teamleader verstanden
+    - sehr gut
+    - ja
+    - ja verstanden
+    - alles klar
+    - gut
+    - alles klar
+    - gut
+    - ja teamleader hat mitgehört
+    - okay
+    - alles klar
+    - verstanden
+    - verstanden
+    - verstanden
+    - verstanden
+    - genau
+    - verstanden
+    - ja verstanden
+    - ja verstanden
+    - verstanden
+    - ja verstanden
+    - ja verstanden
+    - verstanden
+    - das ist verstanden
+    - ja verstanden
+    - ja verstehe
+    - ja verstanden
+    - das ist verstanden
+    - okay
+    - ja verstanden
+    - ja verstanden
+
+
+- intent: 'Disconfirm'
+  examples: |
+    - negativ keine nennenswerten erkenntnisse
+    - nein negativ
+    - das ist eigentlich nicht notwendig
+    - bis dato noch nicht
+    - nein negativ
+    - keine thermik
+    - nein
+    - nein das ist ein foto von dem roboter 1
+    - negativ
+    - ist negativ noch nicht
+    - warten
+    - negativ
+    - sag ich mal ne
+    - ja das ist negativ
+    - negativ
+    - ja negativ
+    - ja das ist negativ
+    - ich glaube nicht
+    - negativ
+    - noch negativ
+    - ja ist negativ
+    - ne leider immer noch nicht
+    - negativ ich hab den roboter mit dem arm dort ist keine infrarotkamera vorne
+    - negativ
+    - ne ich kann hier nichts machen
+    - ne
+    - bisher negativ
+    - wir haben aktuell immer noch probleme mit der steuerung
+    - negativ
+    - ja ist negativ
+    - nein negativ
+    - wobei wir jetzt nur westlich gesucht haben von meinem standpunkt aus
+    - negativ
+    - momentan kann ich keine bilder senden
+    - weiterhin technisch nicht möglich fotos zu senden
+    - die funktioniert doch nicht
+
+
+- intent: 'Request'
+  examples: |
+    - andreas und daniel könnt ihr mir beide jeweils schon mal ein foto von eurem aktuellen standort senden?
+    - den suchbeginn bitte mitteilen
+    - baldmöglich erstes bildmaterial senden
+    - einmal eine rundumsicht
+    - vier bilder 360gradabdeckung
+    - vorrängig weiter personen suchen
+    - einmal aus der ferne und einmal aus der nähe wenn möglich
+    - nochmal wiederholen andreas
+    - roboter 1 können sie den standort nochmal anfahren
+    - und von dort geradeaus weiter auf die person zufahren?
+    - schauen sie mal im umkreis ob dort rettungskräfte sich bewegen kommen
+    - folgenden auftrag an roboter 2 suchen sie den standort des roboters 1
+    - und dort finden sie rettungskräfte die orientierungsprobleme haben um an die verunfallte person zu gelangen kommen
+    - wiederholen
+    - wenn betriebsbereit auftrag durchführen
+    - benötige luftbild mit möglichst der leblosen person die auf dem wärmescan den ich hier habe zu sehen ist
+    - auftrag lautet aus der luft versuchen den roboter 1 zu finden und dann abzufotografieren
+    - neuer auftrag personsuche aus der luft mittels wärmebildkamera kommen
+    - nächster auftrag weitere personensuche
+    - absuchen der fläche vielleicht finden wir die person dort mit dem wärmebild
+    - guck mal auch nebenbei so ein bisschen nach dem feuer
+    - noch suchen nach weiteren personen
+    - jetzt gilt der auftrag auslaufende chemikalien und gefahrstoffe zu finden und zu orten
+    - neuer auftrag lautet suchen von leckagen von undichtigkeiten und chemikalien
+    - benötige foto
+    - bräuchte nur noch ein klareres foto von der person
+    - dann bitte mal eins gerade vorweg
+    - mach mal ein foto
+    - zu allen roboter mal kurz stop
+    - melden wenn einsatzbereitschaft gegeben
+    - na ja gut dann mach du ein foto von dem fass
+    - ugv 1 damit warten
+    - ugv 1 aber warten
+    - dann erkundung zweiter obergeschoss
+    - wiederholen
+    - kannst du einmal ein foto von dem fass machen in richtung der treppe dass man einen orientierungspunkt hat?
+    - wiederholen
+    - ugv 1 versuch noch in kochsweite ein bisschen nähere ergebnisse zu kriegen
+    - da musst du genau hingucken
+    - aber sehr vorsichtig beim vorgehen
+    - dann schick mir mal ein foto davon
+    - kann man von oben vielleicht mir ein foto schicken?
+    - ja fahren sie wieder zurück ins untergeschoss
+    - noch ein bild schicken und das aber mit einem schwarzweißhintergrund
+    - aber wenn du direkt vorbeikommst dann mach nur ein näheres foto als nachweis
+    - schicken sie mir das foto?
+    - alle bitte hier zum treffpunkt ans zelt kommen
+    - ja ich hätte gerne dass du mit dem vogel da einmal über die hochöfen fliegst nen rundflug machstguckst ob du da irgendwelche personen entdecken kannst
+    - von oben uns fotos machst und guckst wo wir eine rauchentwicklung haben und auch mit der infrarotkamera
+    - auftrag für dich geradeaus die treppe hochfahren 50 meter rein linksseitig dichte rauchentwicklung
+    - dort mit dem roboter hinfahren und mit der menschensuche beginnen
+    - mach mal bitte an den relevanten punkten fotos dass wir den hinterher nachvollziehen können
+    - du sollst zur rauchentwicklung fahren
+    - operator 1 schickst du mir die bilder auch einmal rüber die du gemacht hast?
+    - operator 1 schickst du mir das nochmal rüber
+    - ja dann möchte ich dort eine meldung haben
+    - folgenden auftrag den gleichen weg nehmen wie operator 1
+    - auftrag ist erkundung nach weiteren zugangsmöglichkeiten nach verletzten
+    - schau auch mal wie weit die rauchentwicklung da ausgedehnt ist
+    - neuer auftrag ist akku tauschen damit die drohne wieder fliegen kann
+    - dann bitte weiter suchen
+    - mach mal fotos auch
+    - dein auftrag ist an diesem raum vorbei wo der operator 1 drin ist und da ab da weiter zu suchen nach menschen
+    - aber mach mir mal ein foto von dem fass
+    - ich möchte mal dass du mit der drohne jetzt weiter fliegst zum anderen hochofen quasi von der anderen seite der einsatzstelle aus fotos machst
+    - und guckst ob du von dort aus noch personen erkennen kannst
+    - dass du dieses bild nochmal machst aber reinzoomst
+    - lena dann flieg mal mit deinem fluggerät da weiter ja weiter nach rechts würde ich jetzt erst mal sagen was immer auch rechts sein mag so wie du jetzt guckst quasi in deiner position in richtung deiner position
+    - flieg mal mit der drohne genau in die andere richtung
+    - wenn du jetzt startest den hochofen der von euch weiter weg ist von dort aus hätte ich gerne bilder aus der mitte zwischen den hochöfen
+    - immer noch menschen suchen ne
+    - kannst du gucken ob du dieses fass findest und entsprechende bilder machst?
+    - ja bleib mal da wo du jetzt bist
+    - und erkunde um dieses grüne fass herum warum es da raucht
+    - die roboter sollen alle zurückfahren und dann treffen wir uns hier
+    - fliegt ihr in westlicher richtung über dem eigentlichen gelände und schickt mir dann mal ein bild?
+    - bewegt ihr euch mal in südlicher richtung und sucht das gelände mal nach gefährlichen stoffen ab? kommen
+    - könnt ihr den bereich mal abschwenken mit der kamera und nach eventuellen brandnestern suchen?
+    - bleibt mal auf der ebene und fahrt weiter in westlicher richtung und erkundet dort
+    - kannst du mir ein bild schicken?
+    - ja dann fahrt mal hoch und erkundet da weiter
+    - kannst du mal was gucken ob da was interessantes ist
+    - könnt ihr da auch was ausmachen in form von wärmestrahlung?
+    - schickst du mir noch mal ein aktuelles foto euren standortes?
+    - guckst du mal?
+    - schickst du mir dann auch von da mal ein foto?
+    - könnt ihr mir näheres zu dem behälter geben?
+    - ja insbesondere was die wärmeentwicklung geht anbetrifft
+    - frage könnt ihr den behälter mal von einer anderen seite anfahren und erkunden ob er noch verschlossen ist oder ob da irgendwas austritt?
+    - setz die erkundung fort
+    - ja schickst du mir nochmal ein bild?
+    - dann bewegt ihr euch einmal in östlicher richtung?
+    - schick mir mal ein foto wo ihr steht damit ich ein bisschen zuordnen kann
+    - dann müsst ihr euch von da aus in östlicher richtung bewegen
+    - ja dann tausch das akku nochmal aus und flieg die strecke nochmal ab
+    - schau dir das bitte mal an beide bilder sind geteilt
+    - ihr setzt die erkundung in östlicher richtung weiter fort
+    - ja dann könnt ihr direkt mal erkunden wie aus der position wo ugv eins sich momentan befindet das andere fass zu sehen war
+    - ja schickst du mir mal ein foto?
+    - die rauchentwicklung die das uav gemeldet hat könnt ihr da näher erkunden inwiefern wir da noch mit kräften vorgehen können?
+    - bitte bringen sie ihre gerätschaften in stellung in sicherem bereich innerhalb der großen halle
+    - so ihr einsatzauftrag postieren sie sich innerhalb der großen halle im sicheren bereich
+    - und melden sie mir wenn sie einsatzbereit sind
+    - team auf position gehen
+    - boden 1 nach rechts
+    - wenn sie einsatzbereit sind lautet der einsatzauftrag bitte geben sie mir einen gesamtüberblick aus der luft
+    - suchen sie nach möglichen rauchentwicklungen
+    - konzentrieren sie sich besonders auf den bereich zwischen den beiden hochöfen beziehungsweise am linken hochofen
+    - operator boden 1 fahren sie nach links
+    - da ein foto machen
+    - operator boden 2 ein foto senden
+    - bitte eine gesamtübersicht von dem zentralen gebäude
+    - fliegen sie mit der drohne über den linken hochofen oberste höhe
+    - und dann ein foto senden
+    - einmal ein foto machen
+    - dann bitte einmal ein foto davon und wieder landen
+    - bitte über kanal 53wu ansprechen
+    - versuchen sie mit hilfe der bodenroboter die substanzen herauszufinden
+    - oder ob es möglich ist die leckage abzudichten
+    - übungende
+    - für alle übungende
+    - drohnenoperator starten sie und machen sie sich einen überblick über die lage
+    - starten sie ihre roboter zur erkundung der area
+    - mehr richtung hochofen einmal schauen
+    - da ich eine leichte rauchentwicklung auf der linken seite sehe bitte den weg zur linken seite fortsetzen
+    - näher ranfahren zum lokalisieren wo dieser rauch entsteht und foto machen und mir senden
+    - wenn ihr ja weiter einsatzbereit seid dann bitte melden
+    - wie besprochen gebiet erkunden rund um die beiden hochöfen
+    - also personensuche voran bringen
+    - und dann eventuell noch nach der schadenursache gucken
+    - auftrag für die uav 1
+    - auftrag für die uav 1
+    - ich brauch einmal ein lagebild von oben wo das komplette objekt abgebildet wird und dann speziell ein foto zwischen den beiden türen
+    - bitte auch per infrarot bitte
+    - auf menschen und sonstige ereignisse scannen
+    - ja ihr auftrag ist in das objekt reinzufahren und den schadensort zu scannen zu bebildern
+    - ebenfalls ihr auftrag vom westen her richtung osten die einsatzstelle anfahren mir ihrem ugv und kontrolle ob menschen zu erkennen sind beziehungsweise ob irgend ein schadensereignis zu erkennen ist
+    - und wenn weitere erkenntnis das auch melden
+    - vielleicht kann man nochmal dran zoomen
+    - mach mal ein foto davon
+    - bitte darauf achten eine bezeichnung auf dem kanister zu erkennen
+    - dann bitte eine probe nehmen
+    - wir müssten eine stelle mal genauer untersuchen
+    - wir bräuchten mal eine genauere untersuchung bild nummer 3
+    - und da wieder die kennzeichnung die brauchen wir
+    - und eine einschätzung ob undichtigkeit und wenn ja wie viel flüssigkeit ausgetreten ist
+    - so jetzt mal stopp
+    - kann er noch vielleicht mal eine bessere auflösung schicken?
+    - ja ugv 2 wir brauchen nochmal schärfere bilder von dem fass und der kennzeichnung
+    - ja von dem fass brauchen wir nochmal bessere bilder und auch von der kennzeichnung
+
+
+- intent: 'DeclineRequest'
+  examples: |
+    - meine kamera die realbildkamera ist ausgefallen
+    - aber teilweise unfähig das umzusetzen
+    - negativ
+    - drohne landet wegen leerem akku
+    - wir können momentan keine fotos machen
+
+
+- intent: 'Offer'
+  examples: |
+    - ich kann dir lediglich ein wärmebild schicken
+    - ich kann dir gerne weitere bilder zukommen lassen
+    - ich kann das fass noch einmal umkreisen und gucken ob es eine beschriftung drauf ist
+    - ja wir können die orientierung nehmen von dem ersten fass von dem ersten fass geht es ja die treppe hoch und da stand direkt das erste fass und davon gesehen dann rechts
+    - ich kann mal versuchen mal es ein bisschen zu drehen
+    - ich wollte jetzt mit dem ugv 1 nach oben ins obergeschoss versuchen
+    - wenn das okay ist
+    - wäre jetzt ein inspektionsflug möglich
+    - könnt ich ein neues foto machen
+    - wir hätten die möglichkeit von hier aus in den komplex reinzufahren und dort innen zu erkunden
+    - ich hätte jetzt die möglichkeit auch in die erste ebene hochzufahren
+    - dann würde ich die erkundung auf dieser ebene weiter fortsetzen
+    - soll ich mal ein foto machen?
+    - soll ich ein foto machen?
+    - ich kann aber eine probe nehmen ich habe einen arm dabei
+    - wir können vielleicht etwas bessere bilder machen
+    - der ugv 1 ist auch in der nähe ich kann auch nochmal gucken
+
+
+- intent: 'Confirm'
+  examples: |
+    - verstanden
+    - verstanden
+    - meine einschätzung unter pa jederzeit möglich ja
+    - das ist gut
+    - ja
+    - das ist richtig ich habe eine person gefunden
+    - ja zumindest in der nähe davon direkt neben dem hochofen
+    - das ist korrekt
+    - ja andreas mitgehört zwei personen in der nähe des hochofens
+    - ja
+    - ja andreas mitgehört drei gehfähige personen
+    - das ist korrekt
+    - das ist korrekt
+    - ja such mal noch weiter
+    - das ist auch meine vermutung
+    - ja korrekt da stehen bleiben
+    - ja die ist immer noch in der luft
+    - ja von dem fass
+    - ja kann die daten auswerten
+    - korrekt das fass selber ist grün
+    - ja würde ich mich darüber freuen
+    - ja ich rolle bereits
+    - ja ich rolle auch schon
+    - korrekt
+    - ja warten
+    - ja ich fahr gerade näher
+    - ja ist korrekt
+    - ja ugv 2
+    - das ist korrekt
+    - ja ich kann das mal probieren
+    - ja machen wir so
+    - ja verstanden
+    - ja versuch das mal
+    - ja dann werden wir jetzt fliegen und versuchen bilder vor der unfallstelle aufzunehmen
+    - ja korrekt
+    - ja richtig
+    - ja richtig
+    - das ist richtig
+    - ja
+    - ja
+    - müsste zu erkennen sein
+    - ja richtig
+    - ich habe drei geschickt
+    - ja richtig so
+    - ja foto gemacht habe ich
+    - ganz genau
+    - ja das ist richtig
+    - ja klar
+    - bis zum opfer auf jeden fall
+    - ja
+    - ja korrekt
+    - ja ich weiß
+    - fahr zu dem grünen fass
+    - ja das ist korrekt
+    - ja wir sind auch einsatzbereit
+    - ja startet mal und fliegt ja startet erst mal
+    - ja richtig
+    - ja richtig
+    - ja es gibt treppen
+    - ja richtig
+    - ja
+    - das ist korrekt
+    - ja fahr mal rein
+    - ja wir gucken jetzt gerade aus nördlicher richtung oder auf den hochofen ja
+    - ja
+    - ja
+    - ja ist bei mir angekommen
+    - ja fahrt da mal rein
+    - ja danke
+    - ja mache ich
+    - ja macht ihr mal
+    - ja landet erst mal ihr kriegt einen neuen auftrag
+    - ugv 1 erreicht gerade die erste ebene
+    - das ist korrekt
+    - ja verstanden
+    - ja verstanden
+    - ja reicht mir erst mal aus
+    - ja
+    - ja das ist korrekt
+    - ja verstanden
+    - ja verstanden
+    - ja das ist korrekt
+    - bild ist draußen ich hab es geteilt
+    - ja
+    - ja
+    - ja von operator boden 1
+    - ja auf jeden fall mach das mal
+    - ja ich verstehe sie
+    - ja ich verstehe sie einwandfrei
+    - ja
+    - ja wenn es geht
+    - das habe ich auch gesehen
+    - okay
+    - ja natürlich
+    - sind bereit ja
+    - bereit wenn sie es sind
+    - ja
+    - ja das erste bild
+    - korrekt
+    - ja
+    - ja genau
+    - ja
+    - ja genau
+    - ja
+
+
+- intent: 'AcceptRequest'
+  examples: |
+    - andreas verstanden
+    - ja ich setze personensuche fort
+    - ja ich kann den standort direkt nochmal anfahren
+    - ja ich fahre den rettungskräften über meinen angriffsweg entgegen und versuche sie zu lotsen
+    - ja verstanden
+    - das ist verstanden wir schalten um auf wärmebild und gucken
+    - personensuche aus der luft mittels wärmebildkamera verstanden
+    - ja verstanden ich suche weiter
+    - ja verstanden
+    - roboter 2 hat verstanden
+    - gut
+    - ja das verstanden
+    - ja das kann ich versuchen
+    - wir haben ein foto geschickt
+    - machen wir dir fertig
+    - schon da
+    - ja das habe ich verstanden
+    - ja 50 meter geradeaus links rein und erkunde nach menschen
+    - ja ist verstanden ich mach hier fotos
+    - ja ich fahr zur rauchentwicklung
+    - ja ich schicke
+    - ja ist soweit verstanden
+    - ja das habe ich verstanden
+    - ja ist verstanden
+    - ja mach ich
+    - ja
+    - ja mache ich
+    - das habe ich verstanden
+    - ja das habe ich verstanden
+    - ja das habe ich auch verstanden
+    - ja das habe ich verstanden
+    - das hab ich auch verstanden
+    - ja verstanden
+    - ja ist verstanden westlich über das gelände und ein bild schicken
+    - ja verstanden erkunden in südlicher richtung
+    - ja wir suchen nach brandnestern mittels wärmebildkamera oder infrarotkamera
+    - weitererkunden in westlicher richtung verstanden
+    - ja kommt sofort
+    - ja wir schalten gerade um ich komme gleich wieder mit neuen infos
+    - ja ich schick dir gleich ein bild von ugv 1 wenn er an mir vorbei fährt
+    - ja das ist verstanden
+    - ja ich versuch dir nochmal ein besseres bild zu liefern
+    - ja positiv wird gemacht
+    - ja ist verstanden
+    - ja
+    - ja
+    - so machen wir das
+    - ja ist verstanden
+    - ja foto kommt
+    - ja das kann ich machen
+    - hier teamleader verstanden
+    - ja ich versuche das rauszufinden
+    - ja einsatzauftrag verstanden
+    - ich fahre nach links
+    - okay
+    - ich versuch das mal
+    - okay
+    - ja verstanden
+    - ja verstanden
+    - okay
+    - okay
+    - okay
+    - starten die suche mit roboter 2 jetzt
+    - okay
+    - nach links verstanden
+    - machen wir
+    - das ist verstanden
+    - ein lagebild von oben komplette lage und ein lagebild zwischen den beiden türen verstanden
+    - ja beide bilder in infrarot ebenfalls
+    - ja verstanden
+    - verstanden
+    - verstanden
+    - ich kümmere mich drum
+    - ja ich versuche nochmal zu dem fass zu fahren
+
+
+- intent: 'WHQuestion'
+  examples: |
+    - wie weit ist das von dem treppenabsatz denn entfernt?
+    - wie verhalten sich die vier personen verlassen sie das gebäude und wenn ja in welche richtung?
+    - wer hat dieses foto gemacht kommen
+    - wie ist der stand der dinge?
+    - frage wie sieht es da mit der brandausbreitung aus?
+    - frage gerade aktueller standort?
+    - welche rückwärtige seite vom fass?
+    - ja frage soll ich weiter erkunden? das fass liegen lassen weiterfahren?
+    - was kann in der grünen flasche drin sein?
+    - weitere erkenntnisse um das fass herum an leckagen?
+    - welcher gebäudeteil soll umflogen werden?
+    - wie sieht es bei euch aus geht gar nichts mehr oder seid ihr wieder im spiel?
+    - frage zunächst wer hat den roboter mit dem arm?
+    - frage standort roboter?
+    - lena jetzt sag mir mal genau den standort dieser person
+    - wo bist du jetzt? standort
+    - wo soll ich reinzoomen in den eher in den hochofen oder genau in die mitte?
+    - geht es einmal die treppe noch weiter hoch oder soll ich in der ebene bleiben und nach weiteren räumen suchen?
+    - wo ist denn deine position jetzt?
+    - standort frage?
+    - wo ist dein standort im moment?
+    - frage wo ist jetzt euer standort?
+    - was hatten sie?
+    - welcher roboter ist jetzt für die verletztensuche eingeteilt?
+
+
+- intent: 'Pausing'
+  examples: |
+    - warten
+    - warten
+    - warten
+    - ugv warten
+    - warten
+    - moment mal bitte
+    - augenblick
+    - augenblick
+    - augenblick
+    - einen augenblick ich melde mich gleich
+    - melde mich sofort
+    - warte ich muss eben erst gucken
+    - ich komme sofort wieder
+    - wir sind unterwegs und melden uns gleich nochmal
+    - kurz warten
+    - ja war kurz warten
+
+
+- intent: 'AutoNegative'
+  examples: |
+    - letzten teil des satzes habe ich nicht verstanden
+    - lena sag nochmal die letzte meldung hab ich nicht mitgekriegt
+    - hab sie nicht verstanden
+
+
+- intent: 'AlloPositive'
+  examples: |
+    - ja richtig
+    - das ist korrekt
+    - ja richtig
+    - da das ist korrekt
+    - das ist korrekt
+    - das ist korrekt
+    - korrekt
+
+
+- intent: 'Question'
+  examples: |
+    - möchtest du normale oder infrarotbilder haben?
+    - frage wie ist die situation am roboter?
+    - auf welchem bild jetzt auf einem wärmebild oder auf einem richtigen foto?
+    - frage anderer auftrag?
+    - ich will wissen ob die das fass noch durch die explosion ein wärmebaustein ist
+    - kannst du mir nochmal ein bisschen näher beschreiben wo die rauchentwicklung ist?
+    - die linke treppe oder die rechte treppe auf deinm foto?
+    - ist das welcher hochofen ist es der rechte oder der linke von uns aus gesehen?
+    - operator 2 wie ist dein standort?
+    - wer von euch beiden hat ein foto gemacht auf der treppe?
+    - kannst du jetzt nochmal genau beschreiben wo ich hinfliegen sollte?
+    - fahrt ihr runter oder fahrt ihr auch über diese rampe?
+    - dafür müsstest du mal sagen wo wir ungefähr sind
+    - wie ist da meine blickrichtung auf dem bild?
+    - frage wo ist euer standort inzwischen?
+    - hast du eine ebene? auf welcher ebene?
+    - ja du hattest gerade noch mal einen auftrag kann du den mir wiederholen?
+    - wie weit seid ihr?
+    - konntet ihr im außenbereich noch weitere fässer feststellen oder war es das einzigste?
+    - ja wie groß sind die brennenden punkte oder die brandherde was ist an kräften erforderlich?
+    - können sie das bild interpretieren?
+    - wie ist der status ihrer bodenroboter beziehungsweise der standort?
+    - soll ich rechts oder links rum?
+    - ugv 1 ist das die erste etage oder so ne nur fünf stufen?
+    - liegen irgend welche erkenntnisse nochmal vor inwiefern die strukturen noch stabil genug sind um eingriffstrupp reinzuschicken?
+    - frage ist der kanister defekt hat eine leckage oder ist er noch dicht?
+    - ist nur eine kleine lache oder ist er komplett ausgelaufen?
+    - wie viel liter sind das?
+    - gibt es irgendwelche erkenntnisse wo die rauchentwicklung herkommt?
+    - du hast doch auch eine infrarotkamera drauf
+    - sollen wir jetzt die suche fortsetzen nach verletzten oder zurückkehren um die probe zu analysieren?
+    - wie ist der stand der rettung der verletzten?
+    - haben wir das grüne fass dann einen roten kanister und das untere ist ein blauer umgestürtzter eimer oder was?
+    - gibt es da nähere erkenntnisse drüber?
+    - ich habe sie nicht gut verstanden können sie wiederholen?
+
+
+- intent: 'Disconfirm_Communication'
+  examples: |
+    - ja jetzt nicht
+
+
+- intent: 'EverythingElse'
+  examples: |
+    - schi
+    - bin ich – k
+    - fo
+    - mit der mit der drohne
+    - nicht ge richtig
+    - au aus
+    - u uav
+    - abz anzuschließen
+    -  an der an dem tank
+    - si andere signaturen
+    - ugv zw eins
+    - das u das erdgebundene
+    - über machen
+    - versta mission
+    - hier ugv
+    - die suchen verletzte ein feststellen
+    - d den kanister
+    - darüber hinaus habe ich auch sehe ich auch
+    - vom conta von dem kanister
+    - vvon
+    - kkanister
+    - war kurz warten
+    - der team der teamleader
+    - es scheint handelt sich
+    - eine gift giftige
+    - danke schön
+    - z zwecks
+    - vo für

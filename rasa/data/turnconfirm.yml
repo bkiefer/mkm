@@ -1,0 +1,87 @@
+version: "3.1"
+
+nlu:
+- intent: 'Confirm_Communication'
+  examples: |
+    - [andreas](callsign) kommen
+    - [dirk](callsign) kommen
+    - [dirk](callsign) kommen
+    - [andreas](callsign) kommen
+    - [andreas](callsign) kommen
+    - [dirk](callsign) kommen
+    - [andreas](callsign) kommen
+    - [dirk](callsign) kommen
+    - [andreas](callsign) kommen
+    - [dirk](callsign) kommen
+    - [dirk](callsign) kommen
+    - [andreas](callsign) kommen
+    - [dirk](callsign) kommen
+    - [thorsten](callsign) hört [dirk](callsign) kommt
+    - [thorsten](callsign) hört [andreas](callsign) kommt
+    - [teamleader](callsign) hört [roboter 1](callsign)
+    - ich hör dich
+    - hör dich
+    - hört
+    - hört
+    - [ugv 1](callsign)
+    - kommen sie
+    - kommen
+    - [ugv 1](callsign) höre
+    - kommen
+    - hör dich
+    - [ugv 1](callsign) kommen
+    - kommen
+    - hört
+    - ja hier ist der [ugv 1](callsign) von [teamleader](callsign)
+    - hört
+    - kommen sie
+    - ich komm
+    - hört
+    - hört
+    - hört
+    - ja der operator 1 hört
+    - der operator 2 hört
+    - ja operator 2 hört [benno](callsign)
+    - ja der operator 1 hört
+    - hier der operator 1
+    - [uav](callsign) 1 kommen
+    - höre
+    - ja ich höre dich
+    - ich höre [lena](callsign)
+    - höre
+    - hört
+    - hier ist die [uav](callsign)
+    - hier ist die [uav](callsign)
+    - ja ich [ugv 2](callsign)
+    - höre
+    - ich hör dich
+    - höre
+    - höre
+    - ja
+    - hier ist die [uav](callsign)
+    - ich höre dich
+    - hier ist die [uav](callsign)
+    - ja
+    - ich höre dich
+    - hier ist die [uav](callsign)
+    - höre
+    - hier spricht der [roboteroperator](callsign) 2 ich höre sie klar und deutlich
+    - ich kann dich klar und deutlich verstehen
+    - [uav operator](callsign) ja
+    - hier operator boden 2
+    - [bodenoperator](callsign) 1 sprechen
+    - operator boden 1 hört
+    - [uav](callsign) operator
+    - [bodenoperator](callsign) 1 hat mitgehört und startet ebenfalls
+    - [teamleiter](callsign) kann hören
+    - kommen
+    - [ugv 1](callsign) kommen
+    - [ugv 2](callsign) kommen
+    - kommen sie
+    - kommen
+    - kommen sie
+    - [teamleader](callsign)
+    - [ugv 2](callsign) kommen
+    - ja
+    - [ugv 1](callsign) kommen
+    - [ugv 2](callsign) kommen

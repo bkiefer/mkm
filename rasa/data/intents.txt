@@ -1,0 +1,23 @@
+Confirm_Top
+Confirm_EndCall
+Confirm_Information
+Order_Top
+Order_End
+WHQuestion_Communication
+Confirm_CommunicationOK
+
+Request_Repeat
+Inform_Top
+Inform_Ready
+
+WHQuestion_Top
+YNQuestion_Top
+
+Disconfirm_Top
+
+Request_Call | Turn Take | Contact_Request -> Request_Turn
+Confirm_Call | Turn Confirm | Contact_Answer -> Confirm_Turn
+             | Turn Disconfirm | -> Disconfirm_Turn
+
+-> Auto_Positive
+-> Auto_Negative

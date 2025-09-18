@@ -1,0 +1,7 @@
+<number>#n -> # ^ <what>string2number(#n), # ! <number>.
+
+:Everything ^ Else -> # = :OutOfDomain ^ top.
+
+// :OutOfDomain ^ :#t -> #t = :PossibleQuestion.
+
+<mec> -> # ! <mec>.

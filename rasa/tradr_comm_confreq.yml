@@ -1,0 +1,611 @@
+version: '3.1'
+
+nlu:
+- intent: 'Request_Communication'
+  examples: |
+    - andreas andreas von markus kommen
+    - bodenroboter zwei von markus kommen
+    - feuerwehr bochum von markus kommen
+    - markus von andreas kommen
+    - andreas von markus kommen
+    - andreas von markus kommen
+    - markus für dirk
+    - markus für dirk
+    - andreas von markus kommen
+    - daniel von markus kommen
+    - dirk von markus kommen
+    - markus von andreas kommen
+    - markus von andreas kommen
+    - andreas von daniel
+    - markus von daniel
+    - hier markus an alle roboter
+    - markus von andreas kommen
+    - markus für dirk
+    - markus von andreas kommen
+    - markus für dirk
+    - markus von andreas kommen
+    - andreas von markus kommen
+    - markus für dirk
+    - dirk von markus kommen
+    - markus für dirk
+    - markus von andreas
+    - markus für dirk
+    - markus für dirk kommen
+    - markus von andreas kommen
+    - hier markus an alle operator
+    - daniel von markus kommen
+    - andreas von markus kommen
+    - dirk von markus kommen
+    - hier markus an alle operator
+    - thorsten für dirk kommen
+    - thorsten von andreas kommen
+    - thorsten für dirk
+    - thorsten für dirk
+    - thorsten für dirk kommen
+    - dirk von thorsten kommen
+    - teamleader von roboter 1
+    - dirk von thorsten kommen
+    - roboter 2 von thorsten kommen
+    - teamleader von roboter 1 kommen
+    - dirk von thorsten kommen
+    - thorsten für dirk
+    - roboter 1 von thorsten kommen
+    - robot 2 von thorsten kommen
+    - teamleader von roboter 1 kommen
+    - thorsten für dirk kommen
+    - teamleader von operator 1
+    - thorsten für dirk kommen
+    - der einsatzleiter vom operator uav kommen
+    - teamleader von ugv 2
+    - teamleader von ugv 1
+    - teamleader von ugv 2
+    - teamleader von ugv 1
+    - ugv 2 von teamleader
+    - teamleader von ugv 1
+    - ugv 2 von teamleader kommen
+    - teamleader ugv 1
+    - ugv 1 von teamleader
+    - ugv 1 von teamleader kommen
+    - teamleader von ugv 1
+    - uav für einsatzleiter
+    - uav für teamleader
+    - teamleader von ugv 1
+    - ugv 1 von teamleader kommen
+    - ugv 1 von teamleader
+    - teamleader von ugv 2
+    - teamleader von ugv 2
+    - teamleader von ugv 2
+    - ugv 2 von teamleader kommen
+    - teamleader von ugv 1
+    - ugv 1 ugv 2
+    - teamleader von ugv 1
+    - ugv 1 teamleader von ugv 1
+    - teamleader von ugv 1
+    - ugv 2 von teamleader
+    - ja hier ist der ugv 1 von teamleader
+    - teamleader von ugv 1
+    - ja teamleader von ugv 1
+    - ugv 1 ugv 2 kommen
+    - ja ugv 1 von ugv 2
+    - ja teamleader von ugv 2
+    - ugv 1
+    - ugv 2 von ugv 1
+    - teamleader von der uav kommen
+    - gruppe drohne von teamleader kommen
+    - ugv 1 von teamleader kommen
+    - ugv 1 von teamleader
+    - teamleader von ugv 1
+    - teamleader von ugv 1
+    - ugv 2 wie sieht es bei euch aus? ugv 2 von teamleader kommen
+    - ugv 2 von teamleader kommen
+    - ugv 2 von teamleader kommen
+    - ugv 1 von teamleader kommen
+    - teamleader von ugv 1
+    - teamleader von ugv 1
+    - was ist mit der drohne? teamleader kommen
+    - teamleader von uav kommen
+    - teamleader von uav kommen
+    - uav drohne?
+    - uav drohne
+    - teamleader
+    - uav 1 von ugv 1
+    - uav 1 von ugv 1
+    - drohne von ugv 1
+    - teamleader von ugv 1
+    - ugv drohne von teamleader kommen
+    - teamleader von ugv 1
+    - teamleader von uav
+    - uav drohne
+    - teamleader von der uav drohne
+    - uav 1 von teamleader kommen
+    - teamleader an alle
+    - sven kommen
+    - lena für benno kommen
+    - so uav one über den benno kommen
+    - operator 2 für benno kommen
+    - operator 1 für benno kommen
+    - operator 1 für benno
+    - benno für uav operator
+    - der teamleader von operator 1 kommen
+    - operator 1 für teamleiter kommen
+    - uav operator für teamleader kommen
+    - lena für benno?
+    - teamleader vom operator 1
+    - teamleiter 1 für uav operator
+    - operator 1 für teamleader kommen
+    - uav operator für teamleader kommen
+    - der teamleadaer von operator 1 kommen
+    - lena für benno
+    - benno für lena
+    - benno für lena
+    - operator 2 für teamleader kommen
+    - der teamleader von operator 1
+    - benno für lena
+    - operator 1 für teamleader kommen
+    - benno für lena
+    - der teamleader von operator 1 kommen
+    - benno für lena
+    - operator 1 für teamleader kommen
+    - operator 2 für teamleader kommen
+    - operator 2 für teamleader kommen
+    - lena für benno kommen
+    - benno für lena
+    - benno für lena
+    - operator 1 und 2 für teamleader kommen
+    - benno für lena
+    - lena für benno?
+    - der teamleader von operator 1 kommen
+    - benno für lena
+    - operator 1 für teamleader kommen
+    - operator 1 für teamleader kommen
+    - operator 2 für teamleader kommen
+    - teamleader von operator 2 kommen
+    - lena für benno
+    - ja benno für den operator 2 kommen
+    - lena für benno
+    - so der benno für operator 2 kommen
+    - operator 2 für teamleader
+    - so der benno an alle
+    - hier der teamleader
+    - ugv 2 von einsatzleiter kommen
+    - einsatzleiter von uavdrohne
+    - uav von einsatzleiter kommen
+    - ugv 2 von einsatzleiter kommen
+    - einsatzleiter von ugv 1 kommen
+    - einsatzleiter von uav
+    - uav von einsatzleiter kommen
+    - einsatzleiter von ugv 1
+    - ugv 1 von einsatzleiter kommen
+    - ugv 2 von einsatzleiter
+    - uav von einsatzleiter
+    - ugv 1 von einsatzleiter
+    - ugv 2 von einsatzleiter
+    - einsatzleiter von uav
+    - ja einsatzleiter von ugv 1 kommen
+    - ugv 2 von einsatzleiter
+    - einsatzleiter von ugv 1 kommen
+    - einsatzleiter von uav
+    - ugv 2 von einsatzleiter
+    - einsatzleiter von ugv 2 kommen
+    - einsatzleiter von uav
+    - einsatzleiter von uav
+    - einsatzleiter von uav 1
+    - uav von einsatzleiter
+    - ugv 2 von einsatzleiter
+    - einsatzleiter von uav
+    - einsatzleiter von ugv 2 kommen
+    - einsatzleiter von uav
+    - ugv 2 von einsatzleiter
+    - einsatzleiter von uav
+    - einsatzleiter von ugv 1
+    - ugv 1 von einsatzleiter
+    - einsatzleiter von uav
+    - einsatzleiter von ugv 1
+    - einsatzleiter von ugv 2
+    - ugv 1 von einsatzleiter
+    - ugv 1 von einsatzleiter
+    - einsatzleiter von uav
+    - einsatzleiter von ugv 1
+    - einsatzleiter von uav
+    - einsatzleiter von ugv 1
+    - einsatzleiter von ugv 2 kommen
+    - ugv 2 von einsatzleiter
+    - einsatzleiter von ugv 1
+    - einsatzleiter von uav
+    - ugv 2 von einsatzleiter
+    - einsatzleiter von ugv 1
+    - ugv 2 von einsatzleiter
+    - einsatzleiter von ugv 2
+    - einsatzleiter von ugv 1
+    - ugv 2 von einsatzleiter
+    - ugv 2 von einsatzleiter
+    - einsatzführer von uav
+    - einsatzleiter von ugv 1
+    - ugv 2 von einsatzleiter
+    - uav von einsatzleiter
+    - uav von ugv 1 kommen
+    - einsatzleiter von uav
+    - ugv 2 von einsatzleiter
+    - ugv 1 von einsatzleiter
+    - einsatzleiter von uav
+    - einsatzleiter von ugv 2 kommen
+    - ugv 1 von uav 1
+    - uav von einsatzleiter
+    - ugv 1 von uav
+    - ugv 1 von einsatzleiter
+    - uav von einsatzleiter
+    - einsatzleiter von ugv 1 kommen
+    - einsatzleiter von uav
+    - an allen an alle einsatz eingesetzten kräfte ugv 1 ugv 2 und uav
+    - operator boden 2 hörst du mich?
+    - operator boden 1 für teamleader kommen
+    - mission commander für teamleader
+    - teamleader für mission commander
+    - hier ist operator boden 2
+    - uav?
+    - teamleader von mission commander
+    - operator boden 1
+    - teamleader von mission commander kommen
+    - teamleader von mission commander kommen
+    - uavoperator für teamleader kommen
+    - operator boden 2
+    - teamleader von mission commander
+    - teamleader zu bodenoperator 1 kommen
+    - uav operator
+    - mission commander für teamleader
+    - teamleader von bodenoperator 1
+    - teamleader von mission commander kommen
+    - mission commander für teamleader
+    - operator boden 1 für teamleader kommen
+    - mission commander für teamleader kommen
+    - mission commander für teamleader
+    - bodenoperator für teamleader kommen
+    - bodenoperator 1 für teamleader
+    - bodenoperator 2 für teamleader kommen
+    - bodenoperator 2 für teamleader kommen
+    - drohnenoperator für teamleader kommen
+    - drohnenoperator für teamleader kommen
+    - drohnenoperator für teamoperator kommen
+    - hier robotoperator 2
+    - uav operator für team leader
+    - bodenoperator für teamleader kommen
+    - bodenoperator 1 für teamleader kommen
+    - uavoperator an teamleader
+    - teamleader von bodenoperator 1
+    - drohnenoperator für teamleader kommen
+    - bodenoperator 1 für teamleader kommen
+    - bodenoperator 1 für teamleader kommen
+    - teamleader für bodenoperator 1
+    - teamleader für uav bereit da?
+    - teamleader für robotoperator 2
+    - teamleader für bodenoperator 1
+    - teamleader für bodenoperator 1
+    - teamleader für bodenroboter 1
+    - teamleader für bodenoperator 1
+    - mission operator für teamleader kommen
+    - teamleader für uavoperator
+    - teamleader für uavoperator
+    - teamleader für bodenoperator 1
+    - teamleader für bodenoperator 2 kommen
+    - teamleader für bodenoperator 1
+    - ugv 1 von teamleader
+    - ugv 2 von teamleader
+    - uav 1 von teamleader
+    - teamleader von mission commander kommen
+    - an ugv 1 ugv 2 uav
+    - hören sie mit?
+    - ugv 1 von teamleader?
+    - ugv 2 von teamleader?
+    - mission commander von teamleader
+    - teamleader von mission commander kommen
+    - teamleader von mission commander kommen
+    - teamleader von ugv 1
+    - teamleader von mission commander kommen
+    - teamleader von ugv 1 kommen
+    - teamleader für ugv 2 kommen
+    - teamleader von mission commander kommen
+    - ugv 1 ugv 2
+    - teamleader für ugv 2 kommen
+    - teamleader für ugv 2 kommen
+    - mission commander von teamleader
+    - teamleader für ugv 2
+    - teamleader vvon mission commander kommen
+    - teamleader für ugv 2 kommen
+    - teamleader für ugv 2 kommen
+    - teamleader für ugv 2 kommen
+    - teamleader von uavoperator kommen
+    - teamleader von mission commander kommen
+    - ugv 2 für teamleader?
+    - teamleader für mission commander
+    - teamleader von ugv 1 kommen
+    - teamleader für ugv 2 kommen
+    - teamleader von ugv 1 kommen
+    - mission commander von teamleader
+    - teamleader von ugv 1 kommen
+    - teamleader von mission commander kommen
+    - ugv 1 von teamleader
+    - teamleader für ugv 2 kommen
+    - teamleader für mission commander
+    - teamleader von mission commander
+    - teamleader für ugv 2 kommen
+    - teamleader für ugv 2 kommen
+    - teamleader für mission commander kommen
+    - teamleader für ugv 2 kommen
+    - ugv 2 von 1
+    - teamleader von mission commander kommen
+    - teamleader von mission commander kommen
+    - teamleader von ugv 1 kommen
+    - teamleader für ugv 2 kommen
+    - teamleader für ugv 2 kommen
+    - teamleader für mission commander kommen
+    - ugv 2 von teamleader
+    - teamleader vo für ugv 2 kommen
+    - teamleader für mission commander
+
+
+- intent: 'Confirm_Communication'
+  examples: |
+    - ja andreas kommen
+    - andreas kommen
+    - ja andreas kommen
+    - ja andreas kommen
+    - dirk kommen
+    - dirk kommen
+    - hier andreas kommen
+    - daniel hört
+    - hier ist dirk
+    - andreas kommen
+    - hier markus kommen
+    - hier andreas kommen
+    - hier markus
+    - andreas kommen
+    - dirk kommen
+    - andreas kommen
+    - dirk kommen
+    - andreas kommen
+    - hier andreas kommen
+    - dirk kommen
+    - dirk hört
+    - dirk kommen
+    - andreas kommen
+    - dirk kommen
+    - hier markus kommen
+    - daniel hört
+    - hier andreas kommen
+    - hier ist dirk
+    - thorsten hört dirk kommt
+    - thorsten hört andreas kommt
+    - thorsten hört kommen
+    - thorsten hört kommen
+    - thorsten hört kommen
+    - dirk hört
+    - teamleader hört
+    - dirk hört
+    - roboter 2 hört
+    - teamleader hört roboter 1
+    - dirk hört
+    - thorsten hört kommen
+    - hier roboter 1 kommen
+    - roboter 2 hört
+    - teamleader hört kommen
+    - thorsten hört kommen
+    - teamleader hört kommen
+    - thorsten hört kommen
+    - ich hör dich
+    - hör dich
+    - hört
+    - hört
+    - teamleader hört
+    - ich höre
+    - ugv 1?
+    - uav hört
+    - teamleader hört
+    - kommen sie
+    - kommen
+    - ugv 2 hört
+    - ugv 2 hört
+    - teamleader hört
+    - ugv 1 höre
+    - kommen
+    - ugv 2 hört
+    - hör dich
+    - teamleader hört
+    - ugv 1 kommen
+    - ugv 1 hört
+    - ugv 2 hört
+    - kommen
+    - hört
+    - ja hier ist der ugv 1 von teamleader
+    - hört
+    - teamleader hört
+    - die uav hört
+    - kommen sie
+    - ich komm
+    - hört
+    - teamleader hört
+    - die uav hört
+    - hört
+    - die drohne hört
+    - die drohne hört
+    - teamleader hört
+    - uav hört
+    - uav hört
+    - hört
+    - uav hört
+    - ja der operator 1 hört
+    - der operator 2 hört
+    - uav operator hört
+    - uav operator hört
+    - ja operator 2 hört benno
+    - ja der operator 1 hört
+    - hier der operator 1
+    - uav 1 kommen
+    - ja hier operator 1
+    - lena hört
+    - ich höre
+    - hier operator 1
+    - uav operator hört
+    - ich höre
+    - lena hört
+    - ich höre
+    - operator 2 hört
+    - ich höre
+    - höre
+    - ja ich höre dich
+    - ich höre lena
+    - ich höre
+    - hier operator 1
+    - ja hört
+    - lena hört
+    - ich höre
+    - hier operator 1
+    - ich höre
+    - lena hört
+    - höre
+    - ich höre
+    - hört
+    - ich höre
+    - lena hört
+    - ich höre
+    - lena hört
+    - ich höre
+    - ugv 2 hört
+    - ja ich höre
+    - hier ist die uav
+    - ja höre
+    - ich höre
+    - uav hört
+    - ich höre
+    - ugv 1 hört
+    - ugv 2 hört
+    - hier ist die uav
+    - ugv 1 hört
+    - ja ich ugv 2
+    - ich höre
+    - ich höre
+    - ugv 2 hört
+    - ich höre
+    - ich höre
+    - ugv 2 hört
+    - ich höre
+    - ich höre
+    - ich höre
+    - höre
+    - ja kommen sie
+    - ich hör dich
+    - ugv 2 hört
+    - ich höre
+    - ich höre
+    - höre
+    - ugv 2 hört
+    - ich höre
+    - ich höre
+    - ugv 1 hört
+    - ich höre
+    - höre
+    - ich höre
+    - ugv 1 hört
+    - ich höre
+    - ich höre
+    - ja ich höre
+    - ich höre
+    - ich höre
+    - ugv 2 hört
+    - ich höre
+    - ich höre
+    - ugv 2 hört
+    - ich höre
+    - ugv 2 hört
+    - ja
+    - ja ich höre
+    - ugv 2 hört
+    - ugv 2 hört
+    - ja ich höre
+    - ich höre
+    - ugv 2 hört
+    - hier ist die uav
+    - hier ist uav
+    - ja ich höre
+    - ugv 2 hört
+    - ugv 1 hört
+    - ich höre
+    - ich höre
+    - ich höre dich
+    - hier ist die uav
+    - ja
+    - ich höre dich
+    - hier ist die uav
+    - ich höre
+    - höre
+    - hier spricht der roboteroperator 2 ich höre sie klar und deutlich
+    - ich kann dich klar und deutlich verstehen
+    - mission commander hört
+    - teamleader hört
+    - hier teamleader
+    - teamleader hört
+    - teamleader hört
+    - teamleader hört
+    - uavoperator ja?
+    - hier operator boden 2
+    - hier teamleader
+    - bodenoperator 1 sprechen
+    - mission commander hört
+    - hier teamleader
+    - mission commander hört
+    - operator boden 1 hört
+    - mission commander hört
+    - mission commander hört
+    - bodenoperator 1 hört
+    - hier bodenoperator 2
+    - uavoperator
+    - hier bodenoperator 2
+    - bodenoperator 1 hat mitgehört und startet ebenfalls
+    - teamleader hört
+    - hier drohnenoperator
+    - hier bodenoperator 1
+    - hier bodenoperator 1
+    - teamleader hört
+    - teamleader hört
+    - ja teamleader hört
+    - teamleader hört
+    - teamleader hört
+    - teamleader hört
+    - teamleiter kann hören
+    - kommen
+    - teamleader hört
+    - teamleader hört
+    - hier ugv 1 kommen
+    - hier ugv 2
+    - hier uav 1 kommen
+    - teamleader hört
+    - uav hört
+    - ugv 1 kommen
+    - ugv 2 kommen
+    - kommen sie
+    - teamleader hört
+    - teamleader hört
+    - teamleader hört
+    - teamleader hört
+    - kommen
+    - teamleader hört
+    - teamleader hört
+    - teamleader hört
+    - teamleader hört
+    - kommen sie
+    - teamleader hört
+    - teamleader
+    - teamleader hört
+    - ugv 2 kommen
+    - teamleader hört
+    - teamleader hört
+    - mission commander hört
+    - ja
+    - teamleader hört
+    - teamleader hört
+    - ugv 1 kommen
+    - teamleader hört
+    - teamleader hört
+    - teamleader hört
+    - teamleader hört
+    - ugv 2 kommen
+    - teamleader hört
