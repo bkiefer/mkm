@@ -1,14 +1,33 @@
-#!/bin/sh
+#!/bin/bash
+set -xv
 scrdir=`dirname $0`
 #scrdir=`realpath $scrdir`
+cd "$scrdir"
+
+now=`date -Iseconds | sed 's/[: ]/_/g'`
 
 if test -f "logback.xml"; then
    logconf="-Dlogback.configurationFile=./logback.xml"
 fi
-docker ps | grep -q mkm_rasa_nlu && rasaruns=true
-if test -x $scrdir/rasa/rasadock -a -z "$rasaruns" ; then
-    echo "Starting rasa NLU"
-    $scrdir/rasa/rasadock
-fi
 
-java $logconf -jar "$scrdir"/target/mkm-fatjar.jar "$@"
+# Rasa is currently not used
+# docker ps | grep -q mkm_rasa_nlu && rasaruns=true
+# if test -x rasa/rasadock -a -z "$rasaruns" ; then
+#     echo "Starting rasa NLU"
+#     rasa/rasadock
+# fi
+
+# check if there is a MQTT broker, if not start mosquitto docker
+# currently i assume that the service is running
+
+# Start ASR and speaker identification
+modules/asrident/run_whisper.sh -c local_de_config.yml \
+                                > "logs/${now}/asrident.log" 2>&1 &
+
+# Start intent and slot detection
+(sleep 15 &&
+     modules/drz_intentslot/run_server.sh > "logs/${now}/intent.log" 2>&1) &
+
+# Start MKM itself
+java $logconf -jar "$scrdir"/target/mkm-fatjar.jar "$@" \
+     > "logs/${now}/mkm.log" 2>&1 &
