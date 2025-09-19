@@ -12,8 +12,7 @@ echo
 uv sync
 uv -v pip install whisper-gstreamer/
 # download silero and speaker identification and whisper models
-./model_download.sh -l
-uv run download_models.py large-v3-turbo
+./model_download.sh
 popd
 
 # Build docker for intent and slot recognition
