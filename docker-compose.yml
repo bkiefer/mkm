@@ -62,7 +62,7 @@ services:
       - broker
     image: drz_daslot
     command: ["/bin/bash", "-c",
-    'uv python3 -u adapters_bio_tags_server.py 2>&1
+    'uv run adapters_bio_tags_server.py 2>&1
      | tee logs/server$(date -Iminutes).log']
     deploy:
       resources:
