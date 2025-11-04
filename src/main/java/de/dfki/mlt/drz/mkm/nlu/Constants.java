@@ -1,4 +1,4 @@
-package de.dfki.drz.mkm.nlu;
+package de.dfki.mlt.drz.mkm.nlu;
 
 public interface Constants {
   String KEY_HOST = "host";

@@ -18,3 +18,10 @@
 <dialogue_act> "Kontakt_Bestaetigung" -> # ^ :Confirm ^ (Communication), # !<dialogue_act>.
 <dialogue_act> "Sonstiges" -> # ^ :OutOfDomain ^ (top), # !<dialogue_act>.
 <dialogue_act> "Zusage" -> # ^ :Confirm ^ (top), # !<dialogue_act>.
+
+<phrases><einheit>#n: -> # ^ <einheit>#n:.
+<phrases><auftrag>#n: -> # ^ <auftrag>#n:.
+<phrases><mittel>#n: -> # ^ <mittel>#n:.
+<phrases><weg>#n: -> # ^ <weg>#n:.
+<phrases><ziel>#n: -> # ^ <ziel>#n:.
+<phrases> -> # !<phrases>.

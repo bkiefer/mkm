@@ -102,7 +102,7 @@
             <appendAssemblyId>true</appendAssemblyId>
             <archive>
               <manifest>
-                <mainClass>de.dfki.drz.mkm.Main</mainClass>
+                <mainClass>de.dfki.mlt.drz.mkm.Main</mainClass>
               </manifest>
             </archive>
             <descriptors>

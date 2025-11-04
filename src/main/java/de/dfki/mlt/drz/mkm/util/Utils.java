@@ -1,4 +1,4 @@
-package de.dfki.drz.mkm.util;
+package de.dfki.mlt.drz.mkm.util;
 
 import de.dfki.lt.hfc.types.XsdDouble;
 import de.dfki.lt.hfc.types.XsdFloat;

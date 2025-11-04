@@ -1,6 +1,6 @@
-package de.dfki.drz.mkm;
+package de.dfki.mlt.drz.mkm;
 
-import static de.dfki.drz.mkm.Constants.*;
+import static de.dfki.mlt.drz.mkm.Constants.*;
 
 import java.util.List;
 

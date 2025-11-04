@@ -1,4 +1,4 @@
-package de.dfki.drz.mkm;
+package de.dfki.mlt.drz.mkm;
 
 import static de.dfki.mlt.rudimant.common.Configs.*;
 

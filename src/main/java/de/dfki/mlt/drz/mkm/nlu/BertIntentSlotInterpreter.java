@@ -1,9 +1,9 @@
-package de.dfki.drz.mkm.nlu;
+package de.dfki.mlt.drz.mkm.nlu;
 
-import static de.dfki.drz.mkm.nlu.Constants.KEY_HOST;
-import static de.dfki.drz.mkm.nlu.Constants.KEY_PORT;
-import static de.dfki.drz.mkm.nlu.Constants.TRANSCRIPT_NEW_LABEL;
-import static de.dfki.drz.mkm.nlu.Constants.TRANSCRIPT_OLD_LABEL;
+import static de.dfki.mlt.drz.mkm.nlu.Constants.KEY_HOST;
+import static de.dfki.mlt.drz.mkm.nlu.Constants.KEY_PORT;
+import static de.dfki.mlt.drz.mkm.nlu.Constants.TRANSCRIPT_NEW_LABEL;
+import static de.dfki.mlt.drz.mkm.nlu.Constants.TRANSCRIPT_OLD_LABEL;
 
 import java.io.File;
 import java.io.IOException;
@@ -17,50 +17,39 @@ import org.slf4j.LoggerFactory;
 import de.dfki.mlt.rudimant.agent.nlp.DialogueAct;
 import de.dfki.mlt.rudimant.agent.nlp.Interpreter;
 
-public class AdapterBertInterpreter extends Interpreter {
-  static final Logger log = LoggerFactory.getLogger(AdapterBertInterpreter.class);
+/** This module can be activated by specifying appropriate config parameters.
+ *
+ *  However, since it also produces additional information, the vanilla
+ *  CombinedInterpreter might not be the best choice for doing so.
+ *
+ * Connects to the drz_intentslot server that does intent recognition and
+ *    detection of the following slots:
+ *    "einheit", "auftrag", "mittel", "ziel", "weg"
+ *
+ *    The recognized intent set is reduced to the following intents:
+ *    Order(top)
+ *    Confirm(top)
+ *    Disconfirm(top)
+ *    Inform(top)
+ *    Question(top)
+ *    Request(top)
+ *    Request(Communication)
+ *    Confirm(Communication)
+ *   OutOfDomain(top)
+ */
+public class BertIntentSlotInterpreter extends BertSlotInterpreter {
+  static final Logger log = LoggerFactory.getLogger(BertIntentSlotInterpreter.class);
 
-  boolean ready = false;
-
-  private RESTInterpreter ri = new RESTInterpreter();
-
-  private String transcription_old = "";
-
-
+  private static final String INTENT_SLOT_ENDPOINT = "annotate";
+  
   @Override
   @SuppressWarnings("rawtypes")
   public boolean init(File configDir, String language, Map config) {
+    super.init(configDir, language, config);
     name = "DA_SLOT_" + language;
-    ri.predictEndpoint = "annotate";
-    boolean result = super.init(configDir, language, config);
-    if (! result) return result;
-    if (config.containsKey(KEY_HOST)) {
-      ri.host = (String) config.get(KEY_HOST);
-    }
-    if (config.containsKey(KEY_PORT)) {
-      ri.port =  (int)config.get(KEY_PORT);
-    }
-
-    try {
-      if (ri.connect()) {
-        log.info("Adapter intent and slot recognition connected");
-        ready = true;
-      }
-    } catch (IOException e) {
-      log.error("Error connecting adapter intent and slot recognition: {}", e);
-    }
-    return ready;
+    transcription_old = "";
+    return true;
   }
-
-  protected JSONObject classify(String transcript_new, String transcript_old)
-      throws IOException {
-    // TODO: generalise: maybe pass a <String, String> dict?
-    Map<String, String> params = new HashMap<>();
-    params.put(TRANSCRIPT_NEW_LABEL, transcript_new);
-    //params.put(TRANSCRIPT_OLD_LABEL, transcript_old);
-    return ri.classify_get(params);
-  }
-
 
   /**
    * @param text the string to analyse
@@ -76,7 +65,7 @@ public class AdapterBertInterpreter extends Interpreter {
       json = new JSONObject();
     } else {
       try {
-        json = classify(text, transcription_old);
+        json = classify(text, transcription_old, INTENT_SLOT_ENDPOINT);
         if (json == null) {
           log.error("Error calling BERT intent recognition: NULL");
           return null;

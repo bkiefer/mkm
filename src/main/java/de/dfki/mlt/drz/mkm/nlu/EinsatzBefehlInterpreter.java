@@ -1,8 +1,8 @@
-package de.dfki.drz.mkm.nlu;
+package de.dfki.mlt.drz.mkm.nlu;
 
-import static de.dfki.drz.mkm.nlu.Constants.KEY_HOST;
-import static de.dfki.drz.mkm.nlu.Constants.KEY_PORT;
-import static de.dfki.drz.mkm.nlu.Constants.TRANSCRIPT_NEW_LABEL;
+import static de.dfki.mlt.drz.mkm.nlu.Constants.KEY_HOST;
+import static de.dfki.mlt.drz.mkm.nlu.Constants.KEY_PORT;
+import static de.dfki.mlt.drz.mkm.nlu.Constants.TRANSCRIPT_NEW_LABEL;
 
 import java.io.IOException;
 import java.util.Map;
@@ -13,6 +13,9 @@ import org.slf4j.LoggerFactory;
 
 import okhttp3.FormBody;
 
+/**
+ * @deprecated
+ */
 public class EinsatzBefehlInterpreter {
   private static final Logger logger = LoggerFactory
       .getLogger(EinsatzBefehlInterpreter.class);
