@@ -1,4 +1,4 @@
-package de.dfki.drz.mkm.nlu;
+package de.dfki.mlt.drz.mkm.nlu;
 
 import java.io.IOException;
 import java.util.Map;
@@ -84,9 +84,9 @@ public class RESTInterpreter {
     return getResponse(request);
   }
 
-  protected JSONObject classify_get(Map<String, String> params)
+  protected JSONObject classify_get(Map<String, String> params, String endpoint)
       throws IOException {
-    HttpUrl.Builder b = buildUrl(predictEndpoint);
+    HttpUrl.Builder b = buildUrl(endpoint);
     for (Map.Entry<String, String> e : params.entrySet()) {
       b.addQueryParameter(e.getKey(), e.getValue());
     }
@@ -98,5 +98,10 @@ public class RESTInterpreter {
         .build();
 
     return getResponse(request);
+  }
+  
+  protected JSONObject classify_get(Map<String, String> params)
+      throws IOException {
+    return classify_get(params, predictEndpoint);
   }
 }

@@ -1,4 +1,4 @@
-package de.dfki.drz.mkm.util;
+package de.dfki.mlt.drz.mkm.util;
 
 public interface Listener<T> {
   public void listen(T q);

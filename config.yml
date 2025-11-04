@@ -4,12 +4,12 @@ ontologyFile:       src/main/resources/ontology/mkm.yml
 # ########## COMPILE CONFIGURATION SETTINGS ##########
 inputFile:          src/main/rudi/MissionKnowledge.rudi
 outputDirectory:    src/main/gen-java
-agentBase:          de.dfki.drz.mkm.KnowledgeManager
+agentBase:          de.dfki.mlt.drz.mkm.KnowledgeManager
 typeDef:            KnowledgeManager.rudi
 checkTypes:         true
 failOnError:        false
 verbose:            false
-rootPackage:        de.dfki.drz.mkm
+rootPackage:        de.dfki.mlt.drz.mkm
 
 nameToURI:
   Agent: <dial:Agent>
@@ -48,25 +48,24 @@ NLU:
     #     'Confirm(Call, sender="{1}")'
     #   '(?:ja )?hier (.*?)(?: hört)?(?: kommen)?':
     #     'Confirm(Call, sender="{1}")'
-    class: de.dfki.mlt.rudimant.agent.nlp.CombinedInterpreter
+    class: de.dfki.mlt.drz.mkm.nlu.CombinedInterpreter
     instances:
-    - class: de.dfki.mlt.rudimant.agent.nlp.SrgsParser
-      grammar: src/main/resources/grammars/srgs/call.abnf
-      converter: src/main/resources/cplanner/srgsconv
-      tokenizer:
-        class: de.dfki.mlt.rudimant.agent.nlp.TrivialTokenizer
-        toLower: true           # turn all output to lower case
-        removePunctuation: true  # remove all punctuation tokens
-    - class: de.dfki.drz.mkm.nlu.AdapterBertInterpreter
-      host: localhost
-      port: 5050
-      converter: src/main/resources/cplanner/adapterbertconv
-    # - class: de.dfki.mlt.rudimant.agent.nlp.RasaNlu
-    #   host: localhost
-    #   port: 9797
-    #   min_confidence: 0.8
-    #   converter: src/main/resources/cplanner/rasaconv
-
+      - class: de.dfki.mlt.rudimant.agent.nlp.SrgsParser
+        grammar: src/main/resources/grammars/srgs/call.abnf
+        converter: src/main/resources/cplanner/srgsconv
+        tokenizer:
+          class: de.dfki.mlt.rudimant.agent.nlp.TrivialTokenizer
+          toLower: true           # turn all output to lower case
+          removePunctuation: true  # remove all punctuation tokens
+      - class: de.dfki.mlt.rudimant.agent.nlp.RasaNlu
+        host: localhost
+        port: 9797
+        min_confidence: 0.8
+        converter: src/main/resources/cplanner/rasaconv
+      - class: de.dfki.mlt.drz.mkm.nlu.BertIntentSlotInterpreter
+        host: localhost
+        port: 5050
+        converter: src/main/resources/cplanner/adapterbertconv
 
 # ########## DEBUGGER/GUI SETTINGS ##########
 debugPort: 9777
@@ -81,6 +80,13 @@ defaultCompileCommand: compile
 language: de_DE
 
 evaluation: true
+
+# ######### MQTT SETTINGS ##########
+mqtt:
+  #brokerhost: mqtt-broker
+  brokerport: 9883
+  #brokerprotocol: tcp
+  #millis_reconnect: 100
 
 # Evaluation of language services (parsing)
 # corpora:

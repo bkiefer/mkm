@@ -1,6 +1,6 @@
-package de.dfki.drz.mkm;
+package de.dfki.mlt.drz.mkm;
 
-import static de.dfki.drz.mkm.util.Utils.num2xsd;
+import static de.dfki.mlt.drz.mkm.util.Utils.num2xsd;
 import static de.dfki.mlt.mqtt.MqttHandler.bytesToString;
 
 import java.io.File;
@@ -19,7 +19,7 @@ import org.eclipse.paho.client.mqttv3.MqttException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import de.dfki.drz.mkm.util.Listener;
+import de.dfki.mlt.drz.mkm.util.Listener;
 import de.dfki.lt.hfc.WrongFormatException;
 import de.dfki.lt.hfc.db.rdfProxy.Rdf;
 import de.dfki.mlt.mqtt.JsonMarshaller;

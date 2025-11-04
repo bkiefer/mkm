@@ -1,6 +1,6 @@
-package de.dfki.drz.mkm;
+package de.dfki.mlt.drz.mkm;
 
-import static de.dfki.drz.mkm.Constants.INSTANCE_NS_SHORT;
+import static de.dfki.mlt.drz.mkm.Constants.INSTANCE_NS_SHORT;
 import static de.dfki.lt.tr.dialogue.cplan.DagNode.PROP_FEAT_ID;
 import static de.dfki.mlt.rudimant.common.Configs.CFG_ONTOLOGY_FILE;
 

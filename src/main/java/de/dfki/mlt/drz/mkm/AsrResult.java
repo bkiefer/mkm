@@ -1,4 +1,4 @@
-package de.dfki.drz.mkm;
+package de.dfki.mlt.drz.mkm;
 
 import java.util.List;
 import java.util.Map;

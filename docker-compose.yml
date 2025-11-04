@@ -11,6 +11,8 @@ services:
     container_name: 'rasaserver'
     restart: always
     hostname: 'rasa_server'
+    ports:
+      - '9797:9797'
     volumes:
       - ./rasa:/app
 
@@ -30,7 +32,6 @@ services:
   asrident:
     depends_on:
       - broker
-      - rasa_server
       - mkm
     image: 'asrident'
     command: ["/bin/sh", "-c",
@@ -82,12 +83,21 @@ services:
       - ./logs/intentslot:/app/logs
       - ./modules/drz_intentslot/adapters:/app/adapters
       - ./modules/drz_intentslot/bert-base-german-cased:/app/bert-base-german-cased
+    healthcheck:
+      test: ["CMD-SHELL", "test \"$(curl http://drzintent:5050/alive)\" = 'tag server is alive'"]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 10s
 
   mkm:
     depends_on:
-      - broker
-      - rasa_server
-      - drzintent
+      broker:
+        condition: service_started
+      rasa_server:
+        condition: service_started
+      drzintent:
+        condition: service_healthy
     image: 'mkm'
     networks:
       - mlt

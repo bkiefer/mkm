@@ -741,7 +741,7 @@ nlu:
     - verstanden
     - ja verstanden
     - ja hab ich mir fast gedacht
-    - stelle fest ein dichtes 200literfass umweltgefährdend gekennzeichnet
+    - stelle fest ein dichtes 200 liter fass umweltgefährdend gekennzeichnet
     - ja verstanden
     - wiederhole am treppenausgang blauer kanister
     - verstanden
@@ -1420,7 +1420,7 @@ nlu:
     - ja jetzt nicht
 
 
-- intent: 'EverythingElse'
+- intent: 'Everything_Else'
   examples: |
     - schi
     - bin ich – k

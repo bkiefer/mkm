@@ -1,24 +1,22 @@
 version: "3.1"
 
 intents:
-  - 'Confirm_Call'
-  - 'Confirm_CommunicationOK'
-  - 'Confirm_End'
+  - 'Confirm'
   - 'Confirm_EndCall'
   - 'Confirm_Information'
   - 'Confirm_Order'
-  - 'Confirm_Top'
-  - 'Disconfirm_top'
+  - 'Disconfirm'
   - 'Everything_Else'
   - 'Inform_Ready'
-  - 'Inform_Top'
-  - 'Order_Top'
-  - 'Question_Communication'
-  - 'Request_Call'
+  - 'Inform'
+  - 'Request'
+  - 'Question'
   - 'Request_Repeat'
-  - 'WHQuestion_Top'
-  - 'YNQuestion_Top'
-
+  - 'Pausing'
+  - 'Disconfirm_information'
+  - 'Request_Communication'
+  - 'Confirm_Communication'
+  - 'Disconfirm_Communication'
 
 entities:
   - callsign
