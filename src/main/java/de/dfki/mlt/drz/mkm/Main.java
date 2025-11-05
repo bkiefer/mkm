@@ -10,6 +10,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.eclipse.paho.client.mqttv3.MqttException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.yaml.snakeyaml.Yaml;
 
 import de.dfki.lt.hfc.WrongFormatException;
@@ -21,6 +23,8 @@ import joptsimple.OptionSet;
  * The main class to start the application
  */
 public class Main {
+  public static final Logger logger = LoggerFactory.getLogger(Main.class);
+  
   public static Map<String, Object> configs;
   public static File confDir;
 
@@ -81,6 +85,7 @@ public class Main {
       if (options.has("c")) {
         confName = (String)options.valueOf("c");
       }
+      logger.info("Loading config {}", confName);
       configs = (confName != null) ? readConfig(confName) : defaultConfig();
     } catch (OptionException ex) {
       usage("Error parsing options: " + ex.getMessage());
