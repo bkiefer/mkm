@@ -69,7 +69,7 @@ NLU:
 
 
 # ########## DEBUGGER/GUI SETTINGS ##########
-debugPort: 9777
+#debugPort: 9777
 
 customCompileCommands:
   compile: ./compile
