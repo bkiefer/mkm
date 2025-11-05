@@ -40,13 +40,11 @@ _reportSuccess "drz_intentslot"
 pushd modules/vonda
 #git submodule init; git pull --recurse-submodules # do we need that?
 mvn install >> "$logfile" || _exitOnError "vonda_compiler"
+export PATH="$PATH:$(pwd)/bin"
 popd
 _reportSuccess "vonda_compiler"
 
 # Download rasa ML model, compile the MKM and build the MKM docker
 (./model_download.sh &&
-mvn clean &&
-./modules/vonda/bin/vondac -c "config.yml" &&
-mvn install
 ./build_docker.sh) >> "$logfile" || _exitOnError "mkm"
 _reportSuccess "mkm"
