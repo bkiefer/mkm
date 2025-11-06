@@ -48,6 +48,10 @@ services:
     container_name: 'asrident'
     restart: always
     hostname: 'asrident'
+    devices:
+      - /dev/snd
+    group_add:
+      - audio
     environment:
       PULSE_SERVER: "unix:${XDG_RUNTIME_DIR}/pulse/native"
     volumes:
