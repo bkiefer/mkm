@@ -25,26 +25,26 @@ logfile="`pwd`/build`date -Iseconds|sed 's/[: ]/_/g'`.log"
 pushd modules/asrident
 (./build_docker.sh &&
 # download silero, speaker identification and whisper models
-./model_download.sh) > "$logfile" || _exitOnError "asrident"
+./model_download.sh) 2>&1 | tee "$logfile" || _exitOnError "asrident"
 popd
 _reportSuccess "asrident"
 
 # Build docker for intent and slot recognition, NEEDS git-lfs!!
 pushd modules/drz_intentslot
 (./model_download.sh &&
-./build_docker.sh ) >> "$logfile" || _exitOnError "drz_intentslot"
+./build_docker.sh ) 2>&1 | tee -a "$logfile" || _exitOnError "drz_intentslot"
 popd
 _reportSuccess "drz_intentslot"
 
 # Make sure VOnDA compiler is available, needs installed JDK, not only JRE!
 pushd modules/vonda
 #git submodule init; git pull --recurse-submodules # do we need that?
-mvn install >> "$logfile" || _exitOnError "vonda_compiler"
-export PATH="$PATH:$(pwd)/bin"
+mvn install 2>&1 | tee -a "$logfile" || _exitOnError "vonda_compiler"
+export PATH="$(pwd)/bin:$PATH"
 popd
 _reportSuccess "vonda_compiler"
 
 # Download rasa ML model, compile the MKM and build the MKM docker
 (./model_download.sh &&
-./build_docker.sh) >> "$logfile" || _exitOnError "mkm"
+./build_docker.sh) 2>&1 | tee -a "$logfile" || _exitOnError "mkm"
 _reportSuccess "mkm"

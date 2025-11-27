@@ -96,18 +96,18 @@ public abstract class KnowledgeManager extends Agent {
   protected Rdf toRdf(DialogueAct da) {
     return da.toRdf(_proxy);
   }
-  
+
   private static short firstId = -1, restId;
-  
+
   private static String getAtom(DagNode dag) {
     return dag.getValue(PROP_FEAT_ID).getTypeName();
   }
-  
+
   private static DagNode getDag(DagNode dag, String feature) {
     DagEdge e = dag.getEdge(DagNode.getFeatureId(feature));
     return e == null ? null : e.getValue();
   }
-  
+
   public static List<String> daList(DagNode dag) {
     if (firstId < 0) {
       firstId = DagNode.getFeatureId("first");
@@ -121,9 +121,9 @@ public abstract class KnowledgeManager extends Agent {
     }
     return result;
   }
-  
+
   private String na(String in) { return in == null ? "NA" : in; }
-  
+
   /** remove <> and namespace */
   public static String rdf2name(String uriString) {
     if (!uriString.startsWith("<") || !uriString.endsWith(">"))
@@ -134,20 +134,29 @@ public abstract class KnowledgeManager extends Agent {
       i = us.lastIndexOf(':');
     return us.substring(i + 1);
   }
-  
-  long toLong(String s) { 
-    if (s == null) return 0l;
+
+  Object xsdToJava(String s) {
     try {
-      Long l = (Long)XsdAnySimpleType.getXsdObject(s).toJava();
-      return l;
+      return XsdAnySimpleType.getXsdObject(s).toJava();
     } catch (Exception ex) {
     }
-    return 0;
+    return null;
   }
   
+  long toLong(String s) {
+    if (s == null) return 0l;
+    Long l = (Long) xsdToJava(s);
+    return l == null ? 0l : l.longValue();
+  }
+  
+  String asString(String s) {
+    Object sth = xsdToJava(s);
+    return sth == null ? s : sth.toString();
+  }
+
   @SuppressWarnings({ "unchecked", "rawtypes" })
   void sendFusion(DialogueAct da, String sender, String addressee) {
-    String id = na(da.getValue("id"));
+    String id = asString(na(da.getValue("id")));
     String daType = na(da.getDialogueActType());
     String prop = na(da.getProposition());
     String text = na(da.getValue("text"));
@@ -156,26 +165,25 @@ public abstract class KnowledgeManager extends Agent {
     long fromTime = toLong(da.getValue("fromTime"));
     long toTime= toLong(da.getValue("toTime"));
     Map slots = new HashMap<String, List<String>>();
-    DagNode phrases = da.getDag("phrases");
-    if (phrases != null) {
-      // put identified slots into json
-      String[] slotnames = { "einheit", "auftrag", "mittel", "weg", "ziel" };
-      for (String slot: slotnames) {
-        if (getDag(phrases, slot) != null) {
-          slots.put(slot, daList(getDag(phrases, slot)));
-        }
+    DagNode dag = da.getDag();
+    // put identified slots into json
+    String[] slotnames = { "einheit", "auftrag", "mittel", "weg", "ziel" };
+    for (String slot: slotnames) {
+      DagNode slotDag = getDag(dag, slot);
+      if (slotDag != null) {
+        slots.put(slot, daList(slotDag));
       }
     }
-    
-    if (evaluation) { 
+
+    if (evaluation) {
       printEval(da.getValue("id"), sender, addressee, daType, prop, text);
     }
-    
+
     slots.put("id", id);
     slots.put("sender", sender);
     slots.put("addressee", addressee);
-    slots.put("intent", daType);
-    slots.put("frame", prop);
+    slots.put("intent", rdf2name(daType));
+    slots.put("frame", rdf2name(prop));
     slots.put("text", text);
     slots.put("fromTime", Long.toString(fromTime));
     slots.put("toTime", Long.toString(toTime));

@@ -80,6 +80,7 @@ public class AsrResult {
   public Map<String, Object> info;
   public List<Segment> segments;
   public long start, end;
+  public String source;
 
   public Integer embedid;   // id of embedding (optional)
   public Double confidence; // confidence of embedding (optional)
