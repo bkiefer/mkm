@@ -10,7 +10,7 @@ These instructions have been tested on **Ubuntu 24.04** and higher, but they sho
 
 ### OS Requirements:
 
-* **Java 11** or higher (`openjdk-11-jdk`)
+* **Java 21** or higher (`openjdk-21-jdk`)
 * **Maven**
 * **git** and **git-lfs**
 
@@ -33,7 +33,7 @@ sudo usermod -aG docker <username>
 After cloning the repository, run the following command to set up the environment:
 
 ```bash
-./build_modules.sh
+./build_modules.sh -a
 ```
 
 This script will:

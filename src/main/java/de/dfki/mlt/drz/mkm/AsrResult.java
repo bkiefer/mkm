@@ -82,7 +82,8 @@ public class AsrResult {
   public long start, end;
   public String source;
 
-  public Integer embedid;   // id of embedding (optional)
+  public String id;         // unique id, generated: <source>_<start>
+
   public Double confidence; // confidence of embedding (optional)
   public String speaker;    // speaker id (optional)
 

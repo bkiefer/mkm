@@ -108,9 +108,16 @@ public class MkmClient implements CommunicationHub {
     _agent.newData();
   }
 
+  private void sendAsr(AsrResult asr) {
+    if (asr.id == null) {
+      asr.id = asr.source + asr.start;
+    }
+    sendEvent(asr);
+  }
+
   private boolean receiveAsr(byte[] b) {
     Optional<AsrResult> asr;
-    (asr = mapper.unmarshal(b, AsrResult.class)).ifPresent(this::sendEvent);
+    (asr = mapper.unmarshal(b, AsrResult.class)).ifPresent(this::sendAsr);
     return ! asr.isEmpty();
   }
 
@@ -186,8 +193,8 @@ public class MkmClient implements CommunicationHub {
 
   public void addSpeaker(Speaker speaker) {
     sendToTopic(SPEAKER_TOPIC,
-        String.format("{ \"id\": %d, \"speaker\": \"%s\" }",
-            speaker.id, speaker.speaker));
+        String.format("{ \"id\": \"%s\", \"speaker\": \"%s\" }",
+                      speaker.id, speaker.speaker));
   }
 
   public void sendCombined(String msg) {
@@ -304,15 +311,14 @@ public class MkmClient implements CommunicationHub {
       // id is speaker id, this comes from speaker identification
       if (res.speaker != null) {
         // fill the lastSpeaker
-        _agent.lastSpeaker = new Speaker(res.embedid, res.speaker,
-            res.confidence);
+        _agent.lastSpeaker = new Speaker(res.id, res.speaker, res.confidence);
       } else {
         _agent.lastSpeaker = null;
       }
       if (!da.hasSlot("text")) {
         da.setValue("text", asr);
       }
-      da.setValue("id", num2xsd(_running_id++));
+      da.setValue("id", res.id);
       addWithMetaData(da, res.start, res.end, _agent.lastSpeaker);
     } else {
       logger.warn("Unknown incoming object: {}", evt);

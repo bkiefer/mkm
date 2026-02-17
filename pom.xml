@@ -8,17 +8,17 @@
 
     <properties>
       <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-      <maven.compiler.source>11</maven.compiler.source>
-      <maven.compiler.target>11</maven.compiler.target>
+      <maven.compiler.source>21</maven.compiler.source>
+      <maven.compiler.target>21</maven.compiler.target>
       <junit.version>4.13.2</junit.version>
-      <logback.version>1.5.17</logback.version>
+      <logback.version>1.5.26</logback.version>
     </properties>
 
     <dependencies>
       <dependency>
         <groupId>de.dfki.mlt</groupId>
         <artifactId>vonda-nlp</artifactId>
-        <version>[1.2.1,)</version>
+        <version>[1.2.3,)</version>
       </dependency>
 
       <dependency>
@@ -114,7 +114,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-surefire-plugin</artifactId>
-          <version>3.1.2</version>
+          <version>3.5.4</version>
         </plugin>
       </plugins>
     </build>
