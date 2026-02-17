@@ -1,7 +1,8 @@
 #!/bin/bash
-#set -x
+set -x
 scrdir=`dirname $0`
 cd $scrdir
+scrdir=`pwd`
 # check out and update all modules
 ./update_repo.sh
 
@@ -21,30 +22,65 @@ function _reportSuccess {
 
 logfile="`pwd`/build`date -Iseconds|sed 's/[: ]/_/g'`.log"
 
-# ASR and speaker identification
-pushd modules/asrident
-(./build_docker.sh &&
-# download silero, speaker identification and whisper models
-./model_download.sh) 2>&1 | tee "$logfile" || _exitOnError "asrident"
-popd
-_reportSuccess "asrident"
+build_asr() {
+    # ASR and speaker identification
+    cd "$scrdir"/modules/asrident
+    (./build_docker.sh &&
+         # download silero, speaker identification and whisper models
+         ./model_download.sh) 2>&1 | tee "$logfile" || _exitOnError "asrident"
+    cd "$scrdir"
+    _reportSuccess "asrident"
+}
 
-# Build docker for intent and slot recognition, NEEDS git-lfs!!
-pushd modules/drz_intentslot
-(./model_download.sh &&
-./build_docker.sh ) 2>&1 | tee -a "$logfile" || _exitOnError "drz_intentslot"
-popd
-_reportSuccess "drz_intentslot"
+build_intentslot() {
+    # Build docker for intent and slot recognition, NEEDS git-lfs!!
+    cd "$scrdir"/modules/drz_intentslot
+    (./model_download.sh &&
+         ./build_docker.sh ) 2>&1 | tee -a "$logfile" || _exitOnError "drz_intentslot"
+    cd "$scrdir"
+    _reportSuccess "drz_intentslot"
+}
 
-# Make sure VOnDA compiler is available, needs installed JDK, not only JRE!
-pushd modules/vonda
-#git submodule init; git pull --recurse-submodules # do we need that?
-mvn install 2>&1 | tee -a "$logfile" || _exitOnError "vonda_compiler"
-export PATH="$(pwd)/bin:$PATH"
-popd
-_reportSuccess "vonda_compiler"
+build_vonda() {
+    # Make sure VOnDA compiler is available, needs installed JDK, not only JRE!
+    cd "$scrdir"/modules/vonda
+    #git submodule init; git pull --recurse-submodules # do we need that?
+    mvn install 2>&1 | tee -a "$logfile" || _exitOnError "vonda_compiler"
+    export PATH="$(pwd)/bin:$PATH"
+    cd "$scrdir"
+    _reportSuccess "vonda_compiler"
+}
 
-# Download rasa ML model, compile the MKM and build the MKM docker
-(./model_download.sh &&
-./build_docker.sh) 2>&1 | tee -a "$logfile" || _exitOnError "mkm"
-_reportSuccess "mkm"
+build_mkm() {
+    cd "$scrdir"
+    # Download rasa ML model, compile the MKM and build the MKM docker
+    (./model_download.sh &&
+         ./build_docker.sh) 2>&1 | tee -a "$logfile" || _exitOnError "mkm"
+    _reportSuccess "mkm"
+}
+
+while getopts anb: c
+do
+    case $c in
+        a)  all="true";;
+        n)  update="false" ;;
+        b)  build="$OPTARG" ;;
+        *)  echo "Usage: $0 [-<a>ll] [-<n>oupdate] [module1, module2 ...]
+
+no update will skip updating the git submodules.
+module must be one of 'asr', 'intentslot', 'vonda' or 'mkm'
+"
+    esac
+done
+shift `expr $OPTIND - 1`
+
+if test "$all" = "true"; then
+    build_asr
+    build_intentslot
+    build_vonda
+    build_mkm
+else
+    for mod; do
+        build_$mod
+    done
+fi
