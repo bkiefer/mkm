@@ -34,8 +34,14 @@ services:
       - broker
       - mkm
     image: 'asrident'
-    command: ["/bin/sh", "-c",
-              "sleep 15 && uv run ./run_whisper.sh -m -c config.yml"]
+    environment:
+      now: ${now:-$(date -Iminutes)}
+      PULSE_SERVER: "unix:${XDG_RUNTIME_DIR}/pulse/native"
+    command: ["/bin/sh", "-c", "sleep 15 &&
+              (uv run ./run_whisper.sh -m -c config.yml 2>&1
+              | tee ${LOGDIR:-logs}/asrident.log) &
+              (uv run mqttrecorder.py -c rec_config.yml
+              -o ${LOGDIR:-logs}/recorder.log)"]
     deploy:
       resources:
         reservations:
@@ -52,23 +58,26 @@ services:
       - /dev/snd
     group_add:
       - audio
-    environment:
-      PULSE_SERVER: "unix:${XDG_RUNTIME_DIR}/pulse/native"
+
     volumes:
       - ${XDG_RUNTIME_DIR}/pulse/native:${XDG_RUNTIME_DIR}/pulse/native
       - ${HOME}/.config/pulse-cookie:/root/.config/pulse-cookie
       - ./configs/asrident_de_config.yml:/app/asrident/config.yml:ro
+      - ./configs/mkmrec_config.yml:/app/asrident/rec_config.yml:ro
       - ./modules/asrident/models:/app/asrident/models
       - ./modules/asrident/audio:/app/asrident/audio
       - ./modules/asrident/outputs:/app/asrident/outputs
+      - ./logs:/app/asrident/logs
+      - ./inputs:/app/asrident/inputs
 
   drzintent:
     depends_on:
       - broker
     image: drz_daslot
+    environment:
+      - now=${now:-$(date -Iminutes)}
     command: ["/bin/bash", "-c",
-    'uv run adapters_bio_tags_server.py 2>&1
-     | tee logs/server$(date -Iminutes).log']
+    "uv run adapters_bio_tags_server.py 2>&1 | tee ${LOGDIR:-logs}/drzintent.log"]
     deploy:
       resources:
         reservations:
@@ -84,11 +93,12 @@ services:
     ports:
       - 5050:5050
     volumes:
-      - ./logs/intentslot:/app/logs
+      - ./logs:/app/logs
       - ./modules/drz_intentslot/adapters:/app/adapters
       - ./modules/drz_intentslot/bert-base-german-cased:/app/bert-base-german-cased
     healthcheck:
-      test: ["CMD-SHELL", "test \"$(curl http://drzintent:5050/alive)\" = 'tag server is alive'"]
+      test: ["CMD-SHELL",
+      "test \"$(curl http://drzintent:5050/alive)\" = 'tag server is alive'"]
       interval: 30s
       retries: 5
       start_period: 40s
@@ -103,6 +113,10 @@ services:
       drzintent:
         condition: service_healthy
     image: 'mkm'
+    environment:
+      - now=${now:-$(date -Iminutes)}
+    command: [ "/bin/sh", "-c",
+    "java -Xmx64m -jar mkm-fatjar.jar 2>&1 | tee ${LOGDIR:-logs}/mkm_full.log" ]
     networks:
       - mlt
     container_name: 'mkm'
@@ -110,4 +124,4 @@ services:
     hostname: 'mkm'
     volumes:
       - ./configs/docker-config.yml:/app/config.yml:ro
-      - ./logs/mkm:/app/logs
+      - ./logs:/app/logs

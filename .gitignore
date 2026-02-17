@@ -43,3 +43,6 @@ rasa/.keras
 rasa/train_test_split
 **/.idea
 scheiss
+logs
+inputs/**/*csv
+inputs/**/*wav

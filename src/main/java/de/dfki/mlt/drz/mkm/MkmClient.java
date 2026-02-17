@@ -191,6 +191,7 @@ public class MkmClient implements CommunicationHub {
     inQueue.push(new Intention(intention, 0.0));
   }
 
+  /** Send speaker info to the speaker indentification module */
   public void addSpeaker(Speaker speaker) {
     sendToTopic(SPEAKER_TOPIC,
         String.format("{ \"id\": \"%s\", \"speaker\": \"%s\" }",
@@ -236,7 +237,6 @@ public class MkmClient implements CommunicationHub {
             // add callsign to the agent from audio identification (and NLU?)
             _agent.hu.addCallsign(speaker.speaker, nluSenderName);
           }
-          da.setValue("sender", speaker.speaker);
         }
       } else {
         // audio identification is unsure or new speaker
@@ -248,12 +248,13 @@ public class MkmClient implements CommunicationHub {
                 String.format("Unknown%02d", ++_running_userId)));
         speaker.speaker = sender.getURI().trim();
         addSpeaker(speaker);
-        da.setValue("sender", speaker.speaker);
-     }
+      }
+      da.setValue("sender", speaker.speaker);
     }
 
     // resolve sender and addressee names to uris if necessary, eventually
-    // creating new Einsatzkraft/Agent instances
+    // creating new Einsatzkraft/Agent instances (first never applies if
+    // speaker != null, since it's an URI then).
     if (da.hasSlot("sender") &&
         ! (da.getValue("sender").charAt(0) == '<'
            || da.getValue("sender").charAt(0) == '#')) {
@@ -319,6 +320,8 @@ public class MkmClient implements CommunicationHub {
         da.setValue("text", asr);
       }
       da.setValue("id", res.id);
+      // da can have slots speaker and addresse, too, but these need to be
+      // resolved
       addWithMetaData(da, res.start, res.end, _agent.lastSpeaker);
     } else {
       logger.warn("Unknown incoming object: {}", evt);
