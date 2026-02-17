@@ -1,0 +1,5 @@
+#!/bin/bash
+now=`date -Iseconds | sed 's/[: ]/_/g'`
+export LOGDIR="logs/run${now}"
+mkdir $LOGDIR
+docker compose up
