@@ -1,39 +1,17 @@
 # Points to the HFC config file
 ontologyFile:       src/main/resources/ontology/mkm.yml
 
-# ########## COMPILE CONFIGURATION SETTINGS ##########
-inputFile:          src/main/rudi/MissionKnowledge.rudi
-outputDirectory:    src/main/gen-java
-agentBase:          de.dfki.mlt.drz.mkm.KnowledgeManager
-typeDef:            KnowledgeManager.rudi
-checkTypes:         true
-failOnError:        false
-verbose:            false
-rootPackage:        de.dfki.mlt.drz.mkm
-
-nameToURI:
-  Agent: <dial:Agent>
-  DialAct: <dial:DialogueAct>
-
-#nameToClass:
-#  Date: de.dfki.drz.mkm.util.Date
-#printErrors: false   # prints compile errors to terminal, true is the default
-#visualise: true      # produces a graphical representation of the parsed
-                      # rule files
-                      # with type resolution information
-#persistentVars: true # puts compiler into persistent variables mode: local
-                      # variables in included rule files also keep their
-                      # values during runtime
-
-# ########## RUN CONFIGURATION SETTINGS ##########
+# ########## VONDA RUN CONFIGURATION SETTINGS ##########
 
 NLG:
   de_DE:
     class: de.dfki.mlt.rudimant.agent.nlp.LanguageGenerator
     mapperProject: src/main/resources/cplanner/allrules-mapper
     generationProject: src/main/resources/cplanner/allrules
-    #translateNumbers: true  # translates numbers to text internally, if, e.g., the TTS
-                             # can not do it by itself
+    # translate numbers to text internally, if, e.g., the TTS can not do it by
+    # itself
+    #translateNumbers: true
+
 NLU:
   de_DE:
     # class: de.dfki.mlt.rudimant.agent.nlp.RegexInterpreter
@@ -55,7 +33,7 @@ NLU:
         converter: src/main/resources/cplanner/srgsconv
         tokenizer:
           class: de.dfki.mlt.rudimant.agent.nlp.TrivialTokenizer
-          toLower: true           # turn all output to lower case
+          toLower: true            # turn all output to lower case
           removePunctuation: true  # remove all punctuation tokens
       - class: de.dfki.mlt.rudimant.agent.nlp.RasaNlu
         host: rasa_server
@@ -68,20 +46,6 @@ NLU:
         converter: src/main/resources/cplanner/adapterbertconv
 
 
-# ########## DEBUGGER/GUI SETTINGS ##########
-#debugPort: 9777
-
-customCompileCommands:
-  compile: ./compile
-  mvncompile: ./compile && mvn install
-  mvncleancmp: mvn clean && ./compile && mvn install
-  vcompile: vondac -v -c config.yml
-defaultCompileCommand: compile
-
-language: de_DE
-
-evaluation: true
-
 # ######### MQTT SETTINGS ##########
 mqtt:
   brokerhost: mqtt-broker
@@ -90,6 +54,8 @@ mqtt:
   #millis_reconnect: 100
 
 # Evaluation of language services (parsing)
+evaluation: false
+
 # corpora:
 #   reader: de.dfki.mlt.rudimant.agent.nlp.RasaCorpusReader
 #   files:

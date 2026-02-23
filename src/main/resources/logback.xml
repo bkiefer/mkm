@@ -24,7 +24,9 @@
     <!--<withJansi>true</withJansi>-->
     <encoder class="PatternLayoutEncoder">
       <pattern>%d{HH:mm:ss.SSS} %highlight(%-5level) %logger{36} - %msg%n</pattern>
-      <!--<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} -%kvp- %msg%n</pattern-->
+      <!--
+      <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} -%kvp- %msg%n</pattern
+      -->
     </encoder>
   </appender>
 
@@ -35,6 +37,6 @@
 
   <root level="WARN">
     <appender-ref ref="STDERR"/>
-    <appender-ref ref="logfile"/>
+    <!--<appender-ref ref="logfile"/>-->
   </root>
 </configuration>

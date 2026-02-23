@@ -98,3 +98,15 @@ id is always present, this is the line number of the text string sent.
 ## Evaluation with real speaker identification module
 
 This runs with real ASR and speaker identification, so audio must be fed to the asrident module using either the file functionality of asrident or via gstreamer. For the MKM, evaluation mode is defined in the config file, specifying an _evaluation_ key with value _true_.
+
+## End-to-End evaluating the whole pipeline
+
+Start the `run_evaluation` script, which will create a time-stamped subdirectory in the logs directory, where all relevant data of that run will be stored.
+
+To process a set of audio files, you will need a `.csv` file containing the audio file names under the column header `file_name` in the order in which they should be processed. Put the CSV file and the audio files into a directory under `inputs`
+
+Then, send the following MQTT string message to the broker running in the subnetwork of docker compose (exposed on port 9883):
+
+    process_file:inputs/<path_to_subdirectory>/<csv_file>.csv
+
+The audio file paths should be specified relative to the directory of the csv file.

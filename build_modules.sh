@@ -1,5 +1,5 @@
 #!/bin/bash
-set -x
+#set -x
 scrdir=`dirname $0`
 cd $scrdir
 scrdir=`pwd`
