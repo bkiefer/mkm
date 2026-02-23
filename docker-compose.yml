@@ -35,13 +35,11 @@ services:
       - mkm
     image: 'asrident'
     environment:
-      now: ${now:-$(date -Iminutes)}
       PULSE_SERVER: "unix:${XDG_RUNTIME_DIR}/pulse/native"
     command: ["/bin/sh", "-c", "sleep 15 &&
               (uv run ./run_whisper.sh -m -c config.yml 2>&1
-              | tee ${LOGDIR:-logs}/asrident.log) &
-              (uv run mqttrecorder.py -c rec_config.yml
-              -o ${LOGDIR:-logs}/recorder.log)"]
+              | tee logs/asrident.log) &
+              (uv run mqttrecorder.py -c rec_config.yml -o logs/recorder.log)"]
     deploy:
       resources:
         reservations:
@@ -58,7 +56,6 @@ services:
       - /dev/snd
     group_add:
       - audio
-
     volumes:
       - ${XDG_RUNTIME_DIR}/pulse/native:${XDG_RUNTIME_DIR}/pulse/native
       - ${HOME}/.config/pulse-cookie:/root/.config/pulse-cookie
@@ -67,17 +64,15 @@ services:
       - ./modules/asrident/models:/app/asrident/models
       - ./modules/asrident/audio:/app/asrident/audio
       - ./modules/asrident/outputs:/app/asrident/outputs
-      - ./logs:/app/asrident/logs
+      - ./logs/${LOGDIR}:/app/asrident/logs
       - ./inputs:/app/asrident/inputs
 
   drzintent:
     depends_on:
       - broker
     image: drz_daslot
-    environment:
-      - now=${now:-$(date -Iminutes)}
     command: ["/bin/bash", "-c",
-    "uv run adapters_bio_tags_server.py 2>&1 | tee ${LOGDIR:-logs}/drzintent.log"]
+    "uv run adapters_bio_tags_server.py 2>&1 | tee logs/drzintent.log"]
     deploy:
       resources:
         reservations:
@@ -93,7 +88,7 @@ services:
     ports:
       - 5050:5050
     volumes:
-      - ./logs:/app/logs
+      - ./logs/${LOGDIR}:/app/logs
       - ./modules/drz_intentslot/adapters:/app/adapters
       - ./modules/drz_intentslot/bert-base-german-cased:/app/bert-base-german-cased
     healthcheck:
@@ -113,15 +108,14 @@ services:
       drzintent:
         condition: service_healthy
     image: 'mkm'
-    environment:
-      - now=${now:-$(date -Iminutes)}
     command: [ "/bin/sh", "-c",
-    "java -Xmx64m -jar mkm-fatjar.jar 2>&1 | tee ${LOGDIR:-logs}/mkm_full.log" ]
+    "java -Xmx64m -jar mkm-fatjar.jar 2>&1 | tee logs/mkm_full.log" ]
     networks:
       - mlt
     container_name: 'mkm'
     restart: always
     hostname: 'mkm'
     volumes:
-      - ./configs/docker-config.yml:/app/config.yml:ro
-      - ./logs:/app/logs
+      - ./configs/mkm-docomp-config.yml:/app/config.yml:ro
+      - ./logs/${LOGDIR}:/app/logs
+      - ./logs/${LOGDIR}/persistent.nt:/app/persistent.nt

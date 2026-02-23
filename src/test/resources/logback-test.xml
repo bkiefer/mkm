@@ -26,13 +26,13 @@
     </encoder>
   </appender>
 
-  <logger name="de.dfki.voluprof" level="DEBUG"/>
+  <logger name="de.dfki.mlt.drz" level="DEBUG"/>
   <logger name="de.dfki.mlt.rudimant.agent" level="DEBUG"/>
   <logger name="de.dfki.mlt.rudimant.common" level="DEBUG"/>
   <logger name="de.dfki.mlt.rudimant.nlp" level="DEBUG"/>
 
   <root level="WARN">
     <appender-ref ref="STDOUT"/>
-    <appender-ref ref="logfile"/>
+    <!--<appender-ref ref="logfile"/>-->
   </root>
 </configuration>
