@@ -1,0 +1,5 @@
+#!/bin/bash
+last=`ls --color=never -t logs | grep --color=never -v "total  *[0-9][0-9]*" | head -1`
+export ASRVERSION=`grep version modules/asrident/pyproject.toml | sed 's/version *= *"\([^"]*\)".*/\1/'`
+export LOGDIR=${last##logs/}
+docker compose down

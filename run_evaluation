@@ -4,4 +4,4 @@ export LOGDIR="run${now}"
 ldir="logs/$LOGDIR"
 mkdir $ldir; touch $ldir/persistent.nt
 export ASRVERSION=`grep version modules/asrident/pyproject.toml | sed 's/version *= *"\([^"]*\)".*/\1/'`
-docker compose up
+docker compose up 2>&1 | tee $ldir/stdout_err.log
