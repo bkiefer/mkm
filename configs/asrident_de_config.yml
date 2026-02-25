@@ -8,13 +8,14 @@ language: de
 # adaptation_state_outfile="state"
 
 monitor_mic: true
-monitor_asr: true
+monitor_asr: false
 
 # host of MQTT broker (specify port, too, if necessary)
 mqtt:
   host: mqtt-broker  # using docker compose
-  # host: host.docker.internal  # running locally
-  # port: 1883
+  #host: host.docker.internal  # running locally
+  #host: localhost
+  #port: 9883
 
 # List the pulseaudio devices with this command:
 # pactl list sources | grep -e 'node.name'
@@ -37,9 +38,11 @@ pipeline: 'pulsesrc ! audioresample ! audio/x-raw,format=S16LE,channels=1,rate={
 # sample rate of the ASR model (currently 16k)
 asr_sample_rate: 16000
 
-whisper:
+whisper_remote:  # NOT USED
   # if url is given, the other config slots are ignored
-  #url: http://serv-9211.kl.dfki.de:8080/transcribe
+  url: http://serv-9211.kl.dfki.de:5021/transcribe # remote large-v3
+
+whisper:
   # model_size: large-v2
   model_size: large-v3-turbo
   # model_size: medium

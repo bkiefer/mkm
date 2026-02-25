@@ -33,7 +33,7 @@ services:
     depends_on:
       - broker
       - mkm
-    image: 'asrident'
+    image: 'asrident:${ASRVERSION}'
     environment:
       PULSE_SERVER: "unix:${XDG_RUNTIME_DIR}/pulse/native"
     command: ["/bin/sh", "-c", "sleep 15 &&
@@ -59,13 +59,13 @@ services:
     volumes:
       - ${XDG_RUNTIME_DIR}/pulse/native:${XDG_RUNTIME_DIR}/pulse/native
       - ${HOME}/.config/pulse-cookie:/root/.config/pulse-cookie
-      - ./configs/asrident_de_config.yml:/app/asrident/config.yml:ro
-      - ./configs/mkmrec_config.yml:/app/asrident/rec_config.yml:ro
-      - ./modules/asrident/models:/app/asrident/models
-      - ./modules/asrident/audio:/app/asrident/audio
-      - ./modules/asrident/outputs:/app/asrident/outputs
-      - ./logs/${LOGDIR}:/app/asrident/logs
-      - ./inputs:/app/asrident/inputs
+      - ./configs/asrident_de_config.yml:/app/config.yml:ro
+      - ./configs/mkmrec_config.yml:/app/rec_config.yml:ro
+      - ./modules/asrident/models:/app/models
+      - ./modules/asrident/audio:/app/audio
+      - ./modules/asrident/outputs:/app/outputs
+      - ./logs/${LOGDIR}:/app/logs
+      - ./inputs:/app/inputs
 
   drzintent:
     depends_on:
