@@ -41,7 +41,7 @@ asr_sample_rate: 16000
 # only uses whisper: section, the other is there for reference
 whisper:
   # if url is given, the other config slots are ignored
-  url: http://serv-9211.kl.dfki.de:5021/transcribe # remote large-v3
+  url: http://serv-9210.kl.dfki.de:5021/transcribe # remote large-v3
 
 whisper_local:
   # model_size: large-v2
