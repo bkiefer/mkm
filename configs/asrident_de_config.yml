@@ -7,7 +7,7 @@ language: de
 # adaptation_state_infile="state"
 # adaptation_state_outfile="state"
 
-monitor_mic: true
+monitor_mic: false
 monitor_asr: false
 
 # host of MQTT broker (specify port, too, if necessary)
@@ -38,11 +38,12 @@ pipeline: 'pulsesrc ! audioresample ! audio/x-raw,format=S16LE,channels=1,rate={
 # sample rate of the ASR model (currently 16k)
 asr_sample_rate: 16000
 
-whisper_remote:  # NOT USED
+# only uses whisper: section, the other is there for reference
+whisper:
   # if url is given, the other config slots are ignored
   url: http://serv-9211.kl.dfki.de:5021/transcribe # remote large-v3
 
-whisper:
+whisper_local:
   # model_size: large-v2
   model_size: large-v3-turbo
   # model_size: medium
