@@ -1,6 +1,7 @@
 #!/bin/sh
 scdir=`dirname $0`
 cd "$scdir"
+container_id="rasa/rasa:3.6.20-full"
 name="mkm_rasa_nlu"
 
 if test -n "$name"; then
@@ -8,11 +9,12 @@ if test -n "$name"; then
 fi
 
 if test -z "$1"; then
-    docker run -d --rm $name --user $UID:$UID -p 9797:5005 -v $(pwd):/app rasa/rasa:3.6.20-full run --enable-api --port 5005
+    docker run -d --rm $name --user $UID:$UID -p 9797:5005 -v $(pwd):/app \
+           "$container_id" run --enable-api --port 5005
 else
     # e.g., for training
-    #docker run --rm --user $UID:$UID -v $(pwd):/app rasa/rasa:3.6.20-full "$@"
-    docker run --rm --user $UID:$UID --gpus all -v $PWD:/app rasa/rasa:3.6.20-full "$@"
+    gpus="--gpus all"
+    docker run --rm --user $UID:$UID "$gpus" -v $PWD:/app "$container_id" "$@"
 fi
 
 #docker run --rm --gpus all nvidia/cuda:11.0-base nvidia-smi

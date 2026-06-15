@@ -1,0 +1,32 @@
+#!/bin/sh
+# This script assumes that a rasa server has been started with ./rasadock
+
+until docker logs mkm_rasa_nlu 2>&1 | grep -q 'Rasa server is up and running.'; do
+    sleep 4
+done
+
+url='http://localhost:9797/model/parse'
+input='ja für sie auftrag einmal kommunikation zu den robotertrupps checken'
+if test -n "$1"; then
+    input="$1"
+fi
+output=''
+if test -z "$1"; then
+    output='Request'
+else
+    if test -n "$2"; then
+        output="$2"
+    fi
+fi
+
+res=`curl -X POST -d "{\"text\":\"$input\"}" "$url" 2>/dev/null | tr '\n' ' '`
+if test -n "$output"; then
+    intent=`echo $res | sed 's/.*intent":{"name":"\([^"]*\)",.*/\1/'`
+    if test "$intent" = "$output"; then
+        echo "Success!"
+    else
+        echo "Failure: expected $output, but was $res"
+    fi
+else
+    echo $res
+fi
