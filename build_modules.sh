@@ -27,7 +27,7 @@ build_asr() {
     cd "$scrdir"/modules/asrident
     (./build_docker.sh &&
          # download silero, speaker identification and whisper models
-         ./model_download.sh) 2>&1 | tee "$logfile" || _exitOnError "asrident"
+         ./model_download.sh "$@") 2>&1 | tee "$logfile" || _exitOnError "asrident"
     cd "$scrdir"
     _reportSuccess "asrident"
 }
