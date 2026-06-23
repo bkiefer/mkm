@@ -10,7 +10,7 @@ These instructions have been tested on **Ubuntu 24.04** and higher, but they sho
 
 ### OS Requirements:
 
-* **Java 21** or higher (`openjdk-21-jdk`)
+* **Java 21 JDK** or higher (`openjdk-21-jdk`)
 * **Maven**
 * **git** and **git-lfs**
 
