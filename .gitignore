@@ -46,3 +46,4 @@ scheiss
 logs
 inputs/**/*csv
 inputs/**/*wav
+.env*

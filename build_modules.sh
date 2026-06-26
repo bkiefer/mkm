@@ -3,8 +3,6 @@
 scrdir=`dirname $0`
 cd $scrdir
 scrdir=`pwd`
-# check out and update all modules
-./update_repo.sh
 
 GREEN='\e[42m\e[1;30m'
 YELLOW='\e[93m'
@@ -21,6 +19,26 @@ function _reportSuccess {
 }
 
 logfile="`pwd`/build`date -Iseconds|sed 's/[: ]/_/g'`.log"
+
+toml_version() {
+    path="."
+    if test -n "$1"; then path="$1"; fi
+    grep version "$path"/pyproject.toml | sed 's/version *= *"\([^"]*\)".*/\1/'
+}
+
+pom_version() {
+    # There are deprecation warnings under the hood!
+    mvn help:evaluate -Dexpression=project.version -q -DforceStdout 2>/dev/null
+}
+
+create_env_file() {
+    (
+    echo "ASR_VERSION='`toml_version modules/asrident`'"
+    echo "INTENTSLOT_VERSION='`toml_version modules/drz_intentslot`'"
+    echo "MKM_VERSION='`pom_version`'"
+    ) > .env
+}
+
 
 build_asr() {
     # ASR and speaker identification
@@ -63,7 +81,7 @@ while getopts anb: c
 do
     case $c in
         a)  all="true";;
-        n)  update="false" ;;
+        n)  no_update="true" ;;
         b)  build="$OPTARG" ;;
         *)  echo "Usage: $0 [-<a>ll] [-<n>oupdate] [module1, module2 ...]
 
@@ -73,6 +91,12 @@ module must be one of 'asr', 'intentslot', 'vonda' or 'mkm'
     esac
 done
 shift `expr $OPTIND - 1`
+
+if test -z "$no_update" ; then # check out and update all modules
+   ./update_repo.sh
+fi
+
+create_env_file
 
 if test "$all" = "true"; then
     build_asr

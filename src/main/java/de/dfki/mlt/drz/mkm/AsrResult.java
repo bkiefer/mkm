@@ -81,7 +81,8 @@ public class AsrResult {
   public List<Segment> segments;
   public long start, end;
   public String source;
-
+  public String text;
+  
   public String id;         // unique id, generated: <source>_<start>
 
   public Double confidence; // confidence of embedding (optional)

@@ -53,6 +53,14 @@ The `configs` directory contains configuration files that may need to be adapted
 ### Installation of Fraunhofer & Eurocommand connectors (submodule, mvn repo?)
 -->
 
+## Run the pipeline with all necessary docker images
+
+Use the script
+
+    ./run_pipeline
+
+which will set some environment variables (e.g. the current directory for collecting logs etc.) and perform a `docker compose up`. Now, the pipeline behaves like a usual `docker compose` setup, i.e., `docker compose down` will completely shut the pipeline down again.
+
 ## Bare metal installation (for some modules) DISCOURAGED, NOT VERIFIED
 
 An additional requirement for local installation is the `uv` package manager for python. Make sure `uv` is working on your machine.
