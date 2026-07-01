@@ -8,6 +8,11 @@ import de.dfki.lt.hfc.db.rdfProxy.Rdf;
 import de.dfki.lt.hfc.db.rdfProxy.RdfProxy;
 
 public class HfcUtils {
+  private static final String T_EINSATZKRAFT = "<drz:Einsatzkraft>";
+  
+  private static final String P_HAS_TOKEN = "<drz:hasToken>";
+  private static final String P_HAS_CALLSIGN = "<drz:hasCallsign>";
+  
   private RdfProxy proxy;
 
   public HfcUtils(RdfProxy p) {
@@ -16,14 +21,16 @@ public class HfcUtils {
 
   public Rdf resolveAgentFromToken(String callsign) {
     List<Object> agents = proxy.query(
-        "select distinct ?a where ?a <drz:hasToken> \"{}\" ?_ & ?a <rdf:type> <drz:Einsatzkraft> ?_",
+        "select distinct ?a where ?a "+ P_HAS_TOKEN + " \"{}\" ?_ " +
+            "& ?a <rdf:type> " + T_EINSATZKRAFT + " ?_",
         callsign);
     return agents.isEmpty() ? null : (Rdf)agents.get(0);
   }
 
   public Rdf resolveAgent(String callsign) {
     List<Object> agents = proxy.query(
-        "select distinct ?a where ?a <drz:hasCallsign> \"{}\" ?_ & ?a <rdf:type> <drz:Einsatzkraft> ?_",
+        "select distinct ?a where ?a "+ P_HAS_CALLSIGN + " \"{}\" ?_ "
+            + "& ?a <rdf:type> " + T_EINSATZKRAFT + " ?_",
         callsign);
     return agents.isEmpty() ? null : (Rdf)agents.get(0);
   }
@@ -37,14 +44,14 @@ public class HfcUtils {
     // TODO: maybe we need something more clever based on fuzzy matching
     Rdf speaker = resolveAgent(callsign);
     if (speaker == null) {
-      speaker = proxy.getRdfClass(AGENT_URI).getNewInstance(INSTANCE_NS_SHORT);
-      speaker.setValue("<drz:hasCallsign>", callsign);
+      speaker = proxy.getRdfClass(T_EINSATZKRAFT).getNewInstance(INSTANCE_NS_SHORT);
+      speaker.setValue(P_HAS_CALLSIGN, callsign);
     }
     return speaker.getURI();
   }
 
   public void addCallsign(String uri, String callsign) {
-    proxy.getRdf(uri).setValue("<drz:hasCallsign>", callsign);
+    proxy.getRdf(uri).setValue(P_HAS_CALLSIGN, callsign);
   }
 
   /*

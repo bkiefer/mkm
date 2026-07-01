@@ -8,4 +8,7 @@ void printEval(String id, String speaker, String addressee,
 #Date String timeOfDay();
 String toString(Message m);
 Rdf toRdf(DialogueAct da);
-void sendFusion(DialogueAct da, String speaker, String addressee);
+void sendFusion(Map slots);
+String na(String s);
+String rdf2name(String s);
+List<String> daList(Object dag);

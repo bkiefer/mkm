@@ -8,7 +8,33 @@ if (lastDA() && evaluation) {
 }
 */
 
-System.out.println(lastDA());
+//include TestDA;
+
+//System.out.println(lastDA());
+
+Map<String,String> makeFusion(DialogueAct da, String sender, String addr) {
+  Map slots = new HashMap();
+  slots.put("id", na(da.id));
+  slots.put("sender", na(sender));
+  slots.put("addressee", na(addr));
+  slots.put("intent", rdf2name(da.getDialogueActType()));
+  slots.put("frame", rdf2name(da.getProposition()));
+  slots.put("text", na(da.text));
+  slots.put("fromTime", da.fromTime);
+  slots.put("toTime", da.toTime);
+
+  String[] slotnames = { "einheit", "auftrag", "mittel", "weg", "ziel" };
+  for (String slot: slotnames) {
+    if (da.{slot}) {
+      //System.out.println(da.getDag(slot));
+      slist = daList(da.getDag(slot));
+      //System.out.println(slist);
+      slots.put(slot, slist);
+    }
+  }
+  return slots;
+}
+
 
 Message newMessage(DialogueAct da) {
   Message m = new Message;
@@ -26,7 +52,7 @@ Message newMessage(DialogueAct da) {
   String sender = s ? (s.hasToken ? s.hasToken : s.getURI()) : null;
   String addr = a ? (a.hasToken ? a.hasToken : a.getURI()) : null;
 
-  sendFusion(da, sender, addr);
+  sendFusion(makeFusion(da, sender, addr));
   return m;
 }
 
@@ -139,6 +165,7 @@ if (lastDA() >= #Inform(top) || lastDA() >= #Request(top)) {
 
 everything_else:
 if (lastDA()) {
+  //
   m = newMessage(lastDA());
   messageProcessed(m);
 }

@@ -1,8 +1,9 @@
 package de.dfki.mlt.drz.mkm;
 
-import static de.dfki.mlt.drz.mkm.Constants.INSTANCE_NS_SHORT;
 import static de.dfki.lt.tr.dialogue.cplan.DagNode.PROP_FEAT_ID;
+import static de.dfki.mlt.drz.mkm.Constants.INSTANCE_NS_SHORT;
 import static de.dfki.mlt.rudimant.common.Configs.CFG_ONTOLOGY_FILE;
+import static de.dfki.mlt.drz.mkm.util.Utils.num2xsd;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -10,7 +11,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Writer;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -22,11 +22,11 @@ import de.dfki.lt.hfc.db.rdfProxy.DbClient;
 import de.dfki.lt.hfc.db.rdfProxy.Rdf;
 import de.dfki.lt.hfc.db.rdfProxy.RdfProxy;
 import de.dfki.lt.hfc.types.XsdAnySimpleType;
-import de.dfki.lt.tr.dialogue.cplan.DagEdge;
 import de.dfki.lt.tr.dialogue.cplan.DagNode;
 import de.dfki.mlt.rudimant.agent.Agent;
 import de.dfki.mlt.rudimant.agent.Behaviour;
 import de.dfki.mlt.rudimant.agent.nlp.DialogueAct;
+import de.dfki.mlt.rudimant.agent.nlp.Interpreter;
 
 public abstract class KnowledgeManager extends Agent {
 
@@ -37,9 +37,15 @@ public abstract class KnowledgeManager extends Agent {
   protected boolean evaluation = false;
   private Writer w = null;
 
+  private static double CONFIDENCE_THRESHOLD = 0.7;
+  private int _running_id = 0;
+  private int _running_userId = 0;
+
   HfcUtils hu;
 
-  Speaker lastSpeaker = null;
+  // If set, it stores the last speaker that was identified using the audio
+  // speaker identification
+  Speaker lastIdentifiedSpeaker = null;
 
   //private static final SimpleDateFormat sdf =
   //    new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
@@ -97,32 +103,21 @@ public abstract class KnowledgeManager extends Agent {
     return da.toRdf(_proxy);
   }
 
-  private static short firstId = -1, restId;
-
   private static String getAtom(DagNode dag) {
     return dag.getValue(PROP_FEAT_ID).getTypeName();
   }
 
-  private static DagNode getDag(DagNode dag, String feature) {
-    DagEdge e = dag.getEdge(DagNode.getFeatureId(feature));
-    return e == null ? null : e.getValue();
-  }
-
   public static List<String> daList(DagNode dag) {
-    if (firstId < 0) {
-      firstId = DagNode.getFeatureId("first");
-      restId = DagNode.getFeatureId("rest");
-    }
     List<String> result = new ArrayList<>();
-    while (dag != null && dag.getEdge(firstId) != null) {
-      String val = getAtom(dag.getValue(firstId));
+    while (dag != null && dag.getEdge(DagNode.getFeatureId("first")) != null) {
+      String val = getAtom(dag.getValue(DagNode.getFeatureId("first")));
       result.add(val);
-      dag = dag.getValue(restId);
+      dag = dag.getValue(DagNode.getFeatureId("rest"));
     }
     return result;
   }
 
-  private String na(String in) { return in == null ? "NA" : in; }
+  protected String na(String in) { return in == null ? "NA" : in; }
 
   /** remove <> and namespace */
   public static String rdf2name(String uriString) {
@@ -142,54 +137,137 @@ public abstract class KnowledgeManager extends Agent {
     }
     return null;
   }
-  
+
   long toLong(String s) {
     if (s == null) return 0l;
     Long l = (Long) xsdToJava(s);
     return l == null ? 0l : l.longValue();
   }
-  
+
   String asString(String s) {
     Object sth = xsdToJava(s);
     return sth == null ? s : sth.toString();
   }
 
-  @SuppressWarnings({ "unchecked", "rawtypes" })
-  void sendFusion(DialogueAct da, String sender, String addressee) {
-    String id = asString(na(da.getValue("id")));
-    String daType = na(da.getDialogueActType());
-    String prop = na(da.getProposition());
-    String text = na(da.getValue("text"));
-    sender = na(sender);
-    addressee = na(addressee);
-    long fromTime = toLong(da.getValue("fromTime"));
-    long toTime= toLong(da.getValue("toTime"));
-    Map slots = new HashMap<String, List<String>>();
-    DagNode dag = da.getDag();
-    // put identified slots into json
-    String[] slotnames = { "einheit", "auftrag", "mittel", "weg", "ziel" };
-    for (String slot: slotnames) {
-      DagNode slotDag = getDag(dag, slot);
-      if (slotDag != null) {
-        slots.put(slot, daList(slotDag));
-      }
-    }
-
-    if (evaluation) {
-      printEval(da.getValue("id"), sender, addressee, daType, prop, text);
-    }
-
-    slots.put("id", id);
-    slots.put("sender", sender);
-    slots.put("addressee", addressee);
-    slots.put("intent", rdf2name(daType));
-    slots.put("frame", rdf2name(prop));
-    slots.put("text", text);
-    slots.put("fromTime", Long.toString(fromTime));
-    slots.put("toTime", Long.toString(toTime));
+  @SuppressWarnings({ "rawtypes" })
+  void sendFusion(Map slots) {
     ((MkmClient)_hub).sendCombined(JSONWriter.valueToString(slots));
   }
 
+  private DialogueAct addWithMetaData(DialogueAct da, long start, long end) {
+    MkmClient hub = (MkmClient)_hub;
+    Speaker speaker = lastIdentifiedSpeaker;
+    if (da == null) {
+      da = Interpreter.NO_RESULT;
+    }
+    // do we have a result from audio speaker recognition?
+    if (speaker != null) {
+      if (! speaker.speaker.equals("Unknown")) {
+        // it's a URI!
+        if (da.hasSlot("sender")) {
+          String nluSenderName = da.getValue("sender");
+          Rdf nluSender = hu.resolveAgent(nluSenderName);
+          // agent found for callsign in transcription ?
+          if (nluSender != null) {
+            // the URI computed from the NLU result
+            String nluSenderUri = nluSender.getURI().trim();
+            if (nluSenderUri == speaker.speaker) {
+              // we agree, add supporting embedding
+              hub.addSpeaker(speaker);
+            } else {
+              // NLU and audio identify two different (known) people
+              // How confident is the audio speaker recognition?
+              if (speaker.confidence < CONFIDENCE_THRESHOLD) {
+                // add new speaker evidence to audio speaker recognition
+                speaker.speaker = nluSenderUri;
+                hub.addSpeaker(speaker);
+              }
+            }
+          } else {
+            // add callsign to the agent from audio identification (and NLU?)
+            hu.addCallsign(speaker.speaker, nluSenderName);
+          }
+        }
+      } else {
+        // audio identification is unsure or new speaker
+        // check if we have something from transcription
+        Rdf sender = da.hasSlot("sender")
+            ? toRdf(hu.resolveSpeaker(da.getValue("sender")))
+            // create a new Einsatzkraft with unique intermediate name
+            : toRdf(hu.resolveSpeaker(
+                String.format("Unknown%02d", ++_running_userId)));
+        speaker.speaker = sender.getURI().trim();
+        hub.addSpeaker(speaker);
+      }
+      da.setValue("sender", speaker.speaker);
+    }
+
+    // resolve sender and addressee names to uris if necessary, eventually
+    // creating new Einsatzkraft/Agent instances (first never applies if
+    // speaker != null, since it's an URI then).
+    if (da.hasSlot("sender") &&
+        ! (da.getValue("sender").charAt(0) == '<'
+           || da.getValue("sender").charAt(0) == '#')) {
+      da.setValue("sender",
+          hu.resolveSpeaker(da.getValue("sender").trim()));
+    }
+    if (da.hasSlot("addressee")) {
+      da.setValue("addressee",
+          hu.resolveSpeaker(da.getValue("addressee").trim()));
+    }
+    da.setValue("fromTime", num2xsd(start));
+    da.setValue("toTime", num2xsd(end));
+    if (! da.hasSlot("id")) {
+      da.setValue("id", num2xsd(_running_id++));
+    }
+    return da;
+  }
+
+  DialogueAct digestASR(AsrResult res) {
+    lastIdentifiedSpeaker = null;
+    // TODO: check if we can filter out nonsense based on info from AsrResult
+    String asr = res.getText();
+    logger.info("Incoming ASR message: {}", asr);
+    DialogueAct da = analyse(asr);
+    // res.id is speaker id, res.speaker comes from speaker identification
+    if (res.speaker != null) {
+      // fill the lastSpeaker
+      lastIdentifiedSpeaker = new Speaker(res.id, res.speaker, res.confidence);
+    }
+    if (!da.hasSlot("text")) {
+      da.setValue("text", asr);
+    }
+    da.setValue("id", res.id);
+    // da can have slots speaker and addresse, too, but these need to be
+    // resolved
+    return addWithMetaData(da, res.start, res.end);
+  }
+
+  DialogueAct digestStringForTesting(String text) {
+    lastIdentifiedSpeaker = null;
+    logger.info("Incoming String message: {}", text);
+    DialogueAct da = analyse(text);
+    long now = System.currentTimeMillis();
+    da.setValue("text", text);
+    return addWithMetaData(da, now, now);
+  }
+
+  DialogueAct digestIdString(MkmClient.IdString is) {
+    lastIdentifiedSpeaker = null;
+    startEvaluation();
+    logger.info("Incoming IdString message: {}|{}|{}", is.id, is.text, is.speaker);
+    String text = (is.text).trim();
+    DialogueAct da = analyse(text);
+    long now = System.currentTimeMillis();
+    // is.speaker is the fake equivalent of audio speaker identification
+    if (!da.hasSlot("sender") && is.speaker != null && !is.speaker.isBlank()) {
+      // we have to change this since we only send the token, not the callsign
+      da.setValue("sender", hu.resolveSpeaker(is.speaker));
+    }
+    da.setValue("text", text);
+    da.setValue("id", is.id);
+    return addWithMetaData(da, now, now);
+  }
 
   protected void startEvaluation() {
     if (evaluation) return;

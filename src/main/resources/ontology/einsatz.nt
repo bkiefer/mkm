@@ -1,4 +1,5 @@
 <top:teamleader> <rdfs:type> <owl:NamedIndividual> .
+<top:teamleader> <rdfs:type> <drz:Einsatzkraft> .
 <top:teamleader> <top:hasToken> "TL" .
 <top:teamleader> <drz:hasCallsign> "Teamleader" .
 <top:teamleader> <drz:hasCallsign> "Einsatzleiter" .
@@ -17,12 +18,14 @@
 <top:teamleader> <drz:hasCallsign> "benno" .
 
 <top:teamleader2> <rdfs:type> <owl:NamedIndividual> .
+<top:teamleader2> <rdfs:type> <drz:Einsatzkraft> .
 <top:teamleader2> <top:hasToken> "TL2" .
 <top:teamleader2> <drz:hasCallsign> "Thorsten" .
 
 <top:teamleader2> <drz:hasCallsign> "thorsten" .
 
 <top:uavoperator> <rdfs:type> <owl:NamedIndividual> .
+<top:uavoperator> <rdfs:type> <drz:Einsatzkraft> .
 <top:uavoperator> <top:hasToken> "UAV" .
 <top:uavoperator> <drz:hasCallsign> "UAV 1" .
 <top:uavoperator> <drz:hasCallsign> "UAV" .
@@ -49,6 +52,7 @@
 <top:uavoperator> <drz:hasCallsign> "lena" .
 
 <top:ugv2> <rdfs:type> <owl:NamedIndividual> .
+<top:ugv2> <rdfs:type> <drz:Einsatzkraft> .
 <top:ugv2> <top:hasToken> "UGV-2" .
 <top:ugv2> <drz:hasCallsign> "Bodenroboter 2" .
 <top:ugv2> <drz:hasCallsign> "Bodenroboter zwei" .
@@ -71,6 +75,7 @@
 <top:ugv2> <drz:hasCallsign> "operator boden 2" .
 
 <top:ugv1> <rdfs:type> <owl:NamedIndividual> .
+<top:ugv1> <rdfs:type> <drz:Einsatzkraft> .
 <top:ugv1> <top:hasToken> "UGV-1" .
 <top:ugv1> <drz:hasCallsign> "Operator 1" .
 <top:ugv1> <drz:hasCallsign> "Andreas" .
@@ -89,6 +94,7 @@
 <top:ugv1> <drz:hasCallsign> "roboter operator" .
 
 <top:mc> <rdfs:type> <owl:NamedIndividual> .
+<top:mc> <rdfs:type> <drz:Einsatzkraft> .
 <top:mc> <top:hasToken> "MC" .
 <top:mc> <drz:hasCallsign> "Mission Commander" .
 <top:mc> <drz:hasCallsign> "Mission Operator" .

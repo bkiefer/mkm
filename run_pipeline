@@ -3,6 +3,9 @@ now=`date -Iseconds | sed 's/[: ]/_/g'`
 export LOGDIR="run${now}"
 ldir="logs/$LOGDIR"
 mkdir $ldir; touch $ldir/persistent.nt
+# From asrident (eventually)
+mkdir $ldir/audio
+mkdir $ldir/outputs
 # Set current log dir for this run
 mv .env .env.bak
 (grep -v LOGDIR .env.bak ; echo "LOGDIR='$LOGDIR'") > .env

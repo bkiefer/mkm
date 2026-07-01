@@ -1,6 +1,5 @@
 package de.dfki.mlt.drz.mkm;
 
-import static de.dfki.mlt.drz.mkm.util.Utils.num2xsd;
 import static de.dfki.mlt.mqtt.MqttHandler.bytesToString;
 
 import java.io.File;
@@ -19,9 +18,8 @@ import org.eclipse.paho.client.mqttv3.MqttException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import de.dfki.mlt.drz.mkm.util.Listener;
 import de.dfki.lt.hfc.WrongFormatException;
-import de.dfki.lt.hfc.db.rdfProxy.Rdf;
+import de.dfki.mlt.drz.mkm.util.Listener;
 import de.dfki.mlt.mqtt.JsonMarshaller;
 import de.dfki.mlt.mqtt.MqttHandler;
 import de.dfki.mlt.rudimant.agent.Agent;
@@ -29,10 +27,9 @@ import de.dfki.mlt.rudimant.agent.Behaviour;
 import de.dfki.mlt.rudimant.agent.CommunicationHub;
 import de.dfki.mlt.rudimant.agent.Intention;
 import de.dfki.mlt.rudimant.agent.nlp.DialogueAct;
-import de.dfki.mlt.rudimant.agent.nlp.Interpreter;
 
 public class MkmClient implements CommunicationHub {
-  private static class IdString {
+  public static class IdString {
     public String id;
     public String text;
     public String speaker; // nullable, to evaluate perfect speaker oracle
@@ -59,8 +56,6 @@ public class MkmClient implements CommunicationHub {
   private static final String STRING_TOPIC = "test/string";
   private static final String CONTROL_TOPIC = "mkm/control";
 
-  private static double CONFIDENCE_THRESHOLD = 0.7;
-
   /** How much time in milliseconds must pass between two behaviours, if
    *  no message came back that the previous behaviour was finished.
    */
@@ -72,8 +67,6 @@ public class MkmClient implements CommunicationHub {
   private Random r = new Random();
 
   private boolean isRunning = true;
-  private int _running_id = 0;
-  private int _running_userId = 0;
 
   private File _configDir;
   private Map<String, Object> _configs;
@@ -112,7 +105,7 @@ public class MkmClient implements CommunicationHub {
     if (asr.id == null) {
       asr.id = asr.source + asr.start;
     }
-    sendEvent(asr);
+    sendEvent(_agent.digestASR(asr));
   }
 
   private boolean receiveAsr(byte[] b) {
@@ -126,11 +119,11 @@ public class MkmClient implements CommunicationHub {
     if (! str.isEmpty()) {
       int bar = str.indexOf('|');
       if (bar < 0) {
-        sendEvent(str);
+        sendEvent(_agent.digestStringForTesting(str));
       } else {
         IdString ids = IdString.getIdString(str);
         if (ids != null) {
-          sendEvent(ids);
+          sendEvent(_agent.digestIdString(ids));
         }
       }
     }
@@ -206,73 +199,6 @@ public class MkmClient implements CommunicationHub {
     client.sendMessage(topic, msg);
   }
 
-  private void addWithMetaData(DialogueAct da, long start, long end, Speaker speaker) {
-    if (da == null) {
-      da = Interpreter.NO_RESULT;
-    }
-    // do we have a result from audio speaker recognition?
-    if (speaker != null) {
-      if (! speaker.speaker.equals("Unknown")) {
-        // it's a URI!
-        if (da.hasSlot("sender")) {
-          String nluSenderName = da.getValue("sender");
-          Rdf nluSender = _agent.hu.resolveAgent(nluSenderName);
-          // agent found for callsign in transcription ?
-          if (nluSender != null) {
-            // the URI computed from the NLU result
-            String nluSenderUri = nluSender.getURI().trim();
-            if (nluSenderUri == speaker.speaker) {
-              // we agree, add supporting embedding
-              addSpeaker(speaker);
-            } else {
-              // NLU and audio identify two different (known) people
-              // How confident is the audio speaker recognition?
-              if (speaker.confidence < CONFIDENCE_THRESHOLD) {
-                // add new speaker evidence to audio speaker recognition
-                speaker.speaker = nluSenderUri;
-                addSpeaker(speaker);
-              }
-            }
-          } else {
-            // add callsign to the agent from audio identification (and NLU?)
-            _agent.hu.addCallsign(speaker.speaker, nluSenderName);
-          }
-        }
-      } else {
-        // audio identification is unsure or new speaker
-        // check if we have something from transcription
-        Rdf sender = da.hasSlot("sender")
-            ? _agent.toRdf(_agent.hu.resolveSpeaker(da.getValue("sender")))
-            // create a new Einsatzkraft with unique intermediate name
-            : _agent.toRdf(_agent.hu.resolveSpeaker(
-                String.format("Unknown%02d", ++_running_userId)));
-        speaker.speaker = sender.getURI().trim();
-        addSpeaker(speaker);
-      }
-      da.setValue("sender", speaker.speaker);
-    }
-
-    // resolve sender and addressee names to uris if necessary, eventually
-    // creating new Einsatzkraft/Agent instances (first never applies if
-    // speaker != null, since it's an URI then).
-    if (da.hasSlot("sender") &&
-        ! (da.getValue("sender").charAt(0) == '<'
-           || da.getValue("sender").charAt(0) == '#')) {
-      da.setValue("sender",
-          _agent.hu.resolveSpeaker(da.getValue("sender").trim()));
-    }
-    if (da.hasSlot("addressee")) {
-      da.setValue("addressee",
-          _agent.hu.resolveSpeaker(da.getValue("addressee").trim()));
-    }
-    da.setValue("fromTime", num2xsd(start));
-    da.setValue("toTime", num2xsd(end));
-    if (! da.hasSlot("id")) {
-      da.setValue("id", num2xsd(_running_id++));
-    }
-    inQueue.push(da);
-  }
-
   // depends on the concrete Event class
   private void onEvent(Object evt) {
     if (evt instanceof Intention) {
@@ -282,47 +208,6 @@ public class MkmClient implements CommunicationHub {
       logger.info("Incoming DialogueAct: {}", evt);
       _agent.addLastDA((DialogueAct)evt);
       _agent.newData();
-    } else if (evt instanceof String) {
-      logger.info("Incoming String message: {}", evt);
-      String text = ((String)evt).trim();
-      DialogueAct da = _agent.analyse(text);
-      long now = System.currentTimeMillis();
-      da.setValue("text", text);
-      addWithMetaData(da, now, now, null);
-    } else if (evt instanceof IdString) {
-      IdString is = (IdString)evt;
-      _agent.startEvaluation();
-      logger.info("Incoming IdString message: {}|{}|{}", is.id, is.text, is.speaker);
-      String text = (is.text).trim();
-      DialogueAct da = _agent.analyse(text);
-      long now = System.currentTimeMillis();
-      if (!da.hasSlot("sender") && is.speaker != null && !is.speaker.isBlank()) {
-        // we have to change this since we only send the token, not the callsign
-        da.setValue("sender", _agent.hu.resolveSpeaker(is.speaker));
-      }
-      da.setValue("text", text);
-      da.setValue("id", is.id);
-      addWithMetaData(da, now, now, null);
-    } else if (evt instanceof AsrResult) {
-      AsrResult res = ((AsrResult)evt);
-      // TODO: check if we can filter out nonsense based on info from AsrResult
-      String asr = res.getText();
-      logger.info("Incoming ASR message: {}", asr);
-      DialogueAct da = _agent.analyse(asr);
-      // id is speaker id, this comes from speaker identification
-      if (res.speaker != null) {
-        // fill the lastSpeaker
-        _agent.lastSpeaker = new Speaker(res.id, res.speaker, res.confidence);
-      } else {
-        _agent.lastSpeaker = null;
-      }
-      if (!da.hasSlot("text")) {
-        da.setValue("text", asr);
-      }
-      da.setValue("id", res.id);
-      // da can have slots speaker and addresse, too, but these need to be
-      // resolved
-      addWithMetaData(da, res.start, res.end, _agent.lastSpeaker);
     } else {
       logger.warn("Unknown incoming object: {}", evt);
     }

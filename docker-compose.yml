@@ -62,8 +62,8 @@ services:
       - ./configs/asrident_de_config.yml:/app/config.yml:ro
       - ./configs/mkmrec_config.yml:/app/rec_config.yml:ro
       - ./modules/asrident/models:/app/models
-      - ./modules/asrident/audio:/app/audio
-      - ./modules/asrident/outputs:/app/outputs
+      - ./logs/${LOGDIR}/audio:/app/audio
+      - ./logs/${LOGDIR}/outputs:/app/outputs
       - ./logs/${LOGDIR}:/app/logs
       - ./inputs:/app/inputs
 
