@@ -1,13 +1,7 @@
 package de.dfki.mlt.drz.mkm.nlu;
 
-import static de.dfki.mlt.drz.mkm.nlu.Constants.KEY_HOST;
-import static de.dfki.mlt.drz.mkm.nlu.Constants.KEY_PORT;
-import static de.dfki.mlt.drz.mkm.nlu.Constants.TRANSCRIPT_NEW_LABEL;
-import static de.dfki.mlt.drz.mkm.nlu.Constants.TRANSCRIPT_OLD_LABEL;
-
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 
 import org.json.JSONObject;
@@ -15,7 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import de.dfki.mlt.rudimant.agent.nlp.DialogueAct;
-import de.dfki.mlt.rudimant.agent.nlp.Interpreter;
 
 /** This module can be activated by specifying appropriate config parameters.
  *

@@ -1,0 +1,32 @@
+# Points to the HFC config file
+ontologyFile:       src/main/resources/ontology/mkm.yml
+
+# ########## RUN CONFIGURATION SETTINGS ##########
+
+NLG:
+  de_DE:
+    class: de.dfki.mlt.rudimant.agent.nlp.LanguageGenerator
+    mapperProject: src/main/resources/cplanner/allrules-mapper
+    generationProject: src/main/resources/cplanner/allrules
+    #translateNumbers: true  # translates numbers to text internally, if, e.g., the TTS
+                             # can not do it by itself
+NLU:
+  de_DE:
+    class: de.dfki.mlt.drz.mkm.nlu.CombinedInterpreter
+    instances:
+      - class: de.dfki.mlt.rudimant.agent.nlp.SrgsParser
+        grammar: src/main/resources/grammars/srgs/call.abnf
+        converter: src/main/resources/cplanner/srgsconv
+        tokenizer:
+          class: de.dfki.mlt.rudimant.agent.nlp.TrivialTokenizer
+          toLower: true           # turn all output to lower case
+          removePunctuation: true  # remove all punctuation tokens
+      - class: de.dfki.mlt.rudimant.agent.nlp.RasaNlu
+        host: localhost
+        port: 9797
+        min_confidence: 0.8
+        converter: src/main/resources/cplanner/rasaconv
+      - class: de.dfki.mlt.drz.mkm.nlu.BertIntentSlotInterpreter
+        host: localhost
+        port: 5050
+        converter: src/main/resources/cplanner/adapterbertconv

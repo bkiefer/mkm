@@ -101,3 +101,15 @@
 
 <top:mc> <drz:hasCallsign> "mission commander" .
 <top:mc> <drz:hasCallsign> "mission operator" .
+
+<top:gf> <rdfs:type> <owl:NamedIndividual> .
+<top:gf> <rdfs:type> <drz:Einsatzkraft> .
+<top:gf> <top:hasToken> "Gruppenfuehrer" .
+<top:gf> <drz:hasCallsign> "Gruppenführer" .
+<top:gf> <drz:hasCallsign> "gruppenführer" .
+
+<top:zf> <rdfs:type> <owl:NamedIndividual> .
+<top:zf> <rdfs:type> <drz:Einsatzkraft> .
+<top:zf> <top:hasToken> "Zugfuehrer" .
+<top:zf> <drz:hasCallsign> "Zugführer" .
+<top:zf> <drz:hasCallsign> "zugführer" .

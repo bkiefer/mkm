@@ -1,6 +1,6 @@
 package de.dfki.mlt.drz.mkm;
 
-import static de.dfki.mlt.drz.mkm.Constants.*;
+import static de.dfki.mlt.drz.mkm.Constants.INSTANCE_NS_SHORT;
 
 import java.util.List;
 
@@ -9,10 +9,10 @@ import de.dfki.lt.hfc.db.rdfProxy.RdfProxy;
 
 public class HfcUtils {
   private static final String T_EINSATZKRAFT = "<drz:Einsatzkraft>";
-  
+
   private static final String P_HAS_TOKEN = "<drz:hasToken>";
   private static final String P_HAS_CALLSIGN = "<drz:hasCallsign>";
-  
+
   private RdfProxy proxy;
 
   public HfcUtils(RdfProxy p) {
@@ -35,6 +35,13 @@ public class HfcUtils {
     return agents.isEmpty() ? null : (Rdf)agents.get(0);
   }
 
+  /** This method will try to resolve the speaker in the data base based on the
+   *  given callsign string. If that is not possible, it will create a new
+   *  Einsatzkraft instance and assign the callsign to it.
+   *
+   * @param callsign
+   * @return the URI of the resolved or new Einsatzkraft instance
+   */
   public String resolveSpeaker(String callsign) {
     if (callsign.charAt(0) == '<' || callsign.charAt(0) == '#') {
       // it's already a URL

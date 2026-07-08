@@ -49,6 +49,7 @@ Message newMessage(DialogueAct da) {
   }
   Einsatzkraft s = m.da.sender;
   Einsatzkraft a = m.da.addressee;
+  //logger.debug("{} {} {} {}", s, da.sender, a, da.addressee); // same same
   String sender = s ? (s.hasToken ? s.hasToken : s.getURI()) : null;
   String addr = a ? (a.hasToken ? a.hasToken : a.getURI()) : null;
 
@@ -87,6 +88,24 @@ if (lastDA().addressee && lastDA().addressee == "PROP_2SG") {
   /*else if (prevDA >= #top(Call)) { // kommt das vor?
     lastDA().sender = prevDA().sender;
     }*/
+}
+
+// try to guess possibly missing addressee
+sender_but_no_addressee:
+if (! lastDA().addressee && lastDA().sender) {
+  // logger.error("current sender: {}  previous sender: {} previous addressee: {}", lastDA().sender, prevDA.sender, prevDA.addresse);
+ same_sender:
+  if (lastDA().sender == prevDA.sender) {
+    // assume the addressee is the same as in the last turn, given the sender
+    // ist the same as before
+    lastDA().addressee = prevDA.addressee;
+  }
+ sender_is_last_addresse:
+  if (lastDA().sender == prevDA.addressee) {
+    // assume the addressee is the same as in the last turn, given the sender
+    // ist the same as before
+    lastDA().addressee = prevDA.sender;
+  }
 }
 
 
@@ -163,9 +182,15 @@ if (lastDA() >= #Inform(top) || lastDA() >= #Request(top)) {
   messageProcessed(m);
 }
 
+if (lastDA() >= #Inform(top) && prevDA >= #Request(top)
+    && lastDA().sender == prevDA.addressee) {
+  // we might be inclined to think its a confirm, but that's only true when the
+  // sentences are semantically similar, this maybe needs another check for
+  // word overlap or sth. like that.
+}
+
 everything_else:
 if (lastDA()) {
-  //
   m = newMessage(lastDA());
   messageProcessed(m);
 }

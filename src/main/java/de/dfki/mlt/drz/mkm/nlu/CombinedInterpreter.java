@@ -66,13 +66,13 @@ public class CombinedInterpreter extends Interpreter {
       for (Interpreter i : instances) {
         DialogueAct da = i.analyse(text);
         if (da != null) {
-          logger.error("Relevant: {}, prop: {} ",
+          logger.debug("Relevant: {}, prop: {} ",
                        isSlotRelevantDA(da) ? "y" : "n",
                        da.getProposition());
           if (! (i instanceof BertIntentSlotInterpreter) && bsi != null
               && isSlotRelevantDA(da)) {
             DialogueAct slotDA = ((BertSlotInterpreter)bsi).analyseSlots(text);
-            logger.error("Calling BSI: {}",
+            logger.debug("Calling BertIntentSlot: {}",
                          slotDA != null ? slotDA.toString() : "null");
             String[] slots = {"mittel", "einheit", "aufgabe", "weg", "ziel"};
             for (String slot: slots) {

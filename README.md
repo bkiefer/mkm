@@ -61,6 +61,14 @@ Use the script
 
 which will set some environment variables (e.g. the current directory for collecting logs etc.) and perform a `docker compose up`. Now, the pipeline behaves like a usual `docker compose` setup, i.e., `docker compose down` will completely shut the pipeline down again.
 
+## Test the MKM (almost) in isolation
+
+With the script
+
+    ./test_mkm.sh
+
+the MKM can be tested almost in isolation, it needs the `rasa` docker (only pretrained models needed) and the `drz_intentslot` docker, so better first do the full installation as described before. The test needs a while since the docker images need to be started properly first, if an exitcode of 2 is reported, either the docker images don't start fast enough or not at all. Read the description section of the script for more information.
+
 ## Bare metal installation (for some modules) DISCOURAGED, NOT VERIFIED
 
 An additional requirement for local installation is the `uv` package manager for python. Make sure `uv` is working on your machine.

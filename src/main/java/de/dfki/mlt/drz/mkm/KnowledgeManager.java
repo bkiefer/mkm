@@ -2,8 +2,8 @@ package de.dfki.mlt.drz.mkm;
 
 import static de.dfki.lt.tr.dialogue.cplan.DagNode.PROP_FEAT_ID;
 import static de.dfki.mlt.drz.mkm.Constants.INSTANCE_NS_SHORT;
-import static de.dfki.mlt.rudimant.common.Configs.CFG_ONTOLOGY_FILE;
 import static de.dfki.mlt.drz.mkm.util.Utils.num2xsd;
+import static de.dfki.mlt.rudimant.common.Configs.CFG_ONTOLOGY_FILE;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -57,6 +57,28 @@ public abstract class KnowledgeManager extends Agent {
       throw new IOException("Ontology file is missing.");
     }
     handler = new HfcDbHandler(new File(configDir, ontoFileName).getPath());
+    /*
+    // TOOD: THE ABOVE LINE HAS A SERIOUS DRAWBACK: THE ONTOLOGY FILE DETERMINES
+    // WHERE THE PERSISTENCE FILE IS LOCATED, AND THIS CAN NOT BE CHANGED, E.G.
+    // PER SESSION, WHICH IS A GENERAL PROBLEM. THE FOLLOWING CODE TRIES TO
+    // IMPROVE THIS, BUT WE MIGHT WANT TO FIND A BETTER SOLUTION.
+    ///
+    /// WITH DOCKER COMPOSE, IT'S NOT A PROBLEM SINCE THE PERSISTENT.NT IS
+    /// LINKED TO THE RIGHT SESSION DIRECTORY USING VOLUME BINDINGS.
+
+    Yaml yaml = new Yaml();
+    File ontoFile = new File(configDir, ontoFileName);
+    Map<String, Object> confs = (Map<String, Object>)
+        yaml.load(new FileInputStream(ontoFile));
+
+    if (configs.containsKey("persistenceFile")) {
+      confs.put("persistenceFile", configs.get("persistenceFile"));
+    }
+    confs.put(Config.ROOT_DIRECTORY, ontoFile.getParentFile());
+    Config ontoCfg = Config.getInstance(confs);
+
+    handler = new HfcDbHandler(ontoCfg);
+    */
 
     RdfProxy proxy = new RdfProxy(handler);
     hu = new HfcUtils(proxy);

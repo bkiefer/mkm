@@ -7,7 +7,7 @@ language: de
 # adaptation_state_infile="state"
 # adaptation_state_outfile="state"
 
-monitor_mic: false
+monitor_mic: true
 monitor_asr: false
 
 # host of MQTT broker (specify port, too, if necessary)

@@ -3,7 +3,6 @@ package de.dfki.mlt.drz.mkm.nlu;
 import static de.dfki.mlt.drz.mkm.nlu.Constants.KEY_HOST;
 import static de.dfki.mlt.drz.mkm.nlu.Constants.KEY_PORT;
 import static de.dfki.mlt.drz.mkm.nlu.Constants.TRANSCRIPT_NEW_LABEL;
-import static de.dfki.mlt.drz.mkm.nlu.Constants.TRANSCRIPT_OLD_LABEL;
 
 import java.io.File;
 import java.io.IOException;

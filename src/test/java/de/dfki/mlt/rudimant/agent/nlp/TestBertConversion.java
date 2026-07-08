@@ -2,24 +2,19 @@ package de.dfki.mlt.rudimant.agent.nlp;
 
 import static org.junit.Assert.assertEquals;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.json.JSONObject;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 
 import de.dfki.lt.tr.dialogue.cplan.DagNode;
 import de.dfki.mlt.drz.mkm.KnowledgeManager;
 import de.dfki.mlt.drz.mkm.nlu.BertIntentSlotInterpreter;
-import de.dfki.mlt.drz.mkm.nlu.BertSlotInterpreter;
 
 public class TestBertConversion {
 
