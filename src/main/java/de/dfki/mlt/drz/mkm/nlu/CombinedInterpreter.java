@@ -74,6 +74,9 @@ public class CombinedInterpreter extends Interpreter {
             DialogueAct slotDA = ((BertSlotInterpreter)bsi).analyseSlots(text);
             logger.debug("Calling BertIntentSlot: {}",
                          slotDA != null ? slotDA.toString() : "null");
+            if (slotDA == null) {
+              return noResult();
+            }
             String[] slots = {"mittel", "einheit", "aufgabe", "weg", "ziel"};
             for (String slot: slots) {
               short slotId = DagNode.getFeatureId(slot);

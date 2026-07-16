@@ -19,10 +19,10 @@ import de.dfki.lt.hfc.WrongFormatException;
 import de.dfki.mlt.mqtt.MqttHandler;
 
 public class TestPipeline {
-  private static final Logger logger = LoggerFactory.getLogger(TestPipeline.class);
+  private static final Logger logger = 
+      LoggerFactory.getLogger(TestPipeline.class);
 
   List<String[]> msgs = new ArrayList<>();
-  List<String[]> inbound = new ArrayList<>();
   boolean conditionMet;
   private CountDownLatch conditionLatch;
 
@@ -47,16 +47,17 @@ public class TestPipeline {
 
     @Override
     public boolean test(byte[] payload) {
-      String[] nextmsg = msgs.removeFirst();
+      String[] expected = msgs.removeFirst();
       // check it's the right topic
-      if (conditionMet = topic.equals(nextmsg[1])) {
+      if (conditionMet = topic.equals(expected[1])) {
         String in = MqttHandler.bytesToString(payload);
         // check it is the right message
-        if (!(conditionMet = nextmsg[2].equals(in))) {
-          logger.error("Wrong msg from MKM:\n{} instead of \n{}", in, nextmsg[2]);
+        if (!(conditionMet = in.equals(expected[2]))) {
+          logger.error("Wrong MKM msg:\n  {}\n  instead of\n  {}",
+              in, expected[2]);
         }
       } else {
-        logger.error("Wrong topic {} instead of {}", nextmsg[1], topic);
+        logger.error("Wrong topic {} instead of {}", topic, expected[1]);
       }
       conditionLatch.countDown();
       return true;
@@ -77,8 +78,7 @@ public class TestPipeline {
       fakeAsr.register(t, this.new Checker(t));
     }
 
-    String args[] = { };
-    Main.readConfig("src/test/resources/pipeline.yml");
+    String args[] = {"-c", "src/test/resources/pipeline.yml" };
     Main.main(args);
 
     while (! msgs.isEmpty()) {
@@ -95,7 +95,8 @@ public class TestPipeline {
           conditionMet = false;
         }
         if (conditionMet) {
-          ++good; //logger.debug("GOOD!!!! {} !!!!", good);
+          ++good; 
+          logger.debug("GOOD !!!! {} !!!!", good);
         } else {
           ++bad;
         }

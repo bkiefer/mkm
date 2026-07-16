@@ -14,55 +14,29 @@
 # Speaker B: Angriffstrupp mit der Drehleiter zur Rettung verletzter Personen in den ersten Stock, verstanden
 # Speaker A: Das ist so korrekt, Ende
 
-# The test MQTT messages and pipeline config are in the src/test/resources folder
-# Be aware that it can take a while for the supporting docker containers to start,
-# You'll see a counter running up, and if you get exitcode 2, they don't come up
-# quickly enough, or not at all.
+# The test MQTT messages and pipeline config are in the src/test/resources
+# folder
+
+# Be aware that start_nlu.sh can take a while to return, you'll see a counter
+# running up, and if you get exitcode 2, there was a timeout
 
 #set -x
-./rasa/rasadock
-cd modules/drz_intentslot
-DOCKER_ARGS="-d --rm --name drz_intentslot" ./run_docker.sh
-cd ../../
 
-shutdown() {
-    (docker kill "mkm_rasa_nlu"
-     docker kill "drz_intentslot"
-     docker container prune -f) >/dev/null 2>/dev/null
-}
-
-rasa_alive() {
-    count=0
-    while test "$count" \!= "8"; do
-        if $(docker logs mkm_rasa_nlu 2>&1 | grep -q 'Rasa server is up and running'); then
-            break;
-         else
-            sleep 5
-            count="$(($count + 1))"
-            echo -n $count
-        fi
-    done
-    return $(test $count -le 7)
-}
-
-intentslot_alive() {
-    count=0
-    while test "$count" -le "8"; do
-        if test "$(curl http://localhost:5050/alive 2>/dev/null)" \
-                = 'tag server is alive'; then
-            break
-        else
-            sleep 5
-            count="$(($count + 1))"
-            echo -n $count
-        fi
-    done
-    return $(test $count -le 7)
+test_mkm() {
+    if docker images 2>&1 | grep -q mkmhype; then
+        DOCKER_ARGS="--rm -d --name 'test_mkm'" ./run_docker.sh test_config.yml
+        until docker logs test_asr 2>&1 | grep -q 'sample_rate: 16000'; do
+            sleep 3
+        done
+    else
+        mvn clean && ./compile && mvn install && java --class-path target/mkm-fatjar.jar de.dfki.mlt.drz.mkm.TestPipeline || return 1
+    fi
 }
 
 exitcode=0
-if intentslot_alive && rasa_alive; then
-    mvn clean && ./compile && mvn install && java --class-path target/mkm-fatjar.jar de.dfki.mlt.drz.mkm.TestPipeline || exitcode=1
+if ./start_nlu.sh; then
+    test_mkm
+    exitcode=$?
 else
     exitcode=2
 fi
@@ -72,5 +46,5 @@ else
     echo "Failure: $exitcode"
 fi
 
-shutdown
+./stop_nlu.sh
 exit $exitcode

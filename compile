@@ -2,4 +2,6 @@
 script_dir=`dirname $0`
 
 mvn clean
-vondac "$@" -c "$script_dir/config.yml"
+
+modules/vonda/bin/vondac "$@" -c "$script_dir/config.yml" ||
+    echo "Compilation of VOnDA code failed! Did you do mvn install in mods/vonda?"
