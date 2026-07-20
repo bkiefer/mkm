@@ -18,7 +18,7 @@ function _reportSuccess {
     printf "${GREEN}$1 successfully built${NC}\n";
 }
 
-logfile="`pwd`/build`date -Iseconds|sed 's/[: ]/_/g'`.log"
+logfile="`pwd`/BUILD`date -Iseconds|sed 's/[: ]/_/g'`.log"
 
 toml_version() {
     path="."
@@ -27,6 +27,7 @@ toml_version() {
 }
 
 pom_version() {
+    if test -n "$1"; then cd "$1"; fi
     # There are deprecation warnings under the hood!
     mvn help:evaluate -Dexpression=project.version -q -DforceStdout 2>/dev/null
 }
@@ -36,6 +37,7 @@ create_env_file() {
     echo "ASR_VERSION='`toml_version modules/asrident`'"
     echo "INTENTSLOT_VERSION='`toml_version modules/drz_intentslot`'"
     echo "MKM_VERSION='`pom_version`'"
+    echo "MKMCONNECTOR_VERSION='`pom_version modules/mkmconnector`'"
     ) > .env
 }
 
@@ -69,6 +71,13 @@ build_vonda() {
     _reportSuccess "vonda_compiler"
 }
 
+build_mkmconnector() {
+    cd "$scrdir"/modules/mkmconnector
+    # build the MKM Connector docker, not doing tests (no credentials)
+    ./build_docker.sh -n 2>&1 | tee -a "$logfile" || _exitOnError "mkmconnector"
+    _reportSuccess "mkmconnector"
+}
+
 build_mkm() {
     cd "$scrdir"
     # Download rasa ML model, compile the MKM and build the MKM docker
@@ -76,6 +85,7 @@ build_mkm() {
          ./build_docker.sh) 2>&1 | tee -a "$logfile" || _exitOnError "mkm"
     _reportSuccess "mkm"
 }
+
 
 while getopts anb: c
 do

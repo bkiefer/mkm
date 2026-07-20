@@ -107,7 +107,7 @@ services:
         condition: service_started
       drzintent:
         condition: service_healthy
-    image: 'mkm'
+    image: 'mkm:${MKM_VERSION}'
     command: [ "/bin/sh", "-c",
     "java -Xmx64m -jar mkm-fatjar.jar 2>&1 | tee logs/mkm_full.log" ]
     networks:
@@ -119,3 +119,21 @@ services:
       - ./configs/mkm-docomp-config.yml:/app/config.yml:ro
       - ./logs/${LOGDIR}:/app/logs
       - ./logs/${LOGDIR}/persistent.nt:/app/persistent.nt
+
+  mkmconnector:
+    depends_on:
+      broker:
+        condition: service_started
+      mkm:
+        condition: service_started
+    image: 'mkmconnector:${MKMCONNECTOR_VERSION}'
+    container_name: 'mkmconnector'
+    command: [ "/bin/sh", "-c",
+    "java -Xmx64m -jar mkmconnector-fatjar.jar credentials.yml -c config.yml 2>&1 | tee logs/connector.log" ]
+    hostname: 'mkmconnector'
+    networks:
+      - mlt
+    volumes:
+      - ./configs/connector-config.yml:/app/config.yml:ro
+      - ./configs/credentials.yml:/app/credentials.yml:ro
+      - ./logs/${LOGDIR}:/app/logs

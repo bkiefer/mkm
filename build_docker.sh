@@ -1,7 +1,13 @@
 #!/bin/sh
 #set -x
+pom_version() {
+    if test -n "$1"; then cd "$1"; fi
+    # There are deprecation warnings under the hood!
+    mvn help:evaluate -Dexpression=project.version -q -DforceStdout 2>/dev/null
+}
+
 echo "$PATH" | grep -q 'vonda' || export PATH="$(pwd)/modules/vonda/bin:$PATH"
 mvn clean
 ./compile
 mvn install
-docker build -f Dockerfile -t mkm .
+docker build -f Dockerfile -t mkm:`pom_version` .

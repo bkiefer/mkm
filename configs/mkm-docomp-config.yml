@@ -46,11 +46,11 @@ NLU:
         converter: src/main/resources/cplanner/adapterbertconv
 
 
-# ######### MQTT SETTINGS ##########
+# ######### MQTT SETTINGS: CONNECTION TO BROKER ##########
 mqtt:
-  brokerhost: mqtt-broker
-  #brokerport: 1883
-  #brokerprotocol: tcp
+  host: mqtt-broker
+  #port: 1883
+  #protocol: tcp
   #millis_reconnect: 100
 
 # Evaluation of language services (parsing)

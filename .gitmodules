@@ -13,3 +13,6 @@
 [submodule "drz_intentslot"]
 	path = modules/drz_intentslot
 	url = https://github.com/bkiefer/drz_intentslot
+[submodule "modules/mkmconnector"]
+	path = modules/mkmconnector
+	url = https://github.com/bkiefer/mkmconnector.git
