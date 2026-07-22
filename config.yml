@@ -83,9 +83,9 @@ evaluation: true
 
 # ######### MQTT SETTINGS ##########
 mqtt:
-  #brokerhost: mqtt-broker
-  #brokerport: 9883
-  #brokerprotocol: tcp
+  #host: mqtt-broker
+  #port: 9883
+  #protocol: tcp
   #millis_reconnect: 100
 
 # Evaluation of language services (parsing)

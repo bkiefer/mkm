@@ -1,0 +1,7 @@
+mqtt:
+  host: 'mqtt-broker' # running in isolated docker
+  #port: 9883
+
+iais:
+  #base_url: 'https://10.26.2.42:8080/radio-transcription'
+  base_url: 'https://eve.iais.fraunhofer.de/radio-transcription'
