@@ -8,5 +8,5 @@ fi
 # check out and update all modules
 git pull --recurse-submodules
 git submodule update --init --recursive --remote
-cd modules/asrident
-git checkout drz
+#cd modules/asrident
+#git checkout drz

@@ -7,6 +7,7 @@
 [submodule "asrident"]
 	path = modules/asrident
 	url = https://github.com/bkiefer/asrident.git
+	branch = drz
 [submodule "vonda"]
 	path = modules/vonda
 	url = https://github.com/bkiefer/vonda.git
