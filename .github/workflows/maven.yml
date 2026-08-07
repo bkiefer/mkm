@@ -1,12 +1,10 @@
-# This workflow will build a Java project with Maven, and cache/restore any dependencies to improve the workflow execution time
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-maven
-
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-
 name: mvn build
+
+# should avoid error in last action, does not work
+# permissions:
+#   contents: read
+#   pages: write
+#   id-token: write
 
 on:
   push:
@@ -16,7 +14,6 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -38,6 +35,9 @@ jobs:
         ./modules/vonda/bin/vondac -c config.yml
         mvn -B package --file pom.xml
 
-    # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
-    - name: Update dependency graph
-      uses: advanced-security/maven-dependency-submission-action@v4.0.3
+    # Optional: Uploads the full dependency graph to GitHub to improve the
+    # quality of Dependabot alerts this repository can receive
+    # Action Fails with error:
+    # Unable to get ACTIONS_ID_TOKEN_REQUEST_URL env variable
+    # - name: Update dependency graph
+    #   uses: advanced-security/maven-dependency-submission-action@v4.0.3
