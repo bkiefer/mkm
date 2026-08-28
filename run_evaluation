@@ -1,7 +1,3 @@
 #!/bin/bash
-now=`date -Iseconds | sed 's/[: ]/_/g'`
-export LOGDIR="run${now}"
-ldir="logs/$LOGDIR"
-mkdir $ldir; touch $ldir/persistent.nt
-export ASRVERSION=`grep version modules/asrident/pyproject.toml | sed 's/version *= *"\([^"]*\)".*/\1/'`
-docker compose up 2>&1 | tee $ldir/stdout_err.log
+./run_pipeline
+# make the ASR process audio files from a HF local dataset (with metadata.csv)
