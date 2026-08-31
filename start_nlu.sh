@@ -9,7 +9,7 @@
 
 rasa_alive() {
     count=0
-    while test "$count" \!= "8"; do
+    while test "$count" -le "10"; do
         if $(docker logs mkm_rasa_nlu 2>&1 | grep -q 'Rasa server is up and running'); then
             break;
          else
@@ -23,7 +23,7 @@ rasa_alive() {
 
 intentslot_alive() {
     count=0
-    while test "$count" -le "8"; do
+    while test "$count" -le "10"; do
         if test "$(curl http://localhost:5050/alive 2>/dev/null)" \
                 = 'tag server is alive'; then
             break

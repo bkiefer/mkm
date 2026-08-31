@@ -4,19 +4,12 @@
 .project
 .settings
 **/.projectile
-**/src/main/resources/generated/*
-**/src/test/resources/miniproj/src/main/generated/*
 **/*~
-/nbproject/
-nbactions.xml
-/0howto
-/Java8.g4
-/doc/quiz-abstract.txt
-/functionalities.org.commented by HUK
-/old/
-/rulesproto.java.commented by HUK
-runtest
-test.rudi
+**/.idea
+configs/credentials.yml
+src/main/resources/generated
+src/main/rudi/TestDA.rudi
+src/main/rudi/type_NEX.rudi
 **/*.aux
 **/*.blg
 **/*.bbl
@@ -29,7 +22,6 @@ test.rudi
 **/auto
 **/VondaGrammar.output
 **/persistent.nt
-wechrasa/.rasa
 eval/
 rasa/nlu
 rasa/entities.py
@@ -41,9 +33,8 @@ rasa/.cache
 rasa/.config
 rasa/.keras
 rasa/train_test_split
-**/.idea
-scheiss
+divers
 logs
-inputs/**/*csv
-inputs/**/*wav
+inputs/**
+!inputs/.gitkeep
 .env*

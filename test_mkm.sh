@@ -22,29 +22,54 @@
 
 #set -x
 
-test_mkm() {
-    if docker images 2>&1 | grep -q mkmhype; then
+pom_version() {
+    if test -n "$1"; then cd "$1"; fi
+    # There are deprecation warnings under the hood!
+    mvn help:evaluate -Dexpression=project.version -q -DforceStdout 2>/dev/null
+}
+
+# Does not work
+test_mkm_docker() {
+    if docker images 2>&1 | grep -q mkm:$(pom_version); then
         DOCKER_ARGS="--rm -d --name 'test_mkm'" ./run_docker.sh test_config.yml
-        until docker logs test_asr 2>&1 | grep -q 'sample_rate: 16000'; do
+        until docker logs test_mkm 2>&1 | grep -q 'sample_rate: 16000'; do
             sleep 3
         done
-    else
-        mvn clean && ./compile && mvn install && java --class-path target/mkm-fatjar.jar de.dfki.mlt.drz.mkm.TestPipeline || return 1
     fi
 }
+
+run_mosquitto() {
+    (docker container ls | grep -q mqtt-broker ||
+        docker run --name mqtt-broker -d --rm -p 1883:1883 -p 9001:9001 \
+               -v `pwd`/configs/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro \
+               eclipse-mosquitto:2.0.15
+    ) 2>/dev/null
+}
+
+kill_mosquitto() {
+    docker container ls | grep -q mqtt-broker && docker kill mqtt-broker
+}
+
+test_mkm() {
+    mvn clean && ./compile && mvn install && java --class-path target/mkm-fatjar.jar de.dfki.mlt.drz.mkm.TestPipeline || return 1
+}
+
+run_mosquitto
 
 exitcode=0
 if ./start_nlu.sh; then
     test_mkm
     exitcode=$?
 else
-    exitcode=2
+    exitcode="NLU does not start up"
 fi
 if test "$exitcode" = "0"; then
     echo "Success!"
 else
     echo "Failure: $exitcode"
 fi
+
+kill_mosquitto
 
 ./stop_nlu.sh
 exit $exitcode

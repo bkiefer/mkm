@@ -113,6 +113,7 @@ if test "$all" = "true"; then
     build_intentslot
     build_vonda
     build_mkm
+    build_mkmconnector
 else
     for mod; do
         build_$mod

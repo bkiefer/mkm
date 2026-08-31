@@ -46,7 +46,22 @@ This script will:
 
 ## Configuration
 
-The `configs` directory contains configuration files that may need to be adapted to your specific runtime environment. For example, you may need to adjust settings for your current sound system setup. Detailed explanations can be found within each of the configuration files.
+All relevant configuration files are in the `configs` directory.
+
+### Audio system setup
+
+Details for the configuration for the `asrident` module are described in the <file:./modules/asrident/README.md> file and the configuration files themselves.
+
+Options of interest might be the `pipeline` option if anything else than the pulseaudio default source should be used as audio input, the `monitor_mic` flag, which will save incoming audio chunks if set to `true`, and the `whisper/model_size` option to adapt the loaded ASR module to you GPU capabilities. The rest should be left unchanged.
+
+`pipeline` describes a gstreamer pipeline that is used to pick up the sound from the microphone. In most cases, the information and examples given in the configuration file should be enough to find out how to adapt it to your special needs, if there are any. Usually, it should be enough to configure the default pulseaudio input on your OS. Don't change `rate={}` here, this is supposed to be the `asr_sample_rate` and appropriately set in the running module.
+
+### Backend connection configuration
+
+The connection to the database backend is configured in two files:
+
+In `connector-config.yml`, the `base-url` value has to point to the right URL, and the `credentials_stub.yml` needs to be renamed to `credentials.yml` and the correct credentials need to be provided.
+
 
 <!--
 ### TODO:
@@ -67,7 +82,7 @@ With the script
 
     ./test_mkm.sh
 
-the MKM can be tested almost in isolation, it needs the `rasa` docker (only pretrained models needed) and the `drz_intentslot` docker, so better first do the full installation as described before. The test needs a while since the docker images need to be started properly first, if an exitcode of 2 is reported, either the docker images don't start fast enough or not at all. Read the description section of the script for more information.
+the MKM can be tested almost in isolation, it needs the `rasa` docker (only pretrained models needed) and the `drz_intentslot` docker, so better first do the full installation as described before. The test needs a while since the NLU docker images need to be started properly first. If failure with `"NLU does not start up"` is reported, first execute `./start_nlu.sh` and check if the NLU components can be started in isolation or not at all. In case they start up, they remain running and `./test_mkm.sh` can be run immediately afterwards, using the already started NLU modules.
 
 ## Bare metal installation (for some modules) DISCOURAGED, NOT VERIFIED
 
