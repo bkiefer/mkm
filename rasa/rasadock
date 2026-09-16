@@ -9,12 +9,15 @@ if test -n "$name"; then
 fi
 
 if test -z "$1"; then
-    docker run -d --rm $name --user $UID:$UID -p 9797:5005 -v $(pwd):/app \
+    # inference
+    docker run -d --rm $name --user $UID:$UID -p 9797:5005 \
+           -v $(pwd):/app -v $PWD/../models/rasa:/app/models  \
            "$container_id" run --enable-api --port 5005
 else
     # e.g., for training
     gpus="--gpus all"
-    docker run --rm --user $UID:$UID "$gpus" -v $PWD:/app "$container_id" "$@"
+    docker run --rm --user $UID:$UID "$gpus" \
+           -v $PWD:/app "$container_id" "$@"
 fi
 
 #docker run --rm --gpus all nvidia/cuda:11.0-base nvidia-smi

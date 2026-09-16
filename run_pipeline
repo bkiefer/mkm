@@ -9,4 +9,5 @@ mkdir $ldir/outputs
 # Set current log dir for this run
 mv .env .env.bak
 (grep -v LOGDIR .env.bak ; echo "LOGDIR='$LOGDIR'") > .env
-docker compose up
+# you can pass -d to detach immediately
+docker compose up "$@"

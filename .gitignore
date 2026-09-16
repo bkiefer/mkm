@@ -37,4 +37,6 @@ divers
 logs
 inputs/**
 !inputs/.gitkeep
+models/**
+!models/.gitkeep
 .env*

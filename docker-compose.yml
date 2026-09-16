@@ -15,6 +15,7 @@ services:
       - '9797:9797'
     volumes:
       - ./rasa:/app
+      - ./models/rasa:/app/models
 
   broker:
     image: 'eclipse-mosquitto:2.0.15'
@@ -61,7 +62,7 @@ services:
       - ${HOME}/.config/pulse-cookie:/root/.config/pulse-cookie
       - ./configs/asrident_de_config.yml:/app/config.yml:ro
       - ./configs/mkmrec_config.yml:/app/rec_config.yml:ro
-      - ./modules/asrident/models:/app/models
+      - ./models/asr:/app/models
       - ./logs/${LOGDIR}/audio:/app/audio
       - ./logs/${LOGDIR}/outputs:/app/outputs
       - ./logs/${LOGDIR}:/app/logs
@@ -89,8 +90,8 @@ services:
       - 5050:5050
     volumes:
       - ./logs/${LOGDIR}:/app/logs
-      - ./modules/drz_intentslot/adapters:/app/adapters
-      - ./modules/drz_intentslot/bert-base-german-cased:/app/bert-base-german-cased
+      - ./models/intentslot/adapters:/app/adapters
+      - ./models/intentslot/bert-base-german-cased:/app/bert-base-german-cased
     healthcheck:
       test: ["CMD-SHELL",
       "test \"$(curl http://drzintent:5050/alive)\" = 'tag server is alive'"]
