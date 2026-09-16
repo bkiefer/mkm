@@ -34,7 +34,6 @@ build_asr() {
     cd "$script_dir"/modules/asrident
     ./build_docker.sh || _exitOnError "asr"
     # download silero, speaker identification and whisper models
-    ./model_download.sh "$@" || _exitOnError "asr"
     mkdir ../../models/asr 2>/dev/null
     mv models models0
     ln -s ../../models/asr models
