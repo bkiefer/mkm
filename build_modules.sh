@@ -1,8 +1,9 @@
 #!/bin/bash
 #set -x
-scrdir=`dirname $0`
-cd $scrdir
-scrdir=`pwd`
+logfile="`pwd`/BUILD`date -Iseconds|sed 's/[: ]/_/g'`.log"
+exec &> >(tee "$logfile")
+
+. $(dirname $0)/utils.sh
 
 GREEN='\e[42m\e[1;30m'
 YELLOW='\e[93m'
@@ -11,25 +12,11 @@ NC='\033[0m' # No Color
 
 function _exitOnError {
     printf "${RED}ERROR during build or model download $1 ${NC}\n";
-    exit -1;
+    exit 1;
 }
 
 function _reportSuccess {
     printf "${GREEN}$1 successfully built${NC}\n";
-}
-
-logfile="`pwd`/BUILD`date -Iseconds|sed 's/[: ]/_/g'`.log"
-
-toml_version() {
-    path="."
-    if test -n "$1"; then path="$1"; fi
-    grep version "$path"/pyproject.toml | sed 's/version *= *"\([^"]*\)".*/\1/'
-}
-
-pom_version() {
-    if test -n "$1"; then cd "$1"; fi
-    # There are deprecation warnings under the hood!
-    mvn help:evaluate -Dexpression=project.version -q -DforceStdout 2>/dev/null
 }
 
 create_env_file() {
@@ -44,45 +31,49 @@ create_env_file() {
 
 build_asr() {
     # ASR and speaker identification
-    cd "$scrdir"/modules/asrident
-    (./build_docker.sh &&
-         # download silero, speaker identification and whisper models
-         ./model_download.sh "$@") 2>&1 | tee "$logfile" || _exitOnError "asrident"
-    cd "$scrdir"
-    _reportSuccess "asrident"
+    cd "$script_dir"/modules/asrident
+    ./build_docker.sh || _exitOnError "asr"
+    # download silero, speaker identification and whisper models
+    ./model_download.sh "$@" || _exitOnError "asr"
+    mkdir ../../models/asr
+    mv models/* ../../models/asr
+    cd "$script_dir"
+    _reportSuccess "asr"
 }
 
 build_intentslot() {
     # Build docker for intent and slot recognition, NEEDS git-lfs!!
-    cd "$scrdir"/modules/drz_intentslot
-    (./model_download.sh &&
-         ./build_docker.sh ) 2>&1 | tee -a "$logfile" || _exitOnError "drz_intentslot"
-    cd "$scrdir"
-    _reportSuccess "drz_intentslot"
+    cd "$script_dir"/modules/drz_intentslot
+    ./model_download.sh || _exitOnError "intentslot"
+    mkdir ../../models/intentslot
+    mv bert-base-german-cased adapters ../../models/intentslot
+    ./build_docker.sh || _exitOnError "intentslot"
+    cd "$script_dir"
+    _reportSuccess "intentslot"
 }
 
 build_vonda() {
     # Make sure VOnDA compiler is available, needs installed JDK, not only JRE!
-    cd "$scrdir"/modules/vonda
+    cd "$script_dir"/modules/vonda
     #git submodule init; git pull --recurse-submodules # do we need that?
-    mvn install 2>&1 | tee -a "$logfile" || _exitOnError "vonda_compiler"
+    mvn install || _exitOnError "vonda"
     export PATH="$(pwd)/bin:$PATH"
-    cd "$scrdir"
-    _reportSuccess "vonda_compiler"
+    cd "$script_dir"
+    _reportSuccess "vonda"
 }
 
 build_mkmconnector() {
-    cd "$scrdir"/modules/mkmconnector
+    cd "$script_dir"/modules/mkmconnector
     # build the MKM Connector docker, not doing tests (no credentials)
-    ./build_docker.sh -n 2>&1 | tee -a "$logfile" || _exitOnError "mkmconnector"
+    ./build_docker.sh || _exitOnError "mkmconnector"
     _reportSuccess "mkmconnector"
 }
 
 build_mkm() {
-    cd "$scrdir"
+    cd "$script_dir"
     # Download rasa ML model, compile the MKM and build the MKM docker
-    (./model_download.sh &&
-         ./build_docker.sh) 2>&1 | tee -a "$logfile" || _exitOnError "mkm"
+    ./model_download.sh || _exitOnError "mkm"
+    ./build_docker.sh || _exitOnError "mkm"
     _reportSuccess "mkm"
 }
 
