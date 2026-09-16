@@ -35,18 +35,23 @@ build_asr() {
     ./build_docker.sh || _exitOnError "asr"
     # download silero, speaker identification and whisper models
     ./model_download.sh "$@" || _exitOnError "asr"
-    mkdir ../../models/asr
-    mv models/* ../../models/asr
+    mkdir ../../models/asr 2>/dev/null
+    mv models models0
+    ln -s ../../models/asr models
+    ./model_download.sh "$@" || _exitOnError "asr"
+    rm models
+    mv models0 models
     cd "$script_dir"
     _reportSuccess "asr"
 }
 
 build_intentslot() {
     # Build docker for intent and slot recognition, NEEDS git-lfs!!
+    cd "$script_dir"
+    mkdir models/intentslot 2>/dev/null
+    cd models/intentslot
+    ../../modules/drz_intentslot/model_download.sh || _exitOnError "intentslot"
     cd "$script_dir"/modules/drz_intentslot
-    ./model_download.sh || _exitOnError "intentslot"
-    mkdir ../../models/intentslot
-    mv bert-base-german-cased adapters ../../models/intentslot
     ./build_docker.sh || _exitOnError "intentslot"
     cd "$script_dir"
     _reportSuccess "intentslot"
@@ -65,7 +70,7 @@ build_vonda() {
 build_mkmconnector() {
     cd "$script_dir"/modules/mkmconnector
     # build the MKM Connector docker, not doing tests (no credentials)
-    ./build_docker.sh || _exitOnError "mkmconnector"
+    ./build_docker.sh -n || _exitOnError "mkmconnector"
     _reportSuccess "mkmconnector"
 }
 
