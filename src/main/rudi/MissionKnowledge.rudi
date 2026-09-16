@@ -95,13 +95,13 @@ sender_but_no_addressee:
 if (! lastDA().addressee && lastDA().sender) {
   // logger.error("current sender: {}  previous sender: {} previous addressee: {}", lastDA().sender, prevDA.sender, prevDA.addresse);
  same_sender:
-  if (prevDA.sender && (lastDA().sender == prevDA.sender)) {
+  if (prevDA.sender && lastDA().sender && lastDA().sender == prevDA.sender) {
     // assume the addressee is the same as in the last turn, given the sender
     // ist the same as before
     lastDA().addressee = prevDA.addressee;
   }
  sender_is_last_addresse:
-  if (prevDA.sender && (lastDA().sender == prevDA.addressee)) {
+  if (prevDA.sender && lastDA().sender && lastDA().sender == prevDA.addressee) {
     // assume the addressee is the same as in the last turn, given the sender
     // ist the same as before
     lastDA().addressee = prevDA.sender;
