@@ -48,7 +48,8 @@ NLU:
 
 # ######### MQTT SETTINGS: CONNECTION TO BROKER ##########
 mqtt:
-  host: mqtt-broker
+  #host: mqtt-broker
+  host: host.docker.internal  # broker running on host, running in docker
   #port: 1883
   #protocol: tcp
   #millis_reconnect: 100

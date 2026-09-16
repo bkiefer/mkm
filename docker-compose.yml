@@ -15,24 +15,22 @@ services:
       - '9797:9797'
     volumes:
       - ./rasa:/app
-      - ./models/rasa:/app/models
 
-  broker:
-    image: 'eclipse-mosquitto:2.0.15'
-    networks:
-      - mlt
-    restart: always
-    container_name: 'mqtt-broker'
-    hostname: 'mqtt-broker'
-    ports:
-      - '9883:1883'
-    #   - '9001:9001'
-    volumes:
-      - ./configs/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
+  # broker:
+  #   image: 'eclipse-mosquitto:2.0.15'
+  #   networks:
+  #     - mlt
+  #   restart: always
+  #   container_name: 'mqtt-broker'
+  #   hostname: 'mqtt-broker'
+  #   ports:
+  #     - '9883:1883'
+  #   #   - '9001:9001'
+  #   volumes:
+  #     - ./configs/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
 
   asrident:
     depends_on:
-      - broker
       - mkm
     image: 'asrident:${ASR_VERSION}'
     environment:
@@ -50,6 +48,8 @@ services:
               capabilities: [gpu]
     networks:
       - mlt
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
     container_name: 'asrident'
     restart: always
     hostname: 'asrident'
@@ -62,15 +62,15 @@ services:
       - ${HOME}/.config/pulse-cookie:/root/.config/pulse-cookie
       - ./configs/asrident_de_config.yml:/app/config.yml:ro
       - ./configs/mkmrec_config.yml:/app/rec_config.yml:ro
-      - ./models/asr:/app/models
+      - ./modules/asrident/models:/app/models
       - ./logs/${LOGDIR}/audio:/app/audio
       - ./logs/${LOGDIR}/outputs:/app/outputs
       - ./logs/${LOGDIR}:/app/logs
       - ./inputs:/app/inputs
 
   drzintent:
-    depends_on:
-      - broker
+#    depends_on:
+#      - broker
     image: 'drz_daslot:${INTENTSLOT_VERSION}'
     command: ["/bin/bash", "-c",
     "uv run adapters_bio_tags_server.py 2>&1 | tee logs/drzintent.log"]
@@ -83,6 +83,8 @@ services:
               capabilities: [gpu]
     networks:
       - mlt
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
     container_name: 'drz_daslot'
     restart: always
     hostname: 'drzintent'
@@ -90,8 +92,8 @@ services:
       - 5050:5050
     volumes:
       - ./logs/${LOGDIR}:/app/logs
-      - ./models/intentslot/adapters:/app/adapters
-      - ./models/intentslot/bert-base-german-cased:/app/bert-base-german-cased
+      - ./modules/drz_intentslot/adapters:/app/adapters
+      - ./modules/drz_intentslot/bert-base-german-cased:/app/bert-base-german-cased
     healthcheck:
       test: ["CMD-SHELL",
       "test \"$(curl http://drzintent:5050/alive)\" = 'tag server is alive'"]
@@ -102,8 +104,8 @@ services:
 
   mkm:
     depends_on:
-      broker:
-        condition: service_started
+#      broker:
+#        condition: service_started
       rasa_server:
         condition: service_started
       drzintent:
@@ -113,6 +115,8 @@ services:
     "java -Xmx64m -jar mkm-fatjar.jar 2>&1 | tee logs/mkm_full.log" ]
     networks:
       - mlt
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
     container_name: 'mkm'
     restart: always
     hostname: 'mkm'
@@ -123,8 +127,8 @@ services:
 
   mkmconnector:
     depends_on:
-      broker:
-        condition: service_started
+#      broker:
+#        condition: service_started
       mkm:
         condition: service_started
     image: 'mkmconnector:${MKMCONNECTOR_VERSION}'
@@ -134,6 +138,8 @@ services:
     hostname: 'mkmconnector'
     networks:
       - mlt
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
     volumes:
       - ./configs/connector-config.yml:/app/config.yml:ro
       - ./configs/credentials.yml:/app/credentials.yml:ro

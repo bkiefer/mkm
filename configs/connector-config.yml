@@ -1,7 +1,9 @@
 mqtt:
-  host: 'mqtt-broker' # running in isolated docker
+  #host: 'mqtt-broker' # running in isolated docker with broker in docker
+  host: host.docker.internal  # broker running on host, running in docker
   #port: 9883
 
 iais:
   #base_url: 'https://10.26.2.42:8080/radio-transcription'
-  base_url: 'https://eve.iais.fraunhofer.de/radio-transcription'
+  #base_url: 'https://eve.iais.fraunhofer.de/radio-transcription'
+  base_url: 'https://roblw.rettungsrobotik.de/radio-transcription'

@@ -8,12 +8,12 @@ language: de
 # adaptation_state_outfile="state"
 
 monitor_mic: true
-monitor_asr: false
+monitor_asr: true
 
 # host of MQTT broker (specify port, too, if necessary)
 mqtt:
-  host: mqtt-broker  # using docker compose
-  #host: host.docker.internal  # running locally
+  #host: mqtt-broker  # using docker compose
+  host: host.docker.internal  # broker running on host, running in docker
   #host: localhost
   #port: 9883
 

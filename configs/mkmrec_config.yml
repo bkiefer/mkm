@@ -1,3 +1,4 @@
-mqtt_address: 'mqtt-broker'
+#mqtt_address: 'mqtt-broker'
+mqtt_address: host.docker.internal
 topics:
   - '#'
