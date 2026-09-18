@@ -6,8 +6,8 @@ pom_version() {
     mvn help:evaluate -Dexpression=project.version -q -DforceStdout 2>/dev/null
 }
 
+# TODO: use a binary jar from a github release instead
 echo "$PATH" | grep -q 'vonda' || export PATH="$(pwd)/modules/vonda/bin:$PATH"
-mvn clean
 ./compile
 mvn install
 docker build -f Dockerfile -t mkm:`pom_version` .
