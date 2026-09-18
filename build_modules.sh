@@ -11,7 +11,7 @@ RED='\e[31m'
 NC='\033[0m' # No Color
 
 function _exitOnError {
-    printf "${RED}ERROR during build or model download $1 ${NC}\n";
+    printf "${RED}ERROR building $1 ${NC}\n";
     exit 1;
 }
 
@@ -33,23 +33,12 @@ build_asr() {
     # ASR and speaker identification
     cd "$script_dir"/modules/asrident
     ./build_docker.sh || _exitOnError "asr"
-    # download silero, speaker identification and whisper models
-    mkdir ../../models/asr 2>/dev/null
-    mv models models0
-    ln -s ../../models/asr models
-    ./model_download.sh "$@" || _exitOnError "asr"
-    rm models
-    mv models0 models
     cd "$script_dir"
     _reportSuccess "asr"
 }
 
 build_intentslot() {
     # Build docker for intent and slot recognition, NEEDS git-lfs!!
-    cd "$script_dir"
-    mkdir models/intentslot 2>/dev/null
-    cd models/intentslot
-    ../../modules/drz_intentslot/model_download.sh || _exitOnError "intentslot"
     cd "$script_dir"/modules/drz_intentslot
     ./build_docker.sh || _exitOnError "intentslot"
     cd "$script_dir"
@@ -75,23 +64,21 @@ build_mkmconnector() {
 
 build_mkm() {
     cd "$script_dir"
-    # Download rasa ML model, compile the MKM and build the MKM docker
-    ./model_download.sh || _exitOnError "mkm"
+    # compile the MKM and build the MKM docker
     ./build_docker.sh || _exitOnError "mkm"
     _reportSuccess "mkm"
 }
 
 
-while getopts anb: c
+while getopts an c
 do
     case $c in
         a)  all="true";;
         n)  no_update="true" ;;
-        b)  build="$OPTARG" ;;
         *)  echo "Usage: $0 [-<a>ll] [-<n>oupdate] [module1, module2 ...]
 
 no update will skip updating the git submodules.
-module must be one of 'asr', 'intentslot', 'vonda' or 'mkm'
+module must be one of 'asr', 'intentslot', 'vonda', 'mkm' or 'mkmconnector'
 "
     esac
 done

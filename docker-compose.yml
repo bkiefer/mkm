@@ -17,19 +17,6 @@ services:
       - ./rasa:/app
       - ./models/rasa:/app/models
 
-  # broker:
-  #   image: 'eclipse-mosquitto:2.0.15'
-  #   networks:
-  #     - mlt
-  #   restart: always
-  #   container_name: 'mqtt-broker'
-  #   hostname: 'mqtt-broker'
-  #   ports:
-  #     - '9883:1883'
-  #   #   - '9001:9001'
-  #   volumes:
-  #     - ./configs/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
-
   asrident:
     depends_on:
       - mkm
@@ -70,8 +57,6 @@ services:
       - ./inputs:/app/inputs
 
   drzintent:
-#    depends_on:
-#      - broker
     image: 'drz_daslot:${INTENTSLOT_VERSION}'
     command: ["/bin/bash", "-c",
     "uv run adapters_bio_tags_server.py 2>&1 | tee logs/drzintent.log"]
@@ -105,8 +90,6 @@ services:
 
   mkm:
     depends_on:
-#      broker:
-#        condition: service_started
       rasa_server:
         condition: service_started
       drzintent:
@@ -128,8 +111,6 @@ services:
 
   mkmconnector:
     depends_on:
-#      broker:
-#        condition: service_started
       mkm:
         condition: service_started
     image: 'mkmconnector:${MKMCONNECTOR_VERSION}'

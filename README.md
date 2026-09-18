@@ -34,13 +34,14 @@ After cloning the repository, run the following command to set up the environmen
 
 ```bash
 ./build_modules.sh -a
+./model_download.sh -a
 ```
 
-This script will:
+These scripts will:
 
 * Pull the necessary submodules
 * Build the modules, including Docker images
-* Download the required machine learning models for the setup
+* Download the required machine learning models for the setup. It's important that the docker images are built first since some download code uses the docker image for downloading.
 
 ---
 
